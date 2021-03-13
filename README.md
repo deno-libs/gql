@@ -1,3 +1,7 @@
+<p align="center" >
+<img src="logo.png" width="200" />
+</p>
+
 # gql ☁
 
 [![GitHub release (latest by date)][releases]][releases-page] [![][docs-badge]][docs]
