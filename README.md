@@ -8,6 +8,11 @@
 
 Universal [GraphQL](https://www.graphql.com/) HTTP middleware for Deno.
 
+## Features
+
+- supports vanilla, tinyhttp and any other web framework
+- re-exports GraphQL interfaces from `graphql_deno`
+
 ## Examples
 
 ### Vanilla
