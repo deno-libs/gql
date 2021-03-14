@@ -18,5 +18,5 @@ const schema = new GraphQLSchema({
 const s = serve({ port: 3000 })
 
 for await (const req of s) {
-  await GraphQLHTTP({ schema, context: (request: ServerRequest) => ({ request }) })(req)
+  await GraphQLHTTP({ schema })(req)
 }

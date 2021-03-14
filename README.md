@@ -33,7 +33,7 @@ const schema = new GraphQLSchema({
 const s = serve({ port: 3000 })
 
 for await (const req of s) {
-  await GraphQLHTTP({ schema, context: (request: ServerRequest) => ({ request }) })(req)
+  await GraphQLHTTP({ schema })(req)
 }
 ```
 
@@ -59,9 +59,9 @@ const schema = new GraphQLSchema({
 
 const app = new App()
 
-app
-  .post('/graphql', GraphQLHTTP({ schema, context: (request: Request) => ({ request }) }))
-  .listen(3000, () => console.log(`☁  Started on http://localhost:3000`))
+app.post('/graphql', GraphQLHTTP({ schema }))
+
+app.listen(3000, () => console.log(`☁  Started on http://localhost:3000`))
 ```
 
 Then run:

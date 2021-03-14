@@ -1,9 +1,5 @@
-import { App, Request } from 'https://deno.land/x/tinyhttp/mod.ts'
+import { App } from 'https://deno.land/x/tinyhttp/mod.ts'
 import { GraphQLHTTP, GraphQLSchema, GraphQLObjectType, GraphQLString } from '../mod.ts'
-
-const context = (request: Request) => ({
-  request
-})
 
 const schema = new GraphQLSchema({
   query: new GraphQLObjectType({
@@ -21,6 +17,4 @@ const schema = new GraphQLSchema({
 
 const app = new App()
 
-app
-  .post('/graphql', GraphQLHTTP({ schema, context }))
-  .listen(3000, () => console.log(`☁  Started on http://localhost:3000`))
+app.post('/graphql', GraphQLHTTP({ schema })).listen(3000, () => console.log(`☁  Started on http://localhost:3000`))
