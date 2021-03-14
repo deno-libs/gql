@@ -78,6 +78,10 @@ $ curl -X POST localhost:3000/graphql -d '{ "query": "{ hello }" }'
 }
 ```
 
+## Donate
+
+[![PayPal](https://img.shields.io/badge/PayPal-cyan?style=flat-square&logo=paypal)](https://paypal.me/v1rtl) [![ko-fi](https://img.shields.io/badge/kofi-pink?style=flat-square&logo=ko-fi)](https://ko-fi.com/v1rtl) [![Qiwi](https://img.shields.io/badge/qiwi-white?style=flat-square&logo=qiwi)](https://qiwi.com/n/V1RTL) [![Yandex Money](https://img.shields.io/badge/Yandex_Money-yellow?style=flat-square&logo=yandex)](https://money.yandex.ru/to/410014774355272) [![Bitcoin](https://img.shields.io/badge/bitcoin-Donate-yellow?style=flat-square&logo=bitcoin)](https://en.cryptobadges.io/donate/3PxedDftWBXujWtr7TbWQSiYTsZJoMD8K5) [![Ethereu,](https://img.shields.io/badge/ethereum-Donate-cyan?style=flat-square&logo=ethereum)](https://vittominacori.github.io/ethereum-badge/detail.html?address=0x9d9236DC024958D7fB73Ad9B178BD5D372D82288)
+
 [releases]: https://img.shields.io/github/v/release/deno-libs/gql?style=flat-square
 [docs-badge]: https://img.shields.io/github/v/release/deno-libs/gql?color=yellow&label=Documentation&logo=deno&style=flat-square
 [docs]: https://doc.deno.land/https/deno.land/x/gql/mod.ts
