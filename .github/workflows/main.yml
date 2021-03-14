@@ -19,7 +19,7 @@ jobs:
       - name: Cache Dependencies
         run: deno cache deps.ts
       - name: Run tests
-        run: deno test --unstable --coverage=coverage
+        run: deno test -A --location "http://127.0.0.1" --unstable --coverage=coverage
       - name: Create coverage report
         run: deno --unstable coverage ./coverage --lcov > coverage.lcov
       - name: Collect coverage
