@@ -4,7 +4,8 @@
 
 # gql
 
-[![GitHub release (latest by date)][releases]][releases-page] [![][docs-badge]][docs]
+[![GitHub release (latest by date)][releases]][releases-page] [![GitHub Workflow Status][gh-actions-img]][github-actions]
+[![Codecov][codecov-badge]][codecov] [![][docs-badge]][docs]
 
 Universal [GraphQL](https://www.graphql.com/) HTTP middleware for Deno.
 
@@ -84,3 +85,7 @@ $ curl -X POST localhost:3000/graphql -d '{ "query": "{ hello }" }'
 [docs-badge]: https://img.shields.io/github/v/release/deno-libs/gql?color=yellow&label=Documentation&logo=deno&style=flat-square
 [docs]: https://doc.deno.land/https/deno.land/x/gql/mod.ts
 [releases-page]: https://github.com/deno-libs/gql/releases
+[gh-actions-img]: https://img.shields.io/github/workflow/status/deno-libs/gql/CI?style=flat-square
+[codecov]: https://codecov.io/gh/deno-libs/gql
+[github-actions]: https://github.com/deno-libs/gql/actions
+[codecov-badge]: https://img.shields.io/codecov/c/gh/deno-libs/gql?style=flat-square
