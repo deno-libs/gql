@@ -1,9 +1,8 @@
-import { Request } from './types.ts'
-import { graphql, ExecutionResult, GraphQLSchema, GraphQLArgs } from './deps.ts'
+import { graphql, GraphQLSchema, ExecutionResult } from 'https://deno.land/x/graphql_deno@v15.0.0/mod.ts'
 
-export type GraphQLOptions = {
+export type GraphQLOptions<Context = any, Request = any> = {
   schema: GraphQLSchema
-  context?: (val: any) => any
+  context?: (val: Request) => Context | Promise<Context>
   rootValue?: any
 }
 
@@ -13,29 +12,27 @@ export type GraphQLParams = {
   variables?: Record<string, unknown>
   operationName?: string
 }
-
-export type ServerContext<T> = { request: Request } & T
-
-/** Returns a GraphQL response. */
-export async function runHttpQuery<Context = unknown>(
+/**
+ * Execute a GraphQL query
+ * @param {GraphQLParams} params
+ * @param {GraphQLOptions} options
+ * @param context GraphQL context to use inside resolvers
+ */
+export async function runHttpQuery<Req extends any = any, Context extends { request: Req } = { request: Req }>(
   params: GraphQLParams,
-  options: GraphQLOptions,
-  context?: ServerContext<Context>
+  options: GraphQLOptions<Context, Req>,
+  context?: Context | any
 ): Promise<ExecutionResult> {
   if (!params) throw new Error('Bad Request')
 
   const contextValue = options.context && context?.request ? await options.context?.(context?.request) : undefined
   const source = params.query! || params.mutation!
 
-  // https://graphql.org/graphql-js/graphql/#graphql
-  const graphQLArgs: GraphQLArgs = {
+  return await graphql({
     source,
-    schema: options.schema,
-    rootValue: options.rootValue,
+    ...options,
     contextValue: contextValue,
     variableValues: params.variables,
     operationName: params.operationName
-  }
-
-  return await graphql(graphQLArgs)
+  })
 }

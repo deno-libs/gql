@@ -1,10 +1,16 @@
 import { Request } from './types.ts'
-import { runHttpQuery, GraphQLParams, GraphQLOptions } from './common.ts'
+import { runHttpQuery, GraphQLOptions } from './common.ts'
 
 const dec = new TextDecoder()
 
-export function GraphQLHTTP(options: GraphQLOptions) {
-  return async (request: Request) => {
+/**
+ * Create a new GraphQL HTTP middleware with schema, context etc
+ * @param {GraphQLOptions} options
+ */
+export function GraphQLHTTP<Req extends Request = Request, Ctx extends { request: Req } = { request: Req }>(
+  options: GraphQLOptions<Ctx, Req>
+) {
+  return async (request: Req) => {
     if (!['PUT', 'POST', 'PATCH'].includes(request.method)) {
       request.respond({
         status: 405,
@@ -17,7 +23,9 @@ export function GraphQLHTTP(options: GraphQLOptions) {
       try {
         const params = JSON.parse(dec.decode(body))
 
-        const result = await runHttpQuery(params, options, { request })
+        const result = await runHttpQuery<Req, Ctx>(params, options, {
+          request
+        })
 
         request.respond({ body: JSON.stringify(result, null, 2), status: 200 })
       } catch (e) {

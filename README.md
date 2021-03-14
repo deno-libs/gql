@@ -9,18 +9,14 @@
 
 Universal [GraphQL](https://www.graphql.com/) HTTP middleware for Deno.
 
-## Features
-
-- supports vanilla, tinyhttp and any other backend framework
-- re-exports GraphQL interfaces from `graphql_deno`
-
 ## Examples
 
 ### Vanilla
 
 ```ts
 import { serve, ServerRequest } from 'https://deno.land/std@0.90.0/http/server.ts'
-import { GraphQLHTTP, GraphQLSchema, GraphQLObjectType, GraphQLString } from 'https://deno.land/x/gql/mod.ts'
+import { GraphQLHTTP } from 'https://deno.land/x/gql/mod.ts'
+import { GraphQLSchema, GraphQLString, GraphQLObjectType } from 'https://deno.land/x/graphql_deno@v15.0.0/mod.ts'
 
 const schema = new GraphQLSchema({
   query: new GraphQLObjectType({
@@ -47,7 +43,8 @@ for await (const req of s) {
 
 ```ts
 import { App, Request } from 'https://deno.land/x/tinyhttp/mod.ts'
-import { GraphQLHTTP, GraphQLSchema, GraphQLObjectType, GraphQLString } from 'https://deno.land/x/gql/mod.ts'
+import { GraphQLHTTP } from 'https://deno.land/x/gql/mod.ts'
+import { GraphQLSchema, GraphQLString, GraphQLObjectType } from 'https://deno.land/x/graphql_deno@v15.0.0/mod.ts'
 
 const schema = new GraphQLSchema({
   query: new GraphQLObjectType({

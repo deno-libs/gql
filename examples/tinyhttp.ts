@@ -1,6 +1,6 @@
 import { App } from 'https://deno.land/x/tinyhttp/mod.ts'
-import { GraphQLHTTP, GraphQLSchema, GraphQLObjectType, GraphQLString } from '../mod.ts'
-
+import { GraphQLHTTP } from '../mod.ts'
+import { GraphQLSchema, GraphQLString, GraphQLObjectType } from 'https://deno.land/x/graphql_deno@v15.0.0/mod.ts'
 const schema = new GraphQLSchema({
   query: new GraphQLObjectType({
     name: 'Query',
