@@ -9,14 +9,16 @@ on:
     branches: [master]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: denolib/setup-deno@v2
         with:
           deno-version: v1.8
-      - name: Create tests
+      - name: Cache Dependencies
+        run: deno cache deps.ts
+      - name: Run tests
         run: deno test --unstable --coverage=coverage
       - name: Create coverage report
         run: deno --unstable coverage ./coverage --lcov > coverage.lcov
