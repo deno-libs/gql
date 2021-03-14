@@ -20,11 +20,11 @@ export type ServerContext<T> = { request: Request } & T
 export async function runHttpQuery<Context = unknown>(
   params: GraphQLParams,
   options: GraphQLOptions,
-  context: ServerContext<Context>
+  context?: ServerContext<Context>
 ): Promise<ExecutionResult> {
   if (!params) throw new Error('Bad Request')
 
-  const contextValue = await options.context?.(context.request)
+  const contextValue = options.context && context?.request ? await options.context?.(context?.request) : undefined
   const source = params.query! || params.mutation!
 
   // https://graphql.org/graphql-js/graphql/#graphql
