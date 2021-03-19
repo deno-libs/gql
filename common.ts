@@ -6,12 +6,23 @@ export type GraphQLOptions<Context = any, Request = any> = {
   rootValue?: any
 }
 
-export type GraphQLParams = {
-  query?: string
-  mutation?: string
+export interface GraphQLParams {
   variables?: Record<string, unknown>
   operationName?: string
 }
+
+interface QueryParams extends GraphQLParams {
+  query: string
+  mutation: never
+}
+
+interface MutationParams extends GraphQLParams {
+  mutation: string
+  query: never
+}
+
+type Params = QueryParams | MutationParams
+
 /**
  * Execute a GraphQL query
  * @param {GraphQLParams} params
@@ -24,16 +35,12 @@ export type GraphQLParams = {
  * ```
  */
 export async function runHttpQuery<Req extends any = any, Context extends { request: Req } = { request: Req }>(
-  params: GraphQLParams,
+  params: Params,
   options: GraphQLOptions<Context, Req>,
   context?: Context | any
 ): Promise<ExecutionResult> {
-  if (!params) throw new Error('Bad Request')
-
   const contextValue = options.context && context?.request ? await options.context?.(context?.request) : context
   const source = params.query! || params.mutation!
-
-  if (!source) throw new Error('Query or mutation must be provided')
 
   return await graphql({
     source,
