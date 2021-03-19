@@ -13,12 +13,12 @@ export interface GraphQLParams {
 
 interface QueryParams extends GraphQLParams {
   query: string
-  mutation: never
+  mutation?: never
 }
 
 interface MutationParams extends GraphQLParams {
   mutation: string
-  query: never
+  query?: never
 }
 
 type Params = QueryParams | MutationParams
