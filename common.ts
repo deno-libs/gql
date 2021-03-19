@@ -17,6 +17,11 @@ export type GraphQLParams = {
  * @param {GraphQLParams} params
  * @param {GraphQLOptions} options
  * @param context GraphQL context to use inside resolvers
+ *
+ * @example
+ * ```ts
+ * const { errors, data } = await runHttpQuery<ServerRequest, typeof context>({ query: `{ hello }` }, { schema } }, context)
+ * ```
  */
 export async function runHttpQuery<Req extends any = any, Context extends { request: Req } = { request: Req }>(
   params: GraphQLParams,
@@ -25,13 +30,15 @@ export async function runHttpQuery<Req extends any = any, Context extends { requ
 ): Promise<ExecutionResult> {
   if (!params) throw new Error('Bad Request')
 
-  const contextValue = options.context && context?.request ? await options.context?.(context?.request) : undefined
+  const contextValue = options.context && context?.request ? await options.context?.(context?.request) : context
   const source = params.query! || params.mutation!
+
+  if (!source) throw new Error('Query or mutation must be provided')
 
   return await graphql({
     source,
     ...options,
-    contextValue: contextValue,
+    contextValue,
     variableValues: params.variables,
     operationName: params.operationName
   })

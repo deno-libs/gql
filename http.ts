@@ -6,6 +6,12 @@ const dec = new TextDecoder()
 /**
  * Create a new GraphQL HTTP middleware with schema, context etc
  * @param {GraphQLOptions} options
+ * @example
+ * ```ts
+ * const graphql = await GraphQLHTTP({ schema })
+ *
+ * for await (const req of s) graphql(req)
+ * ```
  */
 export function GraphQLHTTP<Req extends Request = Request, Ctx extends { request: Req } = { request: Req }>(
   options: GraphQLOptions<Ctx, Req>

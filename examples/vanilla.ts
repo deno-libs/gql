@@ -1,4 +1,4 @@
-import { serve } from 'https://deno.land/std@0.90.0/http/server.ts'
+import { serve, ServerRequest } from 'https://deno.land/std@0.90.0/http/server.ts'
 import { GraphQLHTTP } from '../mod.ts'
 import { GraphQLSchema, GraphQLString, GraphQLObjectType } from 'https://deno.land/x/graphql_deno@v15.0.0/mod.ts'
 
@@ -19,5 +19,5 @@ const schema = new GraphQLSchema({
 const s = serve({ port: 3000 })
 
 for await (const req of s) {
-  await GraphQLHTTP({ schema })(req)
+  await GraphQLHTTP<ServerRequest>({ schema })(req)
 }

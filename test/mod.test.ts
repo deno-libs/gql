@@ -94,6 +94,27 @@ describe('runHttpQuery(params, options, context)', () => {
 
     expect(result.errors?.[0].message).toBe('Cannot query field "world" on type "Query".')
   })
+  it('should use properties passed to context', async () => {
+    const obj = { a: 'Context prop' }
+
+    const schema = new GraphQLSchema({
+      query: new GraphQLObjectType<any, typeof obj>({
+        name: 'Query',
+        fields: {
+          hello: {
+            type: GraphQLString,
+            resolve(_, __x, ctx) {
+              return ctx.a
+            }
+          }
+        }
+      })
+    })
+
+    const result = await runHttpQuery({ query: '{ hello }' }, { schema }, obj)
+
+    expect(result.data).toEqual({ hello: 'Context prop' })
+  })
 })
 
 run()
