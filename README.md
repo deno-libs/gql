@@ -16,24 +16,23 @@ Universal [GraphQL](https://www.graphql.com/) HTTP middleware for Deno.
 ```ts
 import { serve } from 'https://deno.land/std@0.90.0/http/server.ts'
 import { GraphQLHTTP } from 'https://deno.land/x/gql/mod.ts'
-import { GraphQLSchema, GraphQLString, GraphQLObjectType } from 'https://deno.land/x/graphql_deno@v15.0.0/mod.ts'
+import { buildSchema } from 'https://deno.land/x/graphql_deno@v15.0.0/mod.ts'
 
-const schema = new GraphQLSchema({
-  query: new GraphQLObjectType({
-    name: 'Query',
-    fields: {
-      hello: {
-        type: GraphQLString,
-        resolve() {
-          return 'Hello World!'
-        }
-      }
+const schema = buildSchema(`
+type Query {
+  hello: String
+}
+`)
+
+const s = serve({ port: 3000 })
+
+for await (const req of s) {
+  await GraphQLHTTP({
+    schema,
+    rootValue: {
+      hello: () => 'Hello World!'
     }
-  })
-})
-
-for await (const req of serve({ port: 3000 })) {
-  await GraphQLHTTP({ schema })(req)
+  })(req)
 }
 ```
 
@@ -42,27 +41,27 @@ for await (const req of serve({ port: 3000 })) {
 ```ts
 import { App } from 'https://deno.land/x/tinyhttp/mod.ts'
 import { GraphQLHTTP } from 'https://deno.land/x/gql/mod.ts'
-import { GraphQLSchema, GraphQLString, GraphQLObjectType } from 'https://deno.land/x/graphql_deno@v15.0.0/mod.ts'
+import { buildSchema } from 'https://deno.land/x/graphql_deno@v15.0.0/mod.ts'
 
-const schema = new GraphQLSchema({
-  query: new GraphQLObjectType({
-    name: 'Query',
-    fields: {
-      hello: {
-        type: GraphQLString,
-        resolve() {
-          return 'Hello World!'
-        }
-      }
-    }
-  })
-})
+const schema = buildSchema(`
+type Query {
+  hello: String
+}
+`)
 
 const app = new App()
 
-app.post('/graphql', GraphQLHTTP({ schema }))
-
-app.listen(3000, () => console.log(`☁  Started on http://localhost:3000`))
+app
+  .post(
+    '/graphql',
+    GraphQLHTTP({
+      schema,
+      rootValue: {
+        hello: () => 'Hello World!'
+      }
+    })
+  )
+  .listen(3000, () => console.log(`☁  Started on http://localhost:3000`))
 ```
 
 Then run:

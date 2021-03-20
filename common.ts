@@ -6,22 +6,22 @@ export type GraphQLOptions<Context = any, Request = any> = {
   rootValue?: any
 }
 
-export interface GraphQLParams {
+interface Params {
   variables?: Record<string, unknown>
   operationName?: string
 }
 
-interface QueryParams extends GraphQLParams {
+interface QueryParams extends Params {
   query: string
   mutation?: never
 }
 
-interface MutationParams extends GraphQLParams {
+interface MutationParams extends Params {
   mutation: string
   query?: never
 }
 
-type Params = QueryParams | MutationParams
+export type GraphQLParams = QueryParams | MutationParams
 
 /**
  * Execute a GraphQL query
@@ -35,7 +35,7 @@ type Params = QueryParams | MutationParams
  * ```
  */
 export async function runHttpQuery<Req extends any = any, Context extends { request: Req } = { request: Req }>(
-  params: Params,
+  params: GraphQLParams,
   options: GraphQLOptions<Context, Req>,
   context?: Context | any
 ): Promise<ExecutionResult> {
