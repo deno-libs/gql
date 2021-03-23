@@ -9,9 +9,16 @@
 
 Universal [GraphQL](https://www.graphql.com/) HTTP middleware for Deno.
 
-## Examples
+## Features
+
+- ✨ Works with `std/http`, [tinyhttp](https://github.com/deno-libs/tinyhttp-deno) and [Opine](https://github.com/asos-craigmorten/opine) out-of-the-box
+- ⚡ [GraphQL Playground](https://github.com/graphql/graphql-playground/tree/master/packages/graphql-playground-html) integration (via `graphiql: true`)
+
+## Get started
 
 ### Vanilla
+
+The simplest setup with `std/http`:
 
 ```ts
 import { serve } from 'https://deno.land/std@0.90.0/http/server.ts'
@@ -27,41 +34,17 @@ type Query {
 const s = serve({ port: 3000 })
 
 for await (const req of s) {
-  await GraphQLHTTP({
-    schema,
-    rootValue: {
-      hello: () => 'Hello World!'
-    }
-  })(req)
+  req.url === '/graphql'
+    ? await GraphQLHTTP({
+        schema,
+        rootValue: {
+          hello: () => 'Hello World!'
+        }
+      })(req)
+    : req.respond({
+        status: 404
+      })
 }
-```
-
-### [tinyhttp](https://github.com/talentlessguy/tinyhttp-deno)
-
-```ts
-import { App } from 'https://deno.land/x/tinyhttp/mod.ts'
-import { GraphQLHTTP } from 'https://deno.land/x/gql/mod.ts'
-import { buildSchema } from 'https://deno.land/x/graphql_deno@v15.0.0/mod.ts'
-
-const schema = buildSchema(`
-type Query {
-  hello: String
-}
-`)
-
-const app = new App()
-
-app
-  .post(
-    '/graphql',
-    GraphQLHTTP({
-      schema,
-      rootValue: {
-        hello: () => 'Hello World!'
-      }
-    })
-  )
-  .listen(3000, () => console.log(`☁  Started on http://localhost:3000`))
 ```
 
 Then run:
@@ -77,7 +60,7 @@ $ curl -X POST localhost:3000/graphql -d '{ "query": "{ hello }" }'
 
 ## Donate
 
-[![PayPal](https://img.shields.io/badge/PayPal-cyan?style=flat-square&logo=paypal)](https://paypal.me/v1rtl) [![ko-fi](https://img.shields.io/badge/kofi-pink?style=flat-square&logo=ko-fi)](https://ko-fi.com/v1rtl) [![Qiwi](https://img.shields.io/badge/qiwi-white?style=flat-square&logo=qiwi)](https://qiwi.com/n/V1RTL) [![Yandex Money](https://img.shields.io/badge/Yandex_Money-yellow?style=flat-square&logo=yandex)](https://money.yandex.ru/to/410014774355272) 
+[![PayPal](https://img.shields.io/badge/PayPal-cyan?style=flat-square&logo=paypal)](https://paypal.me/v1rtl) [![ko-fi](https://img.shields.io/badge/kofi-pink?style=flat-square&logo=ko-fi)](https://ko-fi.com/v1rtl) [![Qiwi](https://img.shields.io/badge/qiwi-white?style=flat-square&logo=qiwi)](https://qiwi.com/n/V1RTL) [![Yandex Money](https://img.shields.io/badge/Yandex_Money-yellow?style=flat-square&logo=yandex)](https://money.yandex.ru/to/410014774355272)
 
 [![Bitcoin](https://badge-crypto.vercel.app/api/badge?coin=btc&address=3PxedDftWBXujWtr7TbWQSiYTsZJoMD8K5)](https://badge-crypto.vercel.app/btc/3PxedDftWBXujWtr7TbWQSiYTsZJoMD8K5) [![Ethereum](https://badge-crypto.vercel.app/api/badge?coin=eth&address=0x9d9236DC024958D7fB73Ad9B178BD5D372D82288)
 ](https://badge-crypto.vercel.app/eth/0x9d9236DC024958D7fB73Ad9B178BD5D372D82288) [![ChainLink](https://badge-crypto.vercel.app/api/badge?coin=link&address=0x9d9236DC024958D7fB73Ad9B178BD5D372D82288)](https://badge-crypto.vercel.app/link/0xcd0da1c9b0DA7D2b862bbF813cB50f76F2fB4F5d)

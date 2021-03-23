@@ -11,14 +11,11 @@ type Query {
 const s = serve({ port: 3000 })
 
 for await (const req of s) {
-  req.url === '/graphql'
-    ? await GraphQLHTTP({
-        schema,
-        rootValue: {
-          hello: () => 'Hello World!'
-        }
-      })(req)
-    : req.respond({
-        status: 404
-      })
+  await GraphQLHTTP({
+    schema,
+    rootValue: {
+      hello: () => 'Hello World!'
+    },
+    graphiql: true
+  })(req)
 }

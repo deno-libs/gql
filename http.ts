@@ -18,26 +18,39 @@ export function GraphQLHTTP<Req extends Request = Request, Ctx extends { request
   options: GraphQLOptions<Ctx, Req>
 ) {
   return async (request: Req) => {
-    if (!['PUT', 'POST', 'PATCH'].includes(request.method)) {
+    if (options.graphiql && request.method === 'GET' && request.headers.get('Accept')?.includes('text/html')) {
+      const { renderPlaygroundPage } = await import('./graphiql/render.ts')
+      const playground = renderPlaygroundPage({ endpoint: '/graphql' })
+
       await request.respond({
-        status: 405,
-        body: 'Method Not Allowed'
+        headers: new Headers({
+          'Content-Type': 'text/html'
+        }),
+        body: playground
       })
-      return
     } else {
-      const body = await Deno.readAll(request.body)
-
-      try {
-        const params = JSON.parse(dec.decode(body))
-
-        const result = await runHttpQuery<Req, Ctx>(params, options, {
-          request
+      if (!['PUT', 'POST', 'PATCH'].includes(request.method)) {
+        return await request.respond({
+          status: 405,
+          body: 'Method Not Allowed'
         })
+      } else {
+        const body = await Deno.readAll(request.body)
 
-        await request.respond({ body: JSON.stringify(result, null, 2), status: 200 })
-      } catch (e) {
-        console.error(e)
-        await request.respond({ status: 400, body: 'Malformed request body' })
+        try {
+          const result = await runHttpQuery<Req, Ctx>(JSON.parse(dec.decode(body)), options, { request })
+
+          await request.respond({
+            body: JSON.stringify(result, null, 2),
+            status: 200,
+            headers: new Headers({
+              'Content-Type': 'application/json'
+            })
+          })
+        } catch (e) {
+          console.error(e)
+          await request.respond({ status: 400, body: 'Malformed request body' })
+        }
       }
     }
   }

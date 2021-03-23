@@ -1,4 +1,4 @@
-import { App } from 'https://deno.land/x/tinyhttp/mod.ts'
+import { opine } from 'https://deno.land/x/opine@1.2.0/mod.ts'
 import { GraphQLHTTP } from '../mod.ts'
 import { buildSchema } from 'https://deno.land/x/graphql_deno@v15.0.0/mod.ts'
 
@@ -8,7 +8,7 @@ type Query {
 }
 `)
 
-const app = new App()
+const app = opine()
 
 app
   .use(

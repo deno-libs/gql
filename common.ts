@@ -4,8 +4,8 @@ export type GraphQLOptions<Context = any, Request = any> = {
   schema: GraphQLSchema
   context?: (val: Request) => Context | Promise<Context>
   rootValue?: any
+  graphiql?: boolean
 }
-
 interface Params {
   variables?: Record<string, unknown>
   operationName?: string
