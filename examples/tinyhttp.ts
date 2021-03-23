@@ -15,6 +15,7 @@ app
     '/graphql',
     GraphQLHTTP({
       schema,
+      graphiql: true,
       rootValue: {
         hello: () => 'Hello World!'
       }
