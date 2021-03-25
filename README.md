@@ -59,7 +59,7 @@ $ curl -X POST localhost:3000/graphql -d '{ "query": "{ hello }" }'
 }
 ```
 
-Or in GraphQL Playground (https://localhost:3000/graphql):
+Or in [GraphQL Playground](https://localhost:3000/graphql):
 
 ![image](https://user-images.githubusercontent.com/35937217/112218821-4133c800-8c35-11eb-984a-5c21fa71c229.png)
 
