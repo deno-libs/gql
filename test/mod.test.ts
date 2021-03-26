@@ -1,25 +1,21 @@
 import { superdeno } from 'https://deno.land/x/superdeno@3.0.0/mod.ts'
 import { GraphQLHTTP } from '../http.ts'
 import { runHttpQuery } from '../common.ts'
-import { GraphQLSchema, GraphQLString, GraphQLObjectType } from 'https://deno.land/x/graphql_deno@v15.0.0/mod.ts'
+import { buildSchema } from 'https://deno.land/x/graphql_deno@v15.0.0/mod.ts'
 import { describe, it, run, expect } from 'https://deno.land/x/wizard@0.1.0/mod.ts'
 import { ServerRequest } from 'https://deno.land/std@0.90.0/http/server.ts'
 
-const schema = new GraphQLSchema({
-  query: new GraphQLObjectType({
-    name: 'Query',
-    fields: {
-      hello: {
-        type: GraphQLString,
-        resolve() {
-          return 'Hello World!'
-        }
-      }
-    }
-  })
-})
+const schema = buildSchema(`
+type Query {
+  hello: String
+}
+`)
 
-const app = GraphQLHTTP({ schema })
+const rootValue = {
+  hello: () => 'Hello World!'
+}
+
+const app = GraphQLHTTP({ schema, rootValue })
 
 describe('GraphQLHTTP(opts)', () => {
   it('should send 405 on GET', async () => {
@@ -42,21 +38,14 @@ describe('GraphQLHTTP(opts)', () => {
   })
   it('should pass req obj to server context', async () => {
     type Context = { request: ServerRequest }
-    const schema = new GraphQLSchema({
-      query: new GraphQLObjectType<unknown, Context>({
-        name: 'Query',
-        fields: {
-          hello: {
-            type: GraphQLString,
-            resolve(_1, _2, { request }) {
-              return `Request from ${request.url}`
-            }
-          }
-        }
-      })
-    })
+
     const app = GraphQLHTTP<ServerRequest, Context>({
       schema,
+      fieldResolver: (_, __, ctx: Context, info) => {
+        if (info.fieldName === 'hello') {
+          return `Request from ${ctx.request.url}`
+        }
+      },
       context: (request) => ({ request })
     })
 
@@ -75,7 +64,7 @@ describe('runHttpQuery(params, options, context)', () => {
       {
         query: '{ hello }'
       },
-      { schema }
+      { schema, rootValue }
     )
 
     expect(result.data).toEqual({ hello: 'Hello World!' })
@@ -97,24 +86,25 @@ describe('runHttpQuery(params, options, context)', () => {
   it('should use properties passed to context', async () => {
     const obj = { a: 'Context prop' }
 
-    const schema = new GraphQLSchema({
-      query: new GraphQLObjectType<any, typeof obj>({
-        name: 'Query',
-        fields: {
-          hello: {
-            type: GraphQLString,
-            resolve(_, __x, ctx) {
-              return ctx.a
-            }
+    const result = await runHttpQuery<unknown, typeof obj>(
+      { query: '{ hello }' },
+      {
+        schema,
+        fieldResolver: (_, __, ctx: typeof obj, info) => {
+          if (info.fieldName === 'hello') {
+            return ctx.a
           }
         }
-      })
-    })
-
-    const result = await runHttpQuery({ query: '{ hello }' }, { schema }, obj)
+      },
+      obj
+    )
 
     expect(result.data).toEqual({ hello: 'Context prop' })
   })
+})
+
+describe('GraphQL playground', () => {
+  it('should send method not allowed if playground is disabled', () => {})
 })
 
 run()

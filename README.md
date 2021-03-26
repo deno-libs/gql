@@ -23,13 +23,22 @@ The simplest setup with `std/http`:
 ```ts
 import { serve } from 'https://deno.land/std@0.90.0/http/server.ts'
 import { GraphQLHTTP } from 'https://deno.land/x/gql/mod.ts'
-import { buildSchema } from 'https://deno.land/x/graphql_deno@v15.0.0/mod.ts'
+import { makeExecutableSchema } from 'https://deno.land/x/graphql_tools/mod.ts'
+import { gql } from 'https://deno.land/x/graphql_tag/mod.ts'
 
-const schema = buildSchema(`
-type Query {
-  hello: String
+const typeDefs = gql`
+  type Query {
+    hello: String
+  }
+`
+
+const resolvers = {
+  Query: {
+    hello: () => `Hello World!`
+  }
 }
-`)
+
+const schema = makeExecutableSchema({ resolvers, typeDefs })
 
 const s = serve({ port: 3000 })
 
@@ -37,9 +46,6 @@ for await (const req of s) {
   req.url.startsWith('/graphql')
     ? await GraphQLHTTP({
         schema,
-        rootValue: {
-          hello: () => 'Hello World!'
-        },
         graphiql: true
       })(req)
     : req.respond({

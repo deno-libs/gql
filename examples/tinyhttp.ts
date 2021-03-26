@@ -1,12 +1,21 @@
 import { App } from 'https://deno.land/x/tinyhttp/mod.ts'
 import { GraphQLHTTP } from '../mod.ts'
-import { buildSchema } from 'https://deno.land/x/graphql_deno@v15.0.0/mod.ts'
+import { makeExecutableSchema } from 'https://deno.land/x/graphql_tools/mod.ts'
+import { gql } from 'https://deno.land/x/graphql_tag/mod.ts'
 
-const schema = buildSchema(`
-type Query {
-  hello: String
+const typeDefs = gql`
+  type Query {
+    hello: String
+  }
+`
+
+const resolvers = {
+  Query: {
+    hello: () => `Hello World!`
+  }
 }
-`)
+
+const schema = makeExecutableSchema({ resolvers, typeDefs })
 
 const app = new App()
 
@@ -15,10 +24,7 @@ app
     '/graphql',
     GraphQLHTTP({
       schema,
-      graphiql: true,
-      rootValue: {
-        hello: () => 'Hello World!'
-      }
+      graphiql: true
     })
   )
   .listen(3000, () => console.log(`☁  Started on http://localhost:3000`))
