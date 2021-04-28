@@ -1,5 +1,6 @@
 import { Request } from './types.ts'
 import { runHttpQuery, GraphQLOptions } from './common.ts'
+import { readAll } from 'https://deno.land/std@0.95.0/io/util.ts'
 
 const dec = new TextDecoder()
 
@@ -35,7 +36,7 @@ export function GraphQLHTTP<Req extends Request = Request, Ctx extends { request
           body: 'Method Not Allowed'
         })
       } else {
-        const body = await Deno.readAll(request.body)
+        const body = await readAll(request.body)
 
         try {
           const result = await runHttpQuery<Req, Ctx>(JSON.parse(dec.decode(body)), options, { request })

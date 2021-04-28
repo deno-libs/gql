@@ -1,4 +1,4 @@
-import { opine } from 'https://deno.land/x/opine@1.2.0/mod.ts'
+import { opine, Request } from 'https://deno.land/x/opine@1.3.3/mod.ts'
 import { GraphQLHTTP } from '../mod.ts'
 import { makeExecutableSchema } from 'https://deno.land/x/graphql_tools/mod.ts'
 import { gql } from 'https://deno.land/x/graphql_tag/mod.ts'
@@ -11,7 +11,9 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    hello: () => `Hello World!`
+    hello: (_root: undefined, _args: unknown, ctx: { request: Request }, info: { fieldName: string }) => {
+      return `Hello World from ${ctx.request.originalUrl}!. You have called ${info.fieldName}`
+    }
   }
 }
 
@@ -19,4 +21,9 @@ const schema = makeExecutableSchema({ resolvers, typeDefs })
 
 const app = opine()
 
-app.use('/graphql', GraphQLHTTP({ schema })).listen(3000, () => console.log(`☁  Started on http://localhost:3000`))
+app
+  .use(
+    '/graphql',
+    GraphQLHTTP<Request>({ schema, context: (request) => ({ request }), graphiql: true })
+  )
+  .listen(3000, () => console.log(`☁  Started on http://localhost:3000`))
