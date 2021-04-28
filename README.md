@@ -4,7 +4,7 @@
 
 # gql
 
-[![GitHub release (latest by date)][releases]][releases-page] [![GitHub Workflow Status][gh-actions-img]][github-actions]
+[![nest badge](https://nest.land/badge.svg)](https://nest.land/package/gql) [![GitHub release (latest by date)][releases]][releases-page] [![GitHub Workflow Status][gh-actions-img]][github-actions]
 [![Codecov][codecov-badge]][codecov] [![][docs-badge]][docs]
 
 Universal [GraphQL](https://www.graphql.com/) HTTP middleware for Deno.
