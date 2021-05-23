@@ -1,4 +1,4 @@
-import { opine, Request } from 'https://deno.land/x/opine@1.3.3/mod.ts'
+import { opine, Request } from 'https://deno.land/x/opine@1.4.0/mod.ts'
 import { GraphQLHTTP } from '../mod.ts'
 import { makeExecutableSchema } from 'https://deno.land/x/graphql_tools/mod.ts'
 import { gql } from 'https://deno.land/x/graphql_tag/mod.ts'

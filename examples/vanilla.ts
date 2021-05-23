@@ -1,4 +1,4 @@
-import { serve } from 'https://deno.land/std@0.95.0/http/server.ts'
+import { serve } from 'https://deno.land/std@0.97.0/http/server.ts'
 import { GraphQLHTTP } from '../mod.ts'
 import { makeExecutableSchema } from 'https://deno.land/x/graphql_tools/mod.ts'
 import { gql } from 'https://deno.land/x/graphql_tag/mod.ts'

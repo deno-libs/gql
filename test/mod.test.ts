@@ -3,7 +3,7 @@ import { GraphQLHTTP } from '../http.ts'
 import { runHttpQuery } from '../common.ts'
 import { buildSchema } from 'https://deno.land/x/graphql_deno@v15.0.0/mod.ts'
 import { describe, it, run, expect } from 'https://deno.land/x/wizard@0.1.3/mod.ts'
-import { ServerRequest } from 'https://deno.land/std@0.95.0/http/server.ts'
+import { ServerRequest } from 'https://deno.land/std@0.97.0/http/server.ts'
 
 const schema = buildSchema(`
 type Query {
