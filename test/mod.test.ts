@@ -2,7 +2,7 @@ import { superdeno } from 'https://deno.land/x/superdeno@4.2.1/mod.ts'
 import { GraphQLHTTP } from '../http.ts'
 import { runHttpQuery } from '../common.ts'
 import { buildSchema } from 'https://deno.land/x/graphql_deno@v15.0.0/mod.ts'
-import { describe, it, run, expect } from 'https://deno.land/x/wizard@0.1.3/mod.ts'
+import { describe, it, expect, run } from 'https://deno.land/x/tincan/mod.ts'
 import { ServerRequest } from 'https://deno.land/std@0.97.0/http/server.ts'
 
 const schema = buildSchema(`
@@ -101,10 +101,6 @@ describe('runHttpQuery(params, options, context)', () => {
 
     expect(result.data).toEqual({ hello: 'Context prop' })
   })
-})
-
-describe('GraphQL playground', () => {
-  it('should send method not allowed if playground is disabled', () => {})
 })
 
 run()
