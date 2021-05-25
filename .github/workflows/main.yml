@@ -21,6 +21,6 @@ jobs:
       - name: Create coverage report
         run: deno --unstable coverage ./coverage --lcov > coverage.lcov
       - name: Collect coverage
-        uses: codecov/codecov-action@v1.0.10
+        uses: codecov/codecov-action@v1.5.0
         with:
           file: ./coverage.lcov
