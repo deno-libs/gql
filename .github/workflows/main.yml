@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: denolib/setup-deno@v2
         with:
-          deno-version: v1.8
+          deno-version: v1.11
       - name: Run tests
         run: deno test -A --location "http://127.0.0.1" --unstable --coverage=coverage
       - name: Create coverage report
