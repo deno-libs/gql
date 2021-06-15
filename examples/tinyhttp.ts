@@ -1,7 +1,7 @@
-import { App } from 'https://deno.land/x/tinyhttp@0.1.11/mod.ts'
+import { App } from 'https://deno.land/x/tinyhttp@0.1.12/mod.ts'
 import { GraphQLHTTP } from '../mod.ts'
-import { makeExecutableSchema } from 'https://deno.land/x/graphql_tools/mod.ts'
-import { gql } from 'https://deno.land/x/graphql_tag/mod.ts'
+import { makeExecutableSchema } from 'https://deno.land/x/graphql_tools@0.0.0/mod.ts'
+import { gql } from 'https://deno.land/x/graphql_tag@0.0.1/mod.ts'
 
 const typeDefs = gql`
   type Query {
