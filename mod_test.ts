@@ -1,4 +1,4 @@
-import { superdeno } from 'https://deno.land/x/superdeno@4.2.1/mod.ts'
+import { superdeno } from 'https://deno.land/x/superdeno@4.3.0/mod.ts'
 import { GraphQLHTTP } from './http.ts'
 import { runHttpQuery } from './common.ts'
 import { buildSchema } from 'https://deno.land/x/graphql_deno@v15.0.0/mod.ts'
