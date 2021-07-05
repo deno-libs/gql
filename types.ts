@@ -1,4 +1,4 @@
-import { ServerRequest } from 'https://deno.land/std@0.99.0/http/server.ts'
+import { ServerRequest } from 'https://deno.land/std@0.100.0/http/server.ts'
 
 /**
  * Request type with only required properties

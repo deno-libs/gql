@@ -3,7 +3,7 @@ import { GraphQLHTTP } from './http.ts'
 import { runHttpQuery } from './common.ts'
 import { buildSchema } from 'https://deno.land/x/graphql_deno@v15.0.0/mod.ts'
 import { describe, it, expect, run } from 'https://deno.land/x/tincan@0.2.1/mod.ts'
-import { ServerRequest } from 'https://deno.land/std@0.99.0/http/server.ts'
+import { ServerRequest } from 'https://deno.land/std@0.100.0/http/server.ts'
 
 const schema = buildSchema(`
 type Query {
@@ -41,7 +41,7 @@ describe('GraphQLHTTP(opts)', () => {
 
     const app = GraphQLHTTP<ServerRequest, Context>({
       schema,
-      fieldResolver: (_, __, ctx: Context, info) => {
+      fieldResolver: (_: any, __: any, ctx: Context, info: any) => {
         if (info.fieldName === 'hello') {
           return `Request from ${ctx.request.url}`
         }
