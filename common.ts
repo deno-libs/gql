@@ -1,9 +1,9 @@
 import { graphql, GraphQLSchema, ExecutionResult } from 'https://deno.land/x/graphql_deno@v15.0.0/mod.ts'
 import { GraphQLArgs } from 'https://deno.land/x/graphql_deno@v15.0.0/lib/graphql.d.ts'
-
-export interface GraphQLOptions<Context = any, Request = any> extends Omit<GraphQLArgs, 'source'> {
+import type { Request } from './types.ts'
+export interface GraphQLOptions<Context = any, Req extends Request = Request> extends Omit<GraphQLArgs, 'source'> {
   schema: GraphQLSchema
-  context?: (val: Request) => Context | Promise<Context>
+  context?: (val: Req) => Context | Promise<Context>
   graphiql?: boolean
 }
 interface Params {
@@ -34,7 +34,7 @@ export type GraphQLParams = QueryParams | MutationParams
  * const { errors, data } = await runHttpQuery<ServerRequest, typeof context>({ query: `{ hello }` }, { schema } }, context)
  * ```
  */
-export async function runHttpQuery<Req extends any = any, Context = { request?: Req }>(
+export async function runHttpQuery<Req extends Request = Request, Context = { request?: Req }>(
   params: GraphQLParams,
   options: GraphQLOptions<Context, Req>,
   context?: Context | any

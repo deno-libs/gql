@@ -86,7 +86,7 @@ describe('runHttpQuery(params, options, context)', () => {
   it('should use properties passed to context', async () => {
     const obj = { a: 'Context prop' }
 
-    const result = await runHttpQuery<unknown, typeof obj>(
+    const result = await runHttpQuery<ServerRequest, typeof obj>(
       { query: '{ hello }' },
       {
         schema,

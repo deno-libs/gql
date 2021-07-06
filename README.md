@@ -1,11 +1,13 @@
-<p align="center" >
-<img src="logo.png" width="200" />
-</p>
+<div align="center">
+  <img src="logo.png" width="200" />
+  <br /><br />
+
+[![nest badge][nest-badge]](https://nest.land/package/gql) [![GitHub Workflow Status][gh-actions-img]][github-actions]
+[![Codecov][codecov-badge]][codecov] [![][docs-badge]][docs] [![][code-quality-img]][code-quality]
+
+</div>
 
 # gql
-
-[![nest badge](https://nest.land/badge.svg)](https://nest.land/package/gql) [![GitHub release (latest by date)][releases]][releases-page] [![GitHub Workflow Status][gh-actions-img]][github-actions]
-[![Codecov][codecov-badge]][codecov] [![][docs-badge]][docs]
 
 Universal [GraphQL](https://www.graphql.com/) HTTP middleware for Deno.
 
@@ -69,11 +71,12 @@ Or in [GraphQL Playground](https://localhost:3000/graphql):
 
 ![image](https://user-images.githubusercontent.com/35937217/112218821-4133c800-8c35-11eb-984a-5c21fa71c229.png)
 
-[releases]: https://img.shields.io/github/v/release/deno-libs/gql?style=flat-square
-[docs-badge]: https://img.shields.io/github/v/release/deno-libs/gql?color=yellow&label=Documentation&logo=deno&style=flat-square
+[docs-badge]: https://img.shields.io/github/v/release/deno-libs/gql?label=Docs&logo=deno&style=for-the-badge&color=DD3FAA
 [docs]: https://doc.deno.land/https/deno.land/x/gql/mod.ts
-[releases-page]: https://github.com/deno-libs/gql/releases
-[gh-actions-img]: https://img.shields.io/github/workflow/status/deno-libs/gql/CI?style=flat-square
-[codecov]: https://codecov.io/gh/deno-libs/gql
+[gh-actions-img]: https://img.shields.io/github/workflow/status/deno-libs/gql/CI?style=for-the-badge&logo=github&label=&color=DD3FAA
+[codecov]: https://coveralls.io/github/deno-libs/gql
 [github-actions]: https://github.com/deno-libs/gql/actions
-[codecov-badge]: https://img.shields.io/codecov/c/gh/deno-libs/gql?style=flat-square
+[codecov-badge]: https://img.shields.io/coveralls/github/deno-libs/gql?style=for-the-badge&color=DD3FAA
+[nest-badge]: https://img.shields.io/badge/publushed%20on-nest.land-DD3FAA?style=for-the-badge
+[code-quality-img]: https://img.shields.io/codefactor/grade/github/deno-libs/gql?style=for-the-badge&color=DD3FAA
+[code-quality]: https://www.codefactor.io/repository/github/deno-libs/gql
