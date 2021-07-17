@@ -19,16 +19,23 @@ export function GraphQLHTTP<Req extends Request = Request, Ctx extends { request
   options: GraphQLOptions<Ctx, Req>
 ) {
   return async (request: Req) => {
-    if (options.graphiql && request.method === 'GET' && request.headers.get('Accept')?.includes('text/html')) {
-      const { renderPlaygroundPage } = await import('./graphiql/render.ts')
-      const playground = renderPlaygroundPage({ endpoint: '/graphql' })
+    if (options.graphiql && request.method === 'GET') {
+      if (request.headers.get('Accept')?.includes('text/html')) {
+        const { renderPlaygroundPage } = await import('./graphiql/render.ts')
+        const playground = renderPlaygroundPage({ endpoint: '/graphql' })
 
-      await request.respond({
-        headers: new Headers({
-          'Content-Type': 'text/html'
-        }),
-        body: playground
-      })
+        await request.respond({
+          headers: new Headers({
+            'Content-Type': 'text/html'
+          }),
+          body: playground
+        })
+      } else {
+        request.respond({
+          status: 400,
+          body: '"Accept" header value must include text/html'
+        })
+      }
     } else {
       if (!['PUT', 'POST', 'PATCH'].includes(request.method)) {
         return await request.respond({

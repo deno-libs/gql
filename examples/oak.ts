@@ -11,7 +11,9 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    hello: () => `Hello World!`
+    hello: (_root: any, _args: any, ctx: { request: ServerRequest }) => {
+      return `Hello World! from ${ctx.request.url}`
+    }
   }
 }
 
@@ -19,12 +21,12 @@ const schema = makeExecutableSchema({ resolvers, typeDefs })
 
 const app = new Application()
 
-app.use((ctx) =>
-  GraphQLHTTP<ServerRequest>({
+app.use(async (ctx) => {
+  return await GraphQLHTTP<ServerRequest>({
     schema,
     graphiql: true
   })(ctx.request.originalRequest as ServerRequest)
-)
+})
 
 console.log(`☁  Started on http://localhost:3000`)
 
