@@ -17,7 +17,7 @@ const rootValue = {
 
 const app = GraphQLHTTP({ schema, rootValue })
 
-describe('GraphQLHTTP(opts)', () => {
+describe('GraphQLHTTP({ schema, rootValue })', () => {
   it('should send 405 on GET', async () => {
     const request = superdeno(app)
 
@@ -55,6 +55,23 @@ describe('GraphQLHTTP(opts)', () => {
       .post('/')
       .send('{ "query": "{ hello }" }')
       .expect(200, '{\n  "data": {\n    "hello": "Request from /"\n  }\n}')
+  })
+
+  describe('graphiql', () => {
+    it('should forbid GET requests when set to false', async () => {
+      const app = GraphQLHTTP({ graphiql: false, schema, rootValue })
+
+      const request = superdeno(app)
+
+      await request.get('/').expect(405)
+    })
+    it('should send 400 when Accept does not include text/html when set to true', async () => {
+      const app = GraphQLHTTP({ graphiql: true, schema, rootValue })
+
+      const request = superdeno(app)
+
+      await request.get('/').expect(400, '"Accept" header value must include text/html')
+    })
   })
 })
 
