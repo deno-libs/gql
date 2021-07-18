@@ -20,6 +20,8 @@ Universal [GraphQL](https://www.graphql.com/) HTTP middleware for Deno.
 
 [![DEV](https://badge.devprotocol.xyz/0xcEAddcD2D86A348163EB2385e8fA76776d0DBf6e)](https://stakes.social/0xcEAddcD2D86A348163EB2385e8fA76776d0DBf6e)
 
+**🎁 FIRST 10 PATRONS WILL RECEIVE BONUS 5 DEV 🎁**
+
 The best way to support the project is to do staking on **[stakes.social](https://stakes.social/0xcEAddcD2D86A348163EB2385e8fA76776d0DBf6e)**. Note that you also get rewarded by staking, as well as the project author.
 
 ## Get started
