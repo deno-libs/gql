@@ -1,10 +1,10 @@
 {
-  "$schema": "https://x.nest.land/eggs@0.3.6/src/schema.json",
+  "$schema": "https://x.nest.land/eggs@0.3.8/src/schema.json",
   "name": "gql",
   "entry": "./mod.ts",
   "description": "Universal GraphQL HTTP middleware for Deno",
   "homepage": "https://github.com/deno-libs/gql",
-  "version": "0.1.2",
+  "version": "0.1.7",
   "files": [
     "./*.ts",
     "./graphiql/*.ts",
