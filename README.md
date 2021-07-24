@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/deno-libs/gql/blob/master/logo.png" width="200px" />
+  <img src="https://raw.githubusercontent.com/deno-libs/gql/master/logo.png" width="200px" />
   <br /><br />
 
 [![nest badge][nest-badge]](https://nest.land/package/gql) [![GitHub Workflow Status][gh-actions-img]][github-actions]
