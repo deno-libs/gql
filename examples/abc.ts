@@ -1,6 +1,6 @@
 import { Application } from 'https://deno.land/x/abc@v1.3.3/mod.ts'
 import { GraphQLHTTP } from '../mod.ts'
-import { makeExecutableSchema } from 'https://deno.land/x/graphql_tools@0.0.1/mod.ts'
+import { makeExecutableSchema } from 'https://deno.land/x/graphql_tools@0.0.2/mod.ts'
 import { gql } from 'https://deno.land/x/graphql_tag@0.0.1/mod.ts'
 
 const app = new Application()
