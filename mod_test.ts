@@ -73,6 +73,29 @@ describe('GraphQLHTTP({ schema, rootValue })', () => {
       await request.get('/').expect(400, '"Accept" header value must include text/html')
     })
   })
+  describe('headers', () => {
+    it('should pass custom headers to response', async () => {
+      const app = GraphQLHTTP({ schema, rootValue, headers: { Key: 'Value' } })
+
+      const request = superdeno(app)
+
+      await request
+        .post('/')
+        .send('{ "query": "{ hello }" }')
+        .expect(200, '{\n  "data": {\n    "hello": "Hello World!"\n  }\n}')
+        .expect('Key', 'Value')
+    })
+    it('does not error with empty header object', async () => {
+      const app = GraphQLHTTP({ schema, rootValue, headers: {} })
+
+      const request = superdeno(app)
+
+      await request
+        .post('/')
+        .send('{ "query": "{ hello }" }')
+        .expect(200, '{\n  "data": {\n    "hello": "Hello World!"\n  }\n}')
+    })
+  })
 })
 
 describe('runHttpQuery(params, options, context)', () => {
