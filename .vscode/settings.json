@@ -1,0 +1,4 @@
+{
+  "deno.enable": true,
+  "deno.suggest.autoImports": true
+}

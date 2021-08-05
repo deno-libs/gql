@@ -1,12 +1,12 @@
 import { Request } from './types.ts'
-import { runHttpQuery, GraphQLOptions } from './common.ts'
+import { runHttpQuery, GQLOptions } from './common.ts'
 import { readAll } from 'https://deno.land/std@0.103.0/io/util.ts'
 
 const dec = new TextDecoder()
 
 /**
  * Create a new GraphQL HTTP middleware with schema, context etc
- * @param {GraphQLOptions} options
+ * @param {GQLOptions} options
  *
  * @example
  * ```ts
@@ -16,8 +16,9 @@ const dec = new TextDecoder()
  * ```
  */
 export function GraphQLHTTP<Req extends Request = Request, Ctx extends { request: Req } = { request: Req }>(
-  options: GraphQLOptions<Ctx, Req>
+  options: GQLOptions<Ctx, Req>
 ) {
+  let headers = options.headers || {}
   return async (request: Req) => {
     if (options.graphiql && request.method === 'GET') {
       if (request.headers.get('Accept')?.includes('text/html')) {
@@ -25,22 +26,25 @@ export function GraphQLHTTP<Req extends Request = Request, Ctx extends { request
         const playground = renderPlaygroundPage({ endpoint: '/graphql' })
 
         await request.respond({
+          body: playground,
           headers: new Headers({
-            'Content-Type': 'text/html'
-          }),
-          body: playground
+            'Content-Type': 'text/html',
+            ...headers
+          })
         })
       } else {
         request.respond({
           status: 400,
-          body: '"Accept" header value must include text/html'
+          body: '"Accept" header value must include text/html',
+          headers: new Headers(headers)
         })
       }
     } else {
       if (!['PUT', 'POST', 'PATCH'].includes(request.method)) {
         return await request.respond({
           status: 405,
-          body: 'Method Not Allowed'
+          body: 'Method Not Allowed',
+          headers: new Headers(headers)
         })
       } else {
         const body = await readAll(request.body)
@@ -52,12 +56,13 @@ export function GraphQLHTTP<Req extends Request = Request, Ctx extends { request
             body: JSON.stringify(result, null, 2),
             status: 200,
             headers: new Headers({
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              ...headers
             })
           })
         } catch (e) {
           console.error(e)
-          await request.respond({ status: 400, body: 'Malformed request body' })
+          await request.respond({ status: 400, body: 'Malformed request body', headers: new Headers(headers) })
         }
       }
     }

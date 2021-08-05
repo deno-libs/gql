@@ -1,10 +1,21 @@
 import { graphql, GraphQLSchema, ExecutionResult } from 'https://deno.land/x/graphql_deno@v15.0.0/mod.ts'
 import { GraphQLArgs } from 'https://deno.land/x/graphql_deno@v15.0.0/lib/graphql.d.ts'
 import type { Request } from './types.ts'
-export interface GraphQLOptions<Context = any, Req extends Request = Request> extends Omit<GraphQLArgs, 'source'> {
+
+/**
+ * gql options
+ */
+export interface GQLOptions<Context = any, Req extends Request = Request> extends Omit<GraphQLArgs, 'source'> {
   schema: GraphQLSchema
   context?: (val: Req) => Context | Promise<Context>
+  /**
+   * GraphQL playground
+   */
   graphiql?: boolean
+  /**
+   * Custom headers for responses
+   */
+  headers?: HeadersInit
 }
 interface Params {
   variables?: Record<string, unknown>
@@ -26,7 +37,7 @@ export type GraphQLParams = QueryParams | MutationParams
 /**
  * Execute a GraphQL query
  * @param {GraphQLParams} params
- * @param {GraphQLOptions} options
+ * @param {GQLOptions} options
  * @param context GraphQL context to use inside resolvers
  *
  * @example
@@ -36,7 +47,7 @@ export type GraphQLParams = QueryParams | MutationParams
  */
 export async function runHttpQuery<Req extends Request = Request, Context = { request?: Req }>(
   params: GraphQLParams,
-  options: GraphQLOptions<Context, Req>,
+  options: GQLOptions<Context, Req>,
   context?: Context | any
 ): Promise<ExecutionResult> {
   const contextValue = options.context && context?.request ? await options.context?.(context?.request) : context
