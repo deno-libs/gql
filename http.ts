@@ -1,6 +1,6 @@
 import { Request } from './types.ts'
 import { runHttpQuery, GQLOptions } from './common.ts'
-import { readAll } from 'https://deno.land/std@0.104.0/io/util.ts'
+import { readAll } from 'https://deno.land/std@0.106.0/io/util.ts'
 
 const dec = new TextDecoder()
 

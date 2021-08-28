@@ -3,7 +3,7 @@
   <br /><br />
 
 [![nest badge][nest-badge]](https://nest.land/package/gql) [![GitHub Workflow Status][gh-actions-img]][github-actions]
-[![Codecov][codecov-badge]][codecov] [![][docs-badge]][docs] [![][code-quality-img]][code-quality]
+[![Codecov][cov-badge]][cov] [![][docs-badge]][docs] [![][code-quality-img]][code-quality]
 
 </div>
 
@@ -87,9 +87,9 @@ Or in [GraphQL Playground](https://localhost:3000/graphql):
 [docs-badge]: https://img.shields.io/github/v/release/deno-libs/gql?label=Docs&logo=deno&style=for-the-badge&color=DD3FAA
 [docs]: https://doc.deno.land/https/deno.land/x/gql/mod.ts
 [gh-actions-img]: https://img.shields.io/github/workflow/status/deno-libs/gql/CI?style=for-the-badge&logo=github&label=&color=DD3FAA
-[codecov]: https://coveralls.io/github/deno-libs/gql
 [github-actions]: https://github.com/deno-libs/gql/actions
-[codecov-badge]: https://img.shields.io/coveralls/github/deno-libs/gql?style=for-the-badge&color=DD3FAA
+[cov]: https://coveralls.io/github/deno-libs/gql
+[cov-badge]: https://img.shields.io/coveralls/github/deno-libs/gql?style=for-the-badge&color=DD3FAA
 [nest-badge]: https://img.shields.io/badge/publushed%20on-nest.land-DD3FAA?style=for-the-badge
 [code-quality-img]: https://img.shields.io/codefactor/grade/github/deno-libs/gql?style=for-the-badge&color=DD3FAA
 [code-quality]: https://www.codefactor.io/repository/github/deno-libs/gql
