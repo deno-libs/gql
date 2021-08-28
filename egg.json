@@ -4,7 +4,7 @@
   "entry": "./mod.ts",
   "description": "Universal GraphQL HTTP middleware for Deno",
   "homepage": "https://github.com/deno-libs/gql",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "files": [
     "./*.ts",
     "./graphiql/*.ts",
@@ -13,7 +13,7 @@
   "ignore": [
     "examples",
     ".github",
-    "test"
+    "mod_test.ts"
   ],
   "checkFormat": false,
   "checkTests": true,
