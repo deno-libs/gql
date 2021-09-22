@@ -1,6 +1,7 @@
 import { graphql, GraphQLSchema, ExecutionResult } from 'https://deno.land/x/graphql_deno@v15.0.0/mod.ts'
 import type { GraphQLArgs } from 'https://deno.land/x/graphql_deno@v15.0.0/lib/graphql.d.ts'
 import type { GQLRequest } from './types.ts'
+import type { RenderPageOptions } from './graphiql/render.ts'
 
 /**
  * gql options
@@ -16,6 +17,10 @@ export interface GQLOptions<Context = any, Req extends GQLRequest = GQLRequest> 
    * Custom headers for responses
    */
   headers?: HeadersInit
+  /**
+   * Custom options for GraphQL Playground
+   */
+  playgroundOptions?: Omit<RenderPageOptions, 'endpoint'>
 }
 
 interface Params {

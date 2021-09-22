@@ -78,6 +78,65 @@ describe('GraphQLHTTP({ schema, rootValue })', () => {
 
       await request.get('/').set('Accept', 'text/html').expect(200).expect('Content-Type', 'text/html')
     })
+    describe('playgroundOptions', () => {
+      it('supports custom favicon', async () => {
+        const app = GraphQLHTTP({
+          graphiql: true,
+          schema,
+          rootValue,
+          playgroundOptions: {
+            faviconUrl: 'https://github.com/favicon.ico'
+          }
+        })
+
+        const request = superdeno(app)
+
+        await request
+          .get('/')
+          .set('Accept', 'text/html')
+          .expect(200)
+          .expect('Content-Type', 'text/html')
+          .expect(new RegExp('<link rel="shortcut icon" href="https://github.com/favicon.ico" />'))
+      })
+      it('supports custom title', async () => {
+        const app = GraphQLHTTP({
+          graphiql: true,
+          schema,
+          rootValue,
+          playgroundOptions: {
+            title: 'Hello gql!'
+          }
+        })
+
+        const request = superdeno(app)
+
+        await request
+          .get('/')
+          .set('Accept', 'text/html')
+          .expect(200)
+          .expect('Content-Type', 'text/html')
+          .expect(new RegExp('<title>Hello gql!</title>'))
+      })
+      it('adds React CDN links if env is React', async () => {
+        const app = GraphQLHTTP({
+          graphiql: true,
+          schema,
+          rootValue,
+          playgroundOptions: {
+            cdnUrl: 'https://unpkg.com'
+          }
+        })
+
+        const request = superdeno(app)
+
+        await request
+          .get('/')
+          .set('Accept', 'text/html')
+          .expect(200)
+          .expect('Content-Type', 'text/html')
+          .expect(new RegExp('https://unpkg.com'))
+      })
+    })
   })
   describe('headers', () => {
     it('should pass custom headers to response', async () => {

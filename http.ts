@@ -15,15 +15,16 @@ const dec = new TextDecoder()
  * for await (const req of s) graphql(req)
  * ```
  */
-export function GraphQLHTTP<Req extends GQLRequest = GQLRequest, Ctx extends { request: Req } = { request: Req }>(
-  options: GQLOptions<Ctx, Req>
-) {
-  let headers = options.headers || {}
+export function GraphQLHTTP<Req extends GQLRequest = GQLRequest, Ctx extends { request: Req } = { request: Req }>({
+  playgroundOptions = {},
+  headers = {},
+  ...options
+}: GQLOptions<Ctx, Req>) {
   return async (request: Req) => {
     if (options.graphiql && request.method === 'GET') {
       if (request.headers.get('Accept')?.includes('text/html')) {
         const { renderPlaygroundPage } = await import('./graphiql/render.ts')
-        const playground = renderPlaygroundPage({ endpoint: '/graphql' })
+        const playground = renderPlaygroundPage({ ...playgroundOptions, endpoint: '/graphql' })
 
         return new Response(playground, {
           headers: new Headers({
