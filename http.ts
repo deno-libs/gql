@@ -1,5 +1,4 @@
 import { runHttpQuery, GQLOptions } from './common.ts'
-import { readAll } from 'https://deno.land/std@0.107.0/io/util.ts'
 import type { GQLRequest } from './types.ts'
 
 const dec = new TextDecoder()
