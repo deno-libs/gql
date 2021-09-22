@@ -1,11 +1,11 @@
 import { graphql, GraphQLSchema, ExecutionResult } from 'https://deno.land/x/graphql_deno@v15.0.0/mod.ts'
-import { GraphQLArgs } from 'https://deno.land/x/graphql_deno@v15.0.0/lib/graphql.d.ts'
-import type { Request } from './types.ts'
+import type { GraphQLArgs } from 'https://deno.land/x/graphql_deno@v15.0.0/lib/graphql.d.ts'
+import type { GQLRequest } from './types.ts'
 
 /**
  * gql options
  */
-export interface GQLOptions<Context = any, Req extends Request = Request> extends Omit<GraphQLArgs, 'source'> {
+export interface GQLOptions<Context = any, Req extends GQLRequest = GQLRequest> extends Omit<GraphQLArgs, 'source'> {
   schema: GraphQLSchema
   context?: (val: Req) => Context | Promise<Context>
   /**
@@ -17,6 +17,7 @@ export interface GQLOptions<Context = any, Req extends Request = Request> extend
    */
   headers?: HeadersInit
 }
+
 interface Params {
   variables?: Record<string, unknown>
   operationName?: string
@@ -45,7 +46,7 @@ export type GraphQLParams = QueryParams | MutationParams
  * const { errors, data } = await runHttpQuery<ServerRequest, typeof context>({ query: `{ hello }` }, { schema } }, context)
  * ```
  */
-export async function runHttpQuery<Req extends Request = Request, Context = { request?: Req }>(
+export async function runHttpQuery<Req extends GQLRequest = GQLRequest, Context = { request?: Req }>(
   params: GraphQLParams,
   options: GQLOptions<Context, Req>,
   context?: Context | any

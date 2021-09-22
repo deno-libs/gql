@@ -1,4 +1,4 @@
-import { serve, ServerRequest } from 'https://deno.land/std@0.106.0/http/server.ts'
+import { Server } from 'https://deno.land/std@0.107.0/http/server.ts'
 import { GraphQLHTTP } from '../mod.ts'
 import { makeExecutableSchema } from 'https://deno.land/x/graphql_tools@0.0.2/mod.ts'
 import { gql } from 'https://deno.land/x/graphql_tag@0.0.1/mod.ts'
@@ -17,15 +17,18 @@ const resolvers = {
 
 const schema = makeExecutableSchema({ resolvers, typeDefs })
 
-const s = serve({ port: 3000 })
+const s = new Server({
+  handler: async (req) => {
+    const { pathname } = new URL(req.url)
 
-for await (const req of s) {
-  req.url.startsWith('/graphql')
-    ? await GraphQLHTTP<ServerRequest>({
-        schema,
-        graphiql: true
-      })(req)
-    : req.respond({
-        status: 404
-      })
-}
+    return pathname === '/graphql'
+      ? await GraphQLHTTP<Request>({
+          schema,
+          graphiql: true
+        })(req)
+      : new Response('Not Found', { status: 404 })
+  },
+  addr: ':3000'
+})
+
+s.listenAndServe()

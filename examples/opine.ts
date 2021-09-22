@@ -1,7 +1,10 @@
-import { opine, Request } from 'https://deno.land/x/opine@1.7.2/mod.ts'
+import { opine, Request as OpineRequest } from 'https://deno.land/x/opine@1.8.0/mod.ts'
 import { GraphQLHTTP } from '../mod.ts'
 import { makeExecutableSchema } from 'https://deno.land/x/graphql_tools@0.0.2/mod.ts'
 import { gql } from 'https://deno.land/x/graphql_tag@0.0.1/mod.ts'
+import { readAll } from 'https://deno.land/std@0.108.0/io/mod.ts'
+
+type Request = OpineRequest & { json: () => Promise<any> }
 
 const typeDefs = gql`
   type Query {
@@ -17,10 +20,27 @@ const resolvers = {
   }
 }
 
+const dec = new TextDecoder()
+
 const schema = makeExecutableSchema({ resolvers, typeDefs })
 
 const app = opine()
 
 app
-  .use('/graphql', GraphQLHTTP<Request>({ schema, context: (request) => ({ request }), graphiql: true }))
+  .use('/graphql', async (req, res) => {
+    const request = req as Request
+
+    request.json = async () => {
+      const rawBody = await readAll(req.raw)
+      return JSON.parse(dec.decode(rawBody))
+    }
+
+    const resp = await GraphQLHTTP<Request>({ schema, context: (request) => ({ request }), graphiql: true })(request)
+
+    for (const [k, v] of resp.headers.entries()) res.headers?.append(k, v)
+
+    res.status = resp.status
+
+    res.send(await resp.text())
+  })
   .listen(3000, () => console.log(`☁  Started on http://localhost:3000`))

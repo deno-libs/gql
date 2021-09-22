@@ -1,9 +1,8 @@
-import { superdeno } from 'https://deno.land/x/superdeno@4.4.0/mod.ts'
+import { superdeno } from 'https://deno.land/x/superdeno@4.5.0/mod.ts'
 import { GraphQLHTTP } from './http.ts'
 import { runHttpQuery } from './common.ts'
 import { buildSchema } from 'https://deno.land/x/graphql_deno@v15.0.0/mod.ts'
-import { describe, it, expect, run } from 'https://deno.land/x/tincan@0.2.1/mod.ts'
-import { ServerRequest } from 'https://deno.land/std@0.106.0/http/server.ts'
+import { describe, it, expect, run } from 'https://deno.land/x/tincan@0.2.2/mod.ts'
 
 const schema = buildSchema(`
 type Query {
@@ -37,13 +36,13 @@ describe('GraphQLHTTP({ schema, rootValue })', () => {
       .expect(200, '{\n  "data": {\n    "hello": "Hello World!"\n  }\n}')
   })
   it('should pass req obj to server context', async () => {
-    type Context = { request: ServerRequest }
+    type Context = { request: Request }
 
-    const app = GraphQLHTTP<ServerRequest, Context>({
+    const app = GraphQLHTTP<Request, Context>({
       schema,
-      fieldResolver: (_: any, __: any, ctx: Context, info: any) => {
+      fieldResolver: (_: any, __: any, { request: { url } }: Context, info: any) => {
         if (info.fieldName === 'hello') {
-          return `Request from ${ctx.request.url}`
+          return `Request from ${url.slice(url.lastIndexOf('/'))}`
         }
       },
       context: (request) => ({ request })
@@ -126,7 +125,7 @@ describe('runHttpQuery(params, options, context)', () => {
   it('should use properties passed to context', async () => {
     const obj = { a: 'Context prop' }
 
-    const result = await runHttpQuery<ServerRequest, typeof obj>(
+    const result = await runHttpQuery<Request, typeof obj>(
       { query: '{ hello }' },
       {
         schema,

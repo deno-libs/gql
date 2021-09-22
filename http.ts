@@ -1,6 +1,6 @@
-import { Request } from './types.ts'
 import { runHttpQuery, GQLOptions } from './common.ts'
-import { readAll } from 'https://deno.land/std@0.106.0/io/util.ts'
+import { readAll } from 'https://deno.land/std@0.107.0/io/util.ts'
+import type { GQLRequest } from './types.ts'
 
 const dec = new TextDecoder()
 
@@ -15,7 +15,7 @@ const dec = new TextDecoder()
  * for await (const req of s) graphql(req)
  * ```
  */
-export function GraphQLHTTP<Req extends Request = Request, Ctx extends { request: Req } = { request: Req }>(
+export function GraphQLHTTP<Req extends GQLRequest = GQLRequest, Ctx extends { request: Req } = { request: Req }>(
   options: GQLOptions<Ctx, Req>
 ) {
   let headers = options.headers || {}
@@ -25,35 +25,27 @@ export function GraphQLHTTP<Req extends Request = Request, Ctx extends { request
         const { renderPlaygroundPage } = await import('./graphiql/render.ts')
         const playground = renderPlaygroundPage({ endpoint: '/graphql' })
 
-        await request.respond({
-          body: playground,
+        return new Response(playground, {
           headers: new Headers({
             'Content-Type': 'text/html',
             ...headers
           })
         })
       } else {
-        request.respond({
+        return new Response('"Accept" header value must include text/html', {
           status: 400,
-          body: '"Accept" header value must include text/html',
+
           headers: new Headers(headers)
         })
       }
     } else {
       if (!['PUT', 'POST', 'PATCH'].includes(request.method)) {
-        return await request.respond({
-          status: 405,
-          body: 'Method Not Allowed',
-          headers: new Headers(headers)
-        })
+        return new Response('Method Not Allowed', { status: 405, headers: new Headers(headers) })
       } else {
-        const body = await readAll(request.body)
-
         try {
-          const result = await runHttpQuery<Req, Ctx>(JSON.parse(dec.decode(body)), options, { request })
+          const result = await runHttpQuery<Req, Ctx>(await request.json(), options, { request })
 
-          await request.respond({
-            body: JSON.stringify(result, null, 2),
+          return new Response(JSON.stringify(result, null, 2), {
             status: 200,
             headers: new Headers({
               'Content-Type': 'application/json',
@@ -62,7 +54,10 @@ export function GraphQLHTTP<Req extends Request = Request, Ctx extends { request
           })
         } catch (e) {
           console.error(e)
-          await request.respond({ status: 400, body: 'Malformed request body', headers: new Headers(headers) })
+          return new Response('Malformed request body', {
+            status: 400,
+            headers: new Headers(headers)
+          })
         }
       }
     }

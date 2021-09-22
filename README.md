@@ -36,10 +36,10 @@ The best way to support the project is to do staking on **[stakes.social](https:
 The simplest setup with `std/http`:
 
 ```ts
-import { serve } from 'https://deno.land/std@0.90.0/http/server.ts'
-import { GraphQLHTTP } from 'https://deno.land/x/gql/mod.ts'
-import { makeExecutableSchema } from 'https://deno.land/x/graphql_tools/mod.ts'
-import { gql } from 'https://deno.land/x/graphql_tag/mod.ts'
+import { Server } from 'https://deno.land/std@0.107.0/http/server.ts'
+import { GraphQLHTTP } from '../mod.ts'
+import { makeExecutableSchema } from 'https://deno.land/x/graphql_tools@0.0.2/mod.ts'
+import { gql } from 'https://deno.land/x/graphql_tag@0.0.1/mod.ts'
 
 const typeDefs = gql`
   type Query {
@@ -47,26 +47,23 @@ const typeDefs = gql`
   }
 `
 
-const resolvers = {
-  Query: {
-    hello: () => `Hello World!`
-  }
-}
+const resolvers = { Query: { hello: () => `Hello World!` } }
 
-const schema = makeExecutableSchema({ resolvers, typeDefs })
+const s = new Server({
+  handler: async (req) => {
+    const { pathname } = new URL(req.url)
 
-const s = serve({ port: 3000 })
+    return pathname === '/graphql'
+      ? await GraphQLHTTP<Request>({
+          schema: makeExecutableSchema({ resolvers, typeDefs }),
+          graphiql: true
+        })(req)
+      : new Response('Not Found', { status: 404 })
+  },
+  addr: ':3000'
+})
 
-for await (const req of s) {
-  req.url.startsWith('/graphql')
-    ? await GraphQLHTTP({
-        schema,
-        graphiql: true
-      })(req)
-    : req.respond({
-        status: 404
-      })
-}
+s.listenAndServe()
 ```
 
 Then run:
