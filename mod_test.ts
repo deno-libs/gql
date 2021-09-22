@@ -71,6 +71,13 @@ describe('GraphQLHTTP({ schema, rootValue })', () => {
 
       await request.get('/').expect(400, '"Accept" header value must include text/html')
     })
+    it('should render a playground if graphql is set to true', async () => {
+      const app = GraphQLHTTP({ graphiql: true, schema, rootValue })
+
+      const request = superdeno(app)
+
+      await request.get('/').set('Accept', 'text/html').expect(200).expect('Content-Type', 'text/html')
+    })
   })
   describe('headers', () => {
     it('should pass custom headers to response', async () => {
