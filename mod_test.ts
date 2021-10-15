@@ -1,8 +1,8 @@
-import { superdeno } from 'https://deno.land/x/superdeno@4.5.0/mod.ts'
+import { superdeno } from 'https://deno.land/x/superdeno@4.6.0/mod.ts'
 import { GraphQLHTTP } from './http.ts'
 import { runHttpQuery } from './common.ts'
 import { buildSchema } from 'https://deno.land/x/graphql_deno@v15.0.0/mod.ts'
-import { describe, it, expect, run } from 'https://deno.land/x/tincan@0.2.2/mod.ts'
+import { describe, it, expect, run } from 'https://deno.land/x/tincan@1.0.0/mod.ts'
 
 const schema = buildSchema(`
 type Query {
