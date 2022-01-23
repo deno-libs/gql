@@ -16,19 +16,6 @@ Universal [GraphQL](https://www.graphql.com/) HTTP middleware for Deno.
 - ✨ Works with `std/http`, [tinyhttp](https://github.com/deno-libs/tinyhttp-deno) and [Opine](https://github.com/asos-craigmorten/opine) out-of-the-box
 - ⚡ [GraphQL Playground](https://github.com/graphql/graphql-playground/tree/master/packages/graphql-playground-html) integration (via `graphiql: true`)
 
-## Donate
-
-[![DEV](https://badge.devprotocol.xyz/0xcEAddcD2D86A348163EB2385e8fA76776d0DBf6e)](https://stakes.social/0xcEAddcD2D86A348163EB2385e8fA76776d0DBf6e)
-
-**🎁 FIRST 10 PATRONS WILL RECEIVE BONUS 5 DEV 🎁**
-
-Reward status: waiting for gas fees to get at least to 20-25 gwei
-
-- `0xB3ebEe9d3E0bad437B75f4678D390c0d9608daF5` [pending]
-- `0xAb0658c66670d93BF47B4b8D5797edD0a60F43A0` [pending]
-
-The best way to support the project is to do staking on **[stakes.social](https://stakes.social/0xcEAddcD2D86A348163EB2385e8fA76776d0DBf6e)**. Note that you also get rewarded by staking, as well as the project author.
-
 ## Get started
 
 ### Vanilla
