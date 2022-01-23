@@ -1,8 +1,6 @@
 import { runHttpQuery, GQLOptions } from './common.ts'
 import type { GQLRequest } from './types.ts'
 
-const dec = new TextDecoder()
-
 /**
  * Create a new GraphQL HTTP middleware with schema, context etc
  * @param {GQLOptions} options
