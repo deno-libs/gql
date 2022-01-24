@@ -18,7 +18,7 @@ export function GraphQLHTTP<Req extends GQLRequest = GQLRequest, Ctx extends { r
   ...options
 }: GQLOptions<Ctx, Req>) {
   return async (request: Req) => {
-    const accept = request.headers.get('Accept') || '';
+    const accept = request.headers.get('Accept') || ''
     
     const typeList = [
       'text/html',
@@ -69,7 +69,7 @@ export function GraphQLHTTP<Req extends GQLRequest = GQLRequest, Ctx extends { r
       let contentType = 'text/plain'
       
       if(!typeList.length || typeList.includes('application/json') || typeList.includes('*/*'))
-        contentType = 'application/json';
+        contentType = 'application/json'
 
       return new Response(JSON.stringify(result, null, 2), {
         status: 200,
