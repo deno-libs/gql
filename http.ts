@@ -52,6 +52,8 @@ export function GraphQLHTTP<Req extends GQLRequest = GQLRequest, Ctx extends { r
             ...headers
           })
         })
+      } else if(typeList.length === 1 && typeList[0] === 'text/html') {
+        return new Response('Not Acceptable', { status: 406, headers: new Headers(headers) })
       } else if (queryParams.has('query')) {
         params = Promise.resolve({ query: queryParams.get('query') } as GraphQLParams)
       } else {
