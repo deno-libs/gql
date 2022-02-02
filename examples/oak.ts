@@ -27,6 +27,23 @@ const resolve = GraphQLHTTP({
 
 const app = new Application()
 
+if(Deno.args.includes('--cors')) {
+  app.use((ctx, next) => {
+    ctx.response.headers.append('access-control-allow-origin', '*')
+    ctx.response.headers.append('access-control-allow-headers', 'Origin, Host, Content-Type, Accept')
+
+    if(ctx.request.method !== 'OPTIONS')
+      return next();
+
+    ctx.response.status = 204;
+
+    if(ctx.request.url.pathname.startsWith('/graphql'))
+      ctx.response.headers.append('allow', 'OPTIONS, GET, POST')
+    else
+      ctx.response.headers.append('allow', '*')
+  })
+}
+
 app.use(async (ctx, next) => {
   if(!ctx.request.url.pathname.startsWith('/graphql'))
     return next()
