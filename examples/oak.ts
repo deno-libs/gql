@@ -34,7 +34,7 @@ app.use((ctx, next) => {
   }
 
   if(ctx.request.method !== 'OPTIONS')
-    return next();
+    return next()
 
   ctx.response.status = 204;
 
@@ -48,27 +48,24 @@ app.use(async (ctx, next) => {
   if(!ctx.request.url.pathname.startsWith('/graphql'))
     return next()
 
-  const req: NativeRequest & { json(): Promise<unknown> } = Object.assign(
-    ctx.request.originalRequest,
-    {
-      async json(): Promise<unknown> {
-        if(!ctx.request.hasBody)
-          return null
-    
-        return await ctx.request.body({ type: 'json' }).value
-      }
-    })
-
+  const req = ctx.request.originalRequest.request
   const res = await resolve(req)
 
   for(const [k, v] of res.headers.entries())
     ctx.response.headers.append(k, v)
 
   ctx.response.status = res.status
-
-  ctx.response.body = await res.text()
+  ctx.response.body = res.body
 })
 
-console.log(`☁  Started on http://localhost:3000`)
+app.addEventListener('listen', ({ secure, hostname, port }) => {
+  if(hostname === '0.0.0.0')
+    hostname = 'localhost';
+
+  const protocol = secure ? 'https' : 'http'
+  const url = `${protocol}://${hostname ?? 'localhost'}:${port}`
+
+  console.log('☁  Started on ' + url)
+})
 
 await app.listen({ port: 3000 })
