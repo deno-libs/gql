@@ -1,4 +1,4 @@
-import { Application, NativeRequest } from 'https://deno.land/x/oak@v10.1.0/mod.ts'
+import { Application } from 'https://deno.land/x/oak@v10.1.0/mod.ts'
 import { GraphQLHTTP } from '../mod.ts'
 import { makeExecutableSchema } from 'https://deno.land/x/graphql_tools@0.0.2/mod.ts'
 import { gql } from 'https://deno.land/x/graphql_tag@0.0.1/mod.ts'
@@ -11,7 +11,7 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    hello: (_root: undefined, _args: unknown, ctx: { request: NativeRequest }) => {
+    hello: (_root: undefined, _args: unknown, ctx: { request: Request }) => {
       return `Hello World! from ${ctx.request.url}`
     }
   }
