@@ -17,23 +17,74 @@ const rootValue = {
 const app = GraphQLHTTP({ schema, rootValue })
 
 describe('GraphQLHTTP({ schema, rootValue })', () => {
-  it('should send 405 on GET', async () => {
+  it('should send 400 on malformed request query', async () => {
     const request = superdeno(app)
 
-    await request.get('/').expect(405)
+    await request.get('/').expect(400, 'Malformed Request Query')
   })
   it('should send 400 on malformed request body', async () => {
     const request = superdeno(app)
 
-    await request.post('/').expect(400, 'Malformed request body')
+    await request.post('/').expect(400, 'Malformed Request Body')
   })
-  it('should send resolved GraphQL query', async () => {
+  it('should send resolved POST GraphQL query', async () => {
     const request = superdeno(app)
 
     await request
       .post('/')
       .send('{ "query": "{ hello }" }')
       .expect(200, '{\n  "data": {\n    "hello": "Hello World!"\n  }\n}')
+  })
+  it('should send resolved GET GraphQL query', async () => {
+    const request = superdeno(app)
+
+    await request
+      .get('/?query={hello}')
+      .expect(200, '{\n  "data": {\n    "hello": "Hello World!"\n  }\n}')
+  })
+  it('should send resolved GET GraphQL query when Accept is application/json', async () => {
+    const request = superdeno(app)
+
+    await request
+      .get('/?query={hello}')
+      .set('Accept', 'application/json')
+      .expect(200, '{\n  "data": {\n    "hello": "Hello World!"\n  }\n}')
+      .expect('Content-Type', 'application/json')
+  })
+  it('should send resolved GET GraphQL query when Accept is */*', async() => {
+    const request = superdeno(app)
+
+    await request
+      .get('/?query={hello}')
+      .set('Accept', '*/*')
+      .expect(200, '{\n  "data": {\n    "hello": "Hello World!"\n  }\n}')
+      .expect('Content-Type', 'application/json')
+    })
+      
+  it('should send resolved GET GraphQL query when Accept is text/plain', async() => {
+    const request = superdeno(app)
+
+    await request
+      .get('/?query={hello}')
+      .set('Accept', 'text/plain')
+      .expect(200, '{\n  "data": {\n    "hello": "Hello World!"\n  }\n}')
+      .expect('Content-Type', 'text/plain')
+  })
+  it('should send 406 not acceptable when Accept is other (text/html)', async () => {
+    const request = superdeno(app)
+
+    await request
+      .get('/?query={hello}')
+      .set('Accept', 'text/html')
+      .expect(406, 'Not Acceptable')
+  });
+  it('should send 406 not acceptable when Accept is other (text/css)', async () => {
+    const request = superdeno(app)
+
+    await request
+      .get('/?query={hello}')
+      .set('Accept', 'text/css')
+      .expect(406, 'Not Acceptable')
   })
   it('should pass req obj to server context', async () => {
     type Context = { request: Request }
@@ -57,21 +108,35 @@ describe('GraphQLHTTP({ schema, rootValue })', () => {
   })
 
   describe('graphiql', () => {
-    it('should forbid GET requests when set to false', async () => {
+    it('should allow query GET requests when set to false', async () => {
       const app = GraphQLHTTP({ graphiql: false, schema, rootValue })
 
       const request = superdeno(app)
 
-      await request.get('/').expect(405)
+      await request.get('/?query={hello}').expect(200, '{\n  "data": {\n    "hello": "Hello World!"\n  }\n}')
     })
-    it('should send 400 when Accept does not include text/html when set to true', async () => {
+    it('should allow query GET requests when set to true', async () => {
       const app = GraphQLHTTP({ graphiql: true, schema, rootValue })
 
       const request = superdeno(app)
 
-      await request.get('/').expect(400, '"Accept" header value must include text/html')
+      await request.get('/?query={hello}').expect(200, '{\n  "data": {\n    "hello": "Hello World!"\n  }\n}')
     })
-    it('should render a playground if graphql is set to true', async () => {
+    it('should send 406 when Accept is only text/html when set to false', async () => {
+      const app = GraphQLHTTP({ graphiql: false, schema, rootValue })
+
+      const request = superdeno(app)
+
+      await request.get('/').set('Accept', 'text/html').expect(406, 'Not Acceptable')
+    })
+    it('should render a playground when Accept does include text/html when set to true', async () => {
+      const app = GraphQLHTTP({ graphiql: true, schema, rootValue })
+
+      const request = superdeno(app)
+
+      await request.get('/?query={hello}').set('Accept', 'text/html;*/*').expect(200).expect('Content-Type', 'text/html')
+    })
+    it('should render a playground if graphiql is set to true', async () => {
       const app = GraphQLHTTP({ graphiql: true, schema, rootValue })
 
       const request = superdeno(app)
