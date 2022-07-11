@@ -28,10 +28,9 @@ const resolve = GraphQLHTTP({
 const app = new Application()
 
 app.use((ctx, next) => {
-  if(Deno.args.includes('--cors')) {
-    ctx.response.headers.append('access-control-allow-origin', '*')
-    ctx.response.headers.append('access-control-allow-headers', 'Origin, Host, Content-Type, Accept')
-  }
+  // Allow CORS:
+  // ctx.response.headers.append('access-control-allow-origin', '*')
+  // ctx.response.headers.append('access-control-allow-headers', 'Origin, Host, Content-Type, Accept')
 
   if(ctx.request.method !== 'OPTIONS')
     return next()
