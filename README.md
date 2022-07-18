@@ -30,6 +30,7 @@ import { gql } from 'https://deno.land/x/graphql_tag@0.0.1/mod.ts'
 
 type Context{
   example: string
+  request: Request
 }
 
 const typeDefs = gql`
@@ -47,8 +48,8 @@ const handler = async (req: Request) => {
       ? await GraphQLHTTP<Request, Context>({
         schema: makeExecutableSchema({ resolvers, typeDefs }),
         graphiql: true,
-        context: () => {
-          return { example: "Context Example" };
+        context: (req) => {
+          return { example: "Context Example", request: req };
         },
       })(req)
       : new Response("Not Found", { status: 404 });
