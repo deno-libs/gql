@@ -28,6 +28,10 @@ import { GraphQLHTTP } from '../mod.ts'
 import { makeExecutableSchema } from 'https://deno.land/x/graphql_tools@0.0.2/mod.ts'
 import { gql } from 'https://deno.land/x/graphql_tag@0.0.1/mod.ts'
 
+type Context{
+  example: string
+}
+
 const typeDefs = gql`
   type Query {
     hello: String
@@ -36,21 +40,27 @@ const typeDefs = gql`
 
 const resolvers = { Query: { hello: () => `Hello World!` } }
 
-const s = new Server({
-  handler: async (req) => {
-    const { pathname } = new URL(req.url)
+const handler = async (req: Request) => {
+    const { pathname } = new URL(req.url);
 
-    return pathname === '/graphql'
-      ? await GraphQLHTTP<Request>({
-          schema: makeExecutableSchema({ resolvers, typeDefs }),
-          graphiql: true
-        })(req)
-      : new Response('Not Found', { status: 404 })
-  },
-  addr: ':3000'
-})
+    return pathname === "/graphql"
+      ? await GraphQLHTTP<Request, Context>({
+        schema: makeExecutableSchema({ resolvers, typeDefs }),
+        graphiql: true,
+        context: () => {
+          return { example: "Context Example" };
+        },
+      })(req)
+      : new Response("Not Found", { status: 404 });
+  };
 
-s.listenAndServe()
+  const server = new Server({ handler });
+  const port = 3000;
+  const listener = Deno.listen({ port });
+
+  console.info("Listening on", listener.addr);
+
+  await server.serve(listener);
 ```
 
 Then run:
