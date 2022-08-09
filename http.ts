@@ -88,16 +88,13 @@ export function GraphQLHTTP<
 
     try {
       if (request.method === "OPTIONS") {
-        const res = new Response("{}", {
+        return new Response("{}", {
           status: 200,
           headers: new Headers({
             Allow: "GET, PUT, POST, PATCH, OPTIONS",
             "Content-Type": "No Content",
           }),
         });
-
-        console.log(res);
-        return res;
       }
 
       const result = await runHttpQuery<Req, Ctx>(await params, options, {
