@@ -2,10 +2,10 @@ import {
   Application,
   Router,
   Middleware,
-} from "https://deno.land/x/oak@v11.1.0/mod.ts";
-import { GraphQLHTTP } from "../mod.ts";
-import { makeExecutableSchema } from "https://deno.land/x/graphql_tools@0.0.2/mod.ts";
-import { gql } from "https://deno.land/x/graphql_tag@0.0.1/mod.ts";
+} from 'https://deno.land/x/oak@v11.1.0/mod.ts';
+import { GraphQLHTTP } from '../mod.ts';
+import { makeExecutableSchema } from 'https://deno.land/x/graphql_tools@0.0.2/mod.ts';
+import { gql } from 'https://deno.land/x/graphql_tag@0.0.1/mod.ts';
 
 const typeDefs = gql`
   type Query {
@@ -48,22 +48,22 @@ const returnGraphiql: Middleware = async (ctx) => {
 };
 
 const graphqlRouter = new Router()
-  .get("/graphql", returnGraphiql)
-  .options("/graphql", returnGraphiql)
-  .post("/graphql", returnGraphiql);
+  .get('/graphql', returnGraphiql)
+  .options('/graphql', returnGraphiql)
+  .post('/graphql', returnGraphiql);
 
 const app = new Application().use(
   graphqlRouter.routes(),
   graphqlRouter.allowedMethods()
 );
 
-app.addEventListener("listen", ({ secure, hostname, port }) => {
-  if (hostname === "0.0.0.0") hostname = "localhost";
+app.addEventListener('listen', ({ secure, hostname, port }) => {
+  if (hostname === '0.0.0.0') hostname = 'localhost';
 
-  const protocol = secure ? "https" : "http";
-  const url = `${protocol}://${hostname ?? "localhost"}:${port}`;
+  const protocol = secure ? 'https' : 'http';
+  const url = `${protocol}://${hostname ?? 'localhost'}:${port}`;
 
-  console.log("☁  Started on " + url);
+  console.log('☁  Started on ' + url);
 });
 
 await app.listen({ port: 3000 });
