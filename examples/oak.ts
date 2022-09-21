@@ -33,7 +33,12 @@ const returnGraphiql: Middleware = async (ctx) => {
   // Allow CORS:
   // ctx.response.headers.append('access-control-allow-origin', '*')
   // ctx.response.headers.append('access-control-allow-headers', 'Origin, Host, Content-Type, Accept')
-  const req = ctx.request.originalRequest.request;
+
+  const req = new Request(ctx.request.url.toString(), {
+    body: ctx.request.originalRequest.getBody().body,
+    headers: ctx.request.headers,
+    method: ctx.request.method,
+  });
   const res = await resolve(req);
 
   for (const [k, v] of res.headers.entries()) ctx.response.headers.append(k, v);
