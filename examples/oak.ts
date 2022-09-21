@@ -48,7 +48,8 @@ const returnGraphiql: Middleware = async (ctx) => {
 };
 
 const graphqlRouter = new Router()
-  .all('/graphql', returnGraphiql);
+  .all('/graphql', returnGraphiql)
+  .options('/graphql', returnGraphiql);
 
 const app = new Application().use(
   graphqlRouter.routes(),
