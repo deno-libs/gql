@@ -29,7 +29,7 @@ const resolve = GraphQLHTTP({
   context: (request) => ({ request }),
 });
 
-const returnGraphiql: Middleware = async (ctx) => {
+const handleGql: Middleware = async (ctx) => {
   // Allow CORS:
   // ctx.response.headers.append('access-control-allow-origin', '*')
   // ctx.response.headers.append('access-control-allow-headers', 'Origin, Host, Content-Type, Accept')
@@ -48,7 +48,7 @@ const returnGraphiql: Middleware = async (ctx) => {
 };
 
 const graphqlRouter = new Router()
-  .all('/graphql', returnGraphiql);
+  .all('/graphql', handleGql);
 
 const app = new Application().use(
   graphqlRouter.routes(),
