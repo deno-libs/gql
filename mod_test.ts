@@ -1,8 +1,8 @@
-import { superdeno } from 'https://deno.land/x/superdeno@4.7.2/mod.ts'
+import { superdeno } from 'https://deno.land/x/superdeno@4.8.0/mod.ts'
 import { GraphQLHTTP } from './http.ts'
 import { runHttpQuery } from './common.ts'
-import { buildSchema } from 'https://deno.land/x/graphql_deno@v15.0.0/mod.ts'
-import { describe, it, expect, run } from 'https://deno.land/x/tincan@1.0.0/mod.ts'
+import { buildSchema, GraphQLResolveInfo } from 'https://deno.land/x/graphql_deno@v15.0.0/mod.ts'
+import { describe, it, expect, run } from 'https://deno.land/x/tincan@1.0.1/mod.ts'
 
 const schema = buildSchema(`
 type Query {
@@ -260,7 +260,7 @@ describe('runHttpQuery(params, options, context)', () => {
       { query: '{ hello }' },
       {
         schema,
-        fieldResolver: (_, __, ctx: typeof obj, info) => {
+        fieldResolver: (_: unknown, __: unknown, ctx: typeof obj, info: GraphQLResolveInfo) => {
           if (info.fieldName === 'hello') {
             return ctx.a
           }
