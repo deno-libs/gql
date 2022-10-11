@@ -13,7 +13,7 @@ Universal [GraphQL](https://www.graphql.com/) HTTP middleware for Deno.
 
 ## Features
 
-- ✨ Works with `std/http` and [Opine](https://github.com/asos-craigmorten/opine) and [oak](https://github.com/oakserver/oak) out-of-the-box
+- ✨ Works with `std/http`, [Opine](https://github.com/asos-craigmorten/opine) and [oak](https://github.com/oakserver/oak)
 - ⚡ [GraphQL Playground](https://github.com/graphql/graphql-playground/tree/master/packages/graphql-playground-html) integration (via `graphiql: true`)
 
 ## Get started
