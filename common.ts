@@ -1,4 +1,4 @@
-import { graphql, ExecutionResult } from 'https://deno.land/x/graphql_deno@v15.0.0/mod.ts'
+import { graphql, ExecutionResult } from './deps.ts'
 import type { GQLOptions, GQLRequest, GraphQLParams } from './types.ts'
 
 /**

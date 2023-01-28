@@ -1,7 +1,7 @@
 import { superdeno } from 'https://deno.land/x/superdeno@4.8.0/mod.ts'
 import { GraphQLHTTP } from './http.ts'
 import { runHttpQuery } from './common.ts'
-import { buildSchema, GraphQLResolveInfo } from 'https://deno.land/x/graphql_deno@v15.0.0/mod.ts'
+import { buildSchema, GraphQLResolveInfo } from 'https://esm.sh/graphql@16.6.0'
 import { describe, it, expect, run } from 'https://deno.land/x/tincan@1.0.1/mod.ts'
 
 const schema = buildSchema(`
@@ -38,9 +38,7 @@ describe('GraphQLHTTP({ schema, rootValue })', () => {
   it('should send resolved GET GraphQL query', async () => {
     const request = superdeno(app)
 
-    await request
-      .get('/?query={hello}')
-      .expect(200, '{\n  "data": {\n    "hello": "Hello World!"\n  }\n}')
+    await request.get('/?query={hello}').expect(200, '{\n  "data": {\n    "hello": "Hello World!"\n  }\n}')
   })
   it('should send resolved GET GraphQL query when Accept is application/json', async () => {
     const request = superdeno(app)
@@ -51,7 +49,7 @@ describe('GraphQLHTTP({ schema, rootValue })', () => {
       .expect(200, '{\n  "data": {\n    "hello": "Hello World!"\n  }\n}')
       .expect('Content-Type', 'application/json')
   })
-  it('should send resolved GET GraphQL query when Accept is */*', async() => {
+  it('should send resolved GET GraphQL query when Accept is */*', async () => {
     const request = superdeno(app)
 
     await request
@@ -59,9 +57,9 @@ describe('GraphQLHTTP({ schema, rootValue })', () => {
       .set('Accept', '*/*')
       .expect(200, '{\n  "data": {\n    "hello": "Hello World!"\n  }\n}')
       .expect('Content-Type', 'application/json')
-    })
-      
-  it('should send resolved GET GraphQL query when Accept is text/plain', async() => {
+  })
+
+  it('should send resolved GET GraphQL query when Accept is text/plain', async () => {
     const request = superdeno(app)
 
     await request
@@ -73,18 +71,12 @@ describe('GraphQLHTTP({ schema, rootValue })', () => {
   it('should send 406 not acceptable when Accept is other (text/html)', async () => {
     const request = superdeno(app)
 
-    await request
-      .get('/?query={hello}')
-      .set('Accept', 'text/html')
-      .expect(406, 'Not Acceptable')
-  });
+    await request.get('/?query={hello}').set('Accept', 'text/html').expect(406, 'Not Acceptable')
+  })
   it('should send 406 not acceptable when Accept is other (text/css)', async () => {
     const request = superdeno(app)
 
-    await request
-      .get('/?query={hello}')
-      .set('Accept', 'text/css')
-      .expect(406, 'Not Acceptable')
+    await request.get('/?query={hello}').set('Accept', 'text/css').expect(406, 'Not Acceptable')
   })
   it('should pass req obj to server context', async () => {
     type Context = { request: Request }
@@ -134,7 +126,11 @@ describe('GraphQLHTTP({ schema, rootValue })', () => {
 
       const request = superdeno(app)
 
-      await request.get('/?query={hello}').set('Accept', 'text/html;*/*').expect(200).expect('Content-Type', 'text/html')
+      await request
+        .get('/?query={hello}')
+        .set('Accept', 'text/html;*/*')
+        .expect(200)
+        .expect('Content-Type', 'text/html')
     })
     it('should render a playground if graphiql is set to true', async () => {
       const app = GraphQLHTTP({ graphiql: true, schema, rootValue })

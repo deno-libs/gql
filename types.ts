@@ -1,5 +1,4 @@
-import type { GraphQLArgs } from 'https://deno.land/x/graphql_deno@v15.0.0/lib/graphql.d.ts'
-import type { GraphQLSchema } from 'https://deno.land/x/graphql_deno@v15.0.0/lib/type/schema.d.ts'
+import type { GraphQLSchema, GraphQLArgs } from './deps.ts'
 import type { RenderPageOptions } from './graphiql/render.ts'
 
 /**

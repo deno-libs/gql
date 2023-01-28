@@ -1,11 +1,7 @@
-import {
-  Application,
-  Router,
-  Middleware
-} from 'https://deno.land/x/oak@v11.1.0/mod.ts'
+import { Application, Router, Middleware } from 'https://deno.land/x/oak@v11.1.0/mod.ts'
 import { GraphQLHTTP } from '../mod.ts'
-import { makeExecutableSchema } from 'https://deno.land/x/graphql_tools@0.0.2/mod.ts'
-import { gql } from 'https://deno.land/x/graphql_tag@0.0.1/mod.ts'
+import { makeExecutableSchema } from 'https://esm.sh/@graphql-tools/schema@9.0.14'
+import { gql } from 'https://deno.land/x/graphql_tag@0.1.0/mod.ts'
 
 const typeDefs = gql`
   type Query {
@@ -39,8 +35,7 @@ const handleGraphQL: Middleware = async (ctx) => {
 
   const res = await resolve(req)
 
-  for (const [k, v] of res.headers.entries())
-    ctx.response.headers.append(k, v)
+  for (const [k, v] of res.headers.entries()) ctx.response.headers.append(k, v)
 
   ctx.response.status = res.status
   ctx.response.body = res.body
@@ -48,12 +43,11 @@ const handleGraphQL: Middleware = async (ctx) => {
 
 // Allow CORS:
 // const cors: Middleware = (ctx) => {
-  // ctx.response.headers.append('access-control-allow-origin', '*')
-  // ctx.response.headers.append('access-control-allow-headers', 'Origin, Host, Content-Type, Accept')
+// ctx.response.headers.append('access-control-allow-origin', '*')
+// ctx.response.headers.append('access-control-allow-headers', 'Origin, Host, Content-Type, Accept')
 // }
 
-const graphqlRouter = new Router()
-  .all('/graphql', handleGraphQL)
+const graphqlRouter = new Router().all('/graphql', handleGraphQL)
 
 const app = new Application().use(
   // cors,
