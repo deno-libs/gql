@@ -1,4 +1,7 @@
 {
   "deno.enable": true,
-  "deno.suggest.autoImports": true
+  "deno.lint": true,
+  "deno.unstable": false,
+  "editor.formatOnSave": true,
+  "[typescript]": { "editor.defaultFormatter": "denoland.vscode-deno" }
 }

@@ -1,4 +1,8 @@
-import { Application, Router, Middleware } from 'https://deno.land/x/oak@v11.1.0/mod.ts'
+import {
+  Application,
+  Middleware,
+  Router,
+} from 'https://deno.land/x/oak@v11.1.0/mod.ts'
 import { GraphQLHTTP } from '../mod.ts'
 import { makeExecutableSchema } from 'https://esm.sh/@graphql-tools/schema@9.0.14'
 import { gql } from 'https://deno.land/x/graphql_tag@0.1.0/mod.ts'
@@ -13,8 +17,8 @@ const resolvers = {
   Query: {
     hello: (_root: undefined, _args: unknown, ctx: { request: Request }) => {
       return `Hello World! from ${ctx.request.url}`
-    }
-  }
+    },
+  },
 }
 
 const schema = makeExecutableSchema({ resolvers, typeDefs })
@@ -22,7 +26,7 @@ const schema = makeExecutableSchema({ resolvers, typeDefs })
 const resolve = GraphQLHTTP({
   schema,
   graphiql: true,
-  context: (request) => ({ request })
+  context: (request) => ({ request }),
 })
 
 const handleGraphQL: Middleware = async (ctx) => {
@@ -30,7 +34,7 @@ const handleGraphQL: Middleware = async (ctx) => {
   const req = new Request(ctx.request.url.toString(), {
     body: ctx.request.originalRequest.getBody().body,
     headers: ctx.request.headers,
-    method: ctx.request.method
+    method: ctx.request.method,
   })
 
   const res = await resolve(req)
@@ -52,7 +56,7 @@ const graphqlRouter = new Router().all('/graphql', handleGraphQL)
 const app = new Application().use(
   // cors,
   graphqlRouter.routes(),
-  graphqlRouter.allowedMethods()
+  graphqlRouter.allowedMethods(),
 )
 
 app.addEventListener('listen', ({ secure, hostname, port }) => {

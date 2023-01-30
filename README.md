@@ -2,8 +2,10 @@
   <img src="https://raw.githubusercontent.com/deno-libs/gql/master/logo.png" width="200px" />
   <br /><br />
 
-[![nest badge][nest-badge]](https://nest.land/package/gql) [![GitHub Workflow Status][gh-actions-img]][github-actions]
-[![Codecov][cov-badge]][cov] [![][docs-badge]][docs] [![][code-quality-img]][code-quality]
+[![nest badge][nest-badge]](https://nest.land/package/gql)
+[![GitHub Workflow Status][gh-actions-img]][github-actions]
+[![Codecov][cov-badge]][cov] [![][docs-badge]][docs]
+[![][code-quality-img]][code-quality]
 
 </div>
 
@@ -13,8 +15,11 @@ Universal [GraphQL](https://www.graphql.com/) HTTP middleware for Deno.
 
 ## Features
 
-- ✨ Works with `std/http`, [Opine](https://github.com/asos-craigmorten/opine) and [oak](https://github.com/oakserver/oak)
-- ⚡ [GraphQL Playground](https://github.com/graphql/graphql-playground/tree/master/packages/graphql-playground-html) integration (via `graphiql: true`)
+- ✨ Works with `std/http`, [Opine](https://github.com/asos-craigmorten/opine)
+  and [oak](https://github.com/oakserver/oak)
+- ⚡
+  [GraphQL Playground](https://github.com/graphql/graphql-playground/tree/master/packages/graphql-playground-html)
+  integration (via `graphiql: true`)
 
 ## Get started
 
@@ -42,12 +47,12 @@ const s = new Server({
 
     return pathname === '/graphql'
       ? await GraphQLHTTP<Request>({
-          schema: makeExecutableSchema({ resolvers, typeDefs }),
-          graphiql: true
-        })(req)
+        schema: makeExecutableSchema({ resolvers, typeDefs }),
+        graphiql: true,
+      })(req)
       : new Response('Not Found', { status: 404 })
   },
-  addr: ':3000'
+  addr: ':3000',
 })
 
 s.listenAndServe()

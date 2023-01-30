@@ -88,53 +88,66 @@ const filter = (val: string) => {
     // @ts-ignore
     whiteList: [],
     stripIgnoreTag: true,
-    stripIgnoreTagBody: ['script']
+    stripIgnoreTagBody: ['script'],
   })
 }
 
 const getCdnMarkup = ({
   version,
   cdnUrl = '//cdn.jsdelivr.net/npm',
-  faviconUrl
+  faviconUrl,
 }: {
   faviconUrl?: string | null
   version?: string
   cdnUrl?: string
 }) => {
   const buildCDNUrl = (packageName: string, suffix: string) =>
-    filter(`${cdnUrl}/${packageName}${version ? `@${version}` : ''}/${suffix}` || '')
+    filter(
+      `${cdnUrl}/${packageName}${version ? `@${version}` : ''}/${suffix}` || '',
+    )
   return `
     <link 
       rel="stylesheet" 
-      href="${buildCDNUrl('graphql-playground-react', 'build/static/css/index.css')}"
+      href="${
+    buildCDNUrl('graphql-playground-react', 'build/static/css/index.css')
+  }"
     />
-    ${typeof faviconUrl === 'string' ? `<link rel="shortcut icon" href="${filter(faviconUrl || '')}" />` : ''}
     ${
-      faviconUrl === undefined
-        ? `<link rel="shortcut icon" href="${buildCDNUrl('graphql-playground-react', 'build/favicon.png')}" />`
-        : ''
-    }
+    typeof faviconUrl === 'string'
+      ? `<link rel="shortcut icon" href="${filter(faviconUrl || '')}" />`
+      : ''
+  }
+    ${
+    faviconUrl === undefined
+      ? `<link rel="shortcut icon" href="${
+        buildCDNUrl('graphql-playground-react', 'build/favicon.png')
+      }" />`
+      : ''
+  }
     <script 
-      src="${buildCDNUrl('graphql-playground-react', 'build/static/js/middleware.js')}"
+      src="${
+    buildCDNUrl('graphql-playground-react', 'build/static/js/middleware.js')
+  }"
     ></script>
 `
 }
 
 const renderConfig = (config: unknown) => {
   return filterXSS(`<div id="${CONFIG_ID}">${JSON.stringify(config)}</div>`, {
-    whiteList: { div: ['id'] }
+    whiteList: { div: ['id'] },
   })
 }
 
 export function renderPlaygroundPage(options: RenderPageOptions) {
-  const extendedOptions: Partial<{
-    canSaveConfig: boolean
-    configString: string
-  }> &
-    RenderPageOptions = {
-    ...options,
-    canSaveConfig: false
-  }
+  const extendedOptions:
+    & Partial<{
+      canSaveConfig: boolean
+      configString: string
+    }>
+    & RenderPageOptions = {
+      ...options,
+      canSaveConfig: false,
+    }
 
   if (options.config) {
     extendedOptions.configString = JSON.stringify(options.config, null, 2)
@@ -142,7 +155,7 @@ export function renderPlaygroundPage(options: RenderPageOptions) {
   if (!extendedOptions.endpoint && !extendedOptions.configString) {
     /* tslint:disable-next-line */
     console.warn(
-      `WARNING: You didn't provide an endpoint and don't have a .graphqlconfig. Make sure you have at least one of them.`
+      `WARNING: You didn't provide an endpoint and don't have a .graphqlconfig. Make sure you have at least one of them.`,
     )
   } else if (extendedOptions.endpoint) {
     extendedOptions.endpoint = filter(extendedOptions.endpoint || '')
@@ -156,7 +169,11 @@ export function renderPlaygroundPage(options: RenderPageOptions) {
     <meta name="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Source+Code+Pro:400,700" rel="stylesheet">
     <title>${extendedOptions.title || 'GraphQL Playground'}</title>
-    ${extendedOptions.env === 'react' || extendedOptions.env === 'electron' ? '' : getCdnMarkup(extendedOptions)}
+    ${
+    extendedOptions.env === 'react' || extendedOptions.env === 'electron'
+      ? ''
+      : getCdnMarkup(extendedOptions)
+  }
   </head>
   <body>
     <style type="text/css">

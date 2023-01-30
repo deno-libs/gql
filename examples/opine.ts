@@ -14,10 +14,15 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    hello: (_root: undefined, _args: unknown, ctx: { request: Request }, info: { fieldName: string }) => {
+    hello: (
+      _root: undefined,
+      _args: unknown,
+      ctx: { request: Request },
+      info: { fieldName: string },
+    ) => {
       return `Hello World from ${ctx.request.originalUrl}!. You have called ${info.fieldName}`
-    }
-  }
+    },
+  },
 }
 
 const dec = new TextDecoder()
@@ -35,7 +40,11 @@ app
       return JSON.parse(dec.decode(rawBody))
     }
 
-    const resp = await GraphQLHTTP<Request>({ schema, context: (request) => ({ request }), graphiql: true })(request)
+    const resp = await GraphQLHTTP<Request>({
+      schema,
+      context: (request) => ({ request }),
+      graphiql: true,
+    })(request)
 
     for (const [k, v] of resp.headers.entries()) res.headers?.append(k, v)
 

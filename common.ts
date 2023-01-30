@@ -1,4 +1,4 @@
-import { graphql, ExecutionResult } from './deps.ts'
+import { ExecutionResult, graphql } from './deps.ts'
 import type { GQLOptions, GQLRequest, GraphQLParams } from './types.ts'
 
 /**
@@ -12,12 +12,17 @@ import type { GQLOptions, GQLRequest, GraphQLParams } from './types.ts'
  * const { errors, data } = await runHttpQuery<ServerRequest, typeof context>({ query: `{ hello }` }, { schema } }, context)
  * ```
  */
-export async function runHttpQuery<Req extends GQLRequest = GQLRequest, Context = { request?: Req }>(
+export async function runHttpQuery<
+  Req extends GQLRequest = GQLRequest,
+  Context = { request?: Req },
+>(
   params: GraphQLParams,
   options: GQLOptions<Context, Req>,
-  context?: Context | any
+  context?: Context | any,
 ): Promise<ExecutionResult> {
-  const contextValue = options.context && context?.request ? await options.context?.(context?.request) : context
+  const contextValue = options.context && context?.request
+    ? await options.context?.(context?.request)
+    : context
   const source = params.query! || params.mutation!
 
   return await graphql({
@@ -25,6 +30,6 @@ export async function runHttpQuery<Req extends GQLRequest = GQLRequest, Context 
     ...options,
     contextValue,
     variableValues: params.variables,
-    operationName: params.operationName
+    operationName: params.operationName,
   })
 }

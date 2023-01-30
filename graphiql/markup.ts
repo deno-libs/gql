@@ -465,5 +465,5 @@ export const getLoadingMarkup = () => ({
   <span class="dGfHfc">GraphQL Playground</span>
 </div>
 </div>
-`
+`,
 })

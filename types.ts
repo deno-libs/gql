@@ -1,10 +1,11 @@
-import type { GraphQLSchema, GraphQLArgs } from './deps.ts'
+import type { GraphQLArgs, GraphQLSchema } from './deps.ts'
 import type { RenderPageOptions } from './graphiql/render.ts'
 
 /**
  * gql options
  */
-export interface GQLOptions<Context = any, Req extends GQLRequest = GQLRequest> extends Omit<GraphQLArgs, 'source'> {
+export interface GQLOptions<Context = any, Req extends GQLRequest = GQLRequest>
+  extends Omit<GraphQLArgs, 'source'> {
   schema: GraphQLSchema
   context?: (val: Req) => Context | Promise<Context>
   /**

@@ -11,8 +11,8 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    hello: () => `Hello World!`
-  }
+    hello: () => `Hello World!`,
+  },
 }
 
 const schema = makeExecutableSchema({ resolvers, typeDefs })
@@ -23,12 +23,12 @@ const s = new Server({
 
     return pathname === '/graphql'
       ? await GraphQLHTTP<Request>({
-          schema,
-          graphiql: true
-        })(req)
+        schema,
+        graphiql: true,
+      })(req)
       : new Response('Not Found', { status: 404 })
   },
-  port: 3000
+  port: 3000,
 })
 
 s.listenAndServe()
