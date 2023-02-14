@@ -1,8 +1,8 @@
 import { opine, OpineRequest } from 'https://deno.land/x/opine@2.3.3/mod.ts'
 import { GraphQLHTTP } from '../mod.ts'
-import { makeExecutableSchema } from 'https://esm.sh/@graphql-tools/schema@9.0.14'
+import { makeExecutableSchema } from 'https://esm.sh/@graphql-tools/schema@9.0.16'
 import { gql } from 'https://deno.land/x/graphql_tag@0.1.0/mod.ts'
-import { readAll } from 'https://deno.land/std@0.175.0/streams/read_all.ts'
+import { readAll } from 'https://deno.land/std@0.177.0/streams/read_all.ts'
 
 type Request = OpineRequest & { json: () => Promise<any> }
 
