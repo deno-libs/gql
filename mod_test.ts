@@ -1,7 +1,8 @@
 import { superdeno } from 'https://deno.land/x/superdeno@4.8.0/mod.ts'
 import { GraphQLHTTP } from './http.ts'
 import { runHttpQuery } from './common.ts'
-import { buildSchema, GraphQLResolveInfo } from 'https://esm.sh/graphql@16.6.0'
+import { buildSchema } from 'https://esm.sh/graphql@16.6.0/utilities'
+import type { GraphQLResolveInfo } from 'https://esm.sh/graphql@16.6.0/type'
 import {
   describe,
   expect,
