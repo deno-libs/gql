@@ -28,10 +28,10 @@ Universal [GraphQL](https://www.graphql.com/) HTTP middleware for Deno.
 The simplest setup with `std/http`:
 
 ```ts
-import { Server } from 'https://deno.land/std@0.148.0/http/server.ts'
-import { GraphQLHTTP } from '../mod.ts'
-import { makeExecutableSchema } from 'https://deno.land/x/graphql_tools@0.0.2/mod.ts'
-import { gql } from 'https://deno.land/x/graphql_tag@0.0.1/mod.ts'
+import { Server } from 'https://deno.land/std@0.179.0/http/server.ts'
+import { GraphQLHTTP } from 'https://deno.land/x/gql/mod.ts'
+import { makeExecutableSchema } from 'https://esm.sh/@graphql-tools/schema@9.0.17'
+import { gql } from 'https://deno.land/x/graphql_tag@0.1.1/mod.ts'
 
 const typeDefs = gql`
   type Query {
@@ -47,12 +47,12 @@ const s = new Server({
 
     return pathname === '/graphql'
       ? await GraphQLHTTP<Request>({
-        schema: makeExecutableSchema({ resolvers, typeDefs }),
-        graphiql: true,
-      })(req)
+          schema: makeExecutableSchema({ resolvers, typeDefs }),
+          graphiql: true
+        })(req)
       : new Response('Not Found', { status: 404 })
   },
-  addr: ':3000',
+  addr: ':3000'
 })
 
 s.listenAndServe()

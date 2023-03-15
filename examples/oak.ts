@@ -2,10 +2,10 @@ import {
   Application,
   Middleware,
   Router,
-} from 'https://deno.land/x/oak@v11.1.0/mod.ts'
+} from 'https://deno.land/x/oak@v12.1.0/mod.ts'
 import { GraphQLHTTP } from '../mod.ts'
-import { makeExecutableSchema } from 'https://esm.sh/@graphql-tools/schema@9.0.16'
-import { gql } from 'https://deno.land/x/graphql_tag@0.1.0/mod.ts'
+import { makeExecutableSchema } from 'https://esm.sh/@graphql-tools/schema@9.0.17'
+import { gql } from 'https://deno.land/x/graphql_tag@0.1.1/mod.ts'
 
 const typeDefs = gql`
   type Query {
