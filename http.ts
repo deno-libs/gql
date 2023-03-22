@@ -124,7 +124,7 @@ export function GraphQLHTTP<
       })
     } catch (e) {
       console.log('[ERROR] deno', e)
-      console.error(e)
+      // console.error(e)
       return new Response(
         'Malformed Request ' + (request.method === 'GET' ? 'Query' : 'Body'),
         {
