@@ -2,4 +2,4 @@ export type { GraphQLArgs } from 'https://esm.sh/graphql@16.6.0/graphql?target=d
 export type { ExecutionResult } from 'https://esm.sh/graphql@16.6.0/execution/execute?target=denoNext'
 export type { GraphQLSchema } from 'https://esm.sh/graphql@16.6.0/type/schema?target=denoNext'
 
-export { graphql } from 'https://esm.sh/graphql@16.6.0/graphql?target=deno'
+export { graphql } from 'https://esm.sh/graphql@16.6.0/graphql?target=denoNext'
