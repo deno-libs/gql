@@ -54,7 +54,7 @@ export function GraphQLHTTP<
       const urlQuery = request.url.substring(request.url.indexOf('?'))
       console.log('[INFO]', urlQuery)
       const queryParams = new URLSearchParams(urlQuery)
-      console.log('[INFO]', queryParams)
+      console.log('[INFO] SEARCH', queryParams)
 
       if (
         options.graphiql && typeList[0] === 'text/html' &&
@@ -92,6 +92,8 @@ export function GraphQLHTTP<
     } else {
       params = request.json()
     }
+
+    console.log('[INFO]', 'finished if conditions')
 
     try {
       console.log('[INFO]', 'RUN QUERY')
