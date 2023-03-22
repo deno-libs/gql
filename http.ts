@@ -1,5 +1,6 @@
 import { runHttpQuery } from './common.ts'
 import type { GQLOptions, GQLRequest, GraphQLParams } from './types.ts'
+import { renderPlaygroundPage } from './graphiql/render.ts';
 
 /**
  * Create a new GraphQL HTTP middleware with schema, context etc
@@ -61,7 +62,6 @@ export function GraphQLHTTP<
         !queryParams.has('raw')
       ) {
         console.log('[INFO]', 'BEFORE IMPORT')
-        const { renderPlaygroundPage } = await import('./graphiql/render.ts')
         console.log('[INFO]', 'AFTER IMPORT')
         const playground = renderPlaygroundPage({
           ...playgroundOptions,
