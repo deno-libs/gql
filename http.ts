@@ -101,11 +101,12 @@ export function GraphQLHTTP<
 
     try {
       console.log('[INFO]', 'RUN QUERY')
+      console.log('PARAMS', await params)
       const result = await runHttpQuery<Req, Ctx>(await params, options, {
         request,
       })
 
-      console.log('[INFO]', result)
+      console.log('RESULT [INFO]', result)
       let contentType = 'text/plain'
 
       if (
