@@ -23,7 +23,6 @@ export function GraphQLHTTP<
 }: GQLOptions<Ctx, Req>) {
   return async (request: Req) => {
     const accept = request.headers.get('Accept') || ''
-    console.log('[INFO]', accept)
 
     const typeList = ['text/html', 'text/plain', 'application/json', '*/*']
       .map((contentType) => ({
@@ -34,7 +33,6 @@ export function GraphQLHTTP<
       .sort((a, b) => a.index - b.index)
       .map(({ contentType }) => contentType)
 
-    console.log('[INFO]', typeList.join(', '))
     if (accept && !typeList.length) {
       return new Response('Not Acceptable', {
         status: 406,
@@ -47,29 +45,21 @@ export function GraphQLHTTP<
       })
     }
 
-    console.log('[INFO] PARAMS TIME', 'params time');
     let params: Promise<GraphQLParams>
 
     if (request.method === 'GET') {
-      console.log('[INFO] URL', request.url)
       const urlQuery = request.url.substring(request.url.indexOf('?'))
-      console.log('[INFO] URL QUERY', urlQuery)
       const queryParams = new URLSearchParams(urlQuery)
-      console.log('[INFO] SEARCH', queryParams)
 
       if (
         options.graphiql && typeList[0] === 'text/html' &&
         !queryParams.has('raw')
       ) {
-        console.log('[INFO]', 'BEFORE IMPORT')
-        console.log('[INFO]', 'AFTER IMPORT')
         const playground = renderPlaygroundPage({
           ...playgroundOptions,
           endpoint: '/graphql',
         })
-        console.log('[INFO]', 'AFTER PLAYGROUND')
 
-        console.log('[INFO]', 'RETURN RESPONSE')
         return new Response(playground, {
           headers: new Headers({
             'Content-Type': 'text/html',
@@ -97,16 +87,11 @@ export function GraphQLHTTP<
       params = request.json()
     }
 
-    console.log('[INFO]', 'finished if conditions')
-
     try {
-      console.log('[INFO]', 'RUN QUERY')
-      console.log('PARAMS', await params)
       const result = await runHttpQuery<Req, Ctx>(await params, options, {
         request,
       })
 
-      console.log('RESULT [INFO]', result)
       let contentType = 'text/plain'
 
       if (
@@ -124,8 +109,6 @@ export function GraphQLHTTP<
         }),
       })
     } catch (e) {
-      console.log('[ERROR] deno', e)
-      // console.error(e)
       return new Response(
         'Malformed Request ' + (request.method === 'GET' ? 'Query' : 'Body'),
         {

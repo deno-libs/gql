@@ -24,7 +24,6 @@ export async function runHttpQuery<
     ? await options.context?.(context?.request)
     : context
   const source = params.query! || params.mutation!
-  console.log('[SOURCE]', source)
 
   return await graphql({
     source,
