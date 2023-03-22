@@ -22,6 +22,7 @@ export function GraphQLHTTP<
 }: GQLOptions<Ctx, Req>) {
   return async (request: Req) => {
     const accept = request.headers.get('Accept') || ''
+    console.log('[INFO]', accept)
 
     const typeList = ['text/html', 'text/plain', 'application/json', '*/*']
       .map((contentType) => ({
@@ -32,6 +33,7 @@ export function GraphQLHTTP<
       .sort((a, b) => a.index - b.index)
       .map(({ contentType }) => contentType)
 
+    console.log('[INFO]', typeList.join(', '))
     if (accept && !typeList.length) {
       return new Response('Not Acceptable', {
         status: 406,
@@ -44,11 +46,15 @@ export function GraphQLHTTP<
       })
     }
 
+    console.log('[INFO]', 'params time');
     let params: Promise<GraphQLParams>
 
     if (request.method === 'GET') {
+      console.log('[INFO]', request.url)
       const urlQuery = request.url.substring(request.url.indexOf('?'))
+      console.log('[INFO]', urlQuery)
       const queryParams = new URLSearchParams(urlQuery)
+      console.log('[INFO]', queryParams)
 
       if (
         options.graphiql && typeList[0] === 'text/html' &&
@@ -88,10 +94,12 @@ export function GraphQLHTTP<
     }
 
     try {
+      console.log('[INFO]', 'RUN QUERY')
       const result = await runHttpQuery<Req, Ctx>(await params, options, {
         request,
       })
 
+      console.log('[INFO]', result)
       let contentType = 'text/plain'
 
       if (
@@ -109,6 +117,7 @@ export function GraphQLHTTP<
         }),
       })
     } catch (e) {
+      console.log('[ERROR] deno', e)
       console.error(e)
       return new Response(
         'Malformed Request ' + (request.method === 'GET' ? 'Query' : 'Body'),
