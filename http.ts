@@ -46,13 +46,13 @@ export function GraphQLHTTP<
       })
     }
 
-    console.log('[INFO]', 'params time');
+    console.log('[INFO] PARAMS TIME', 'params time');
     let params: Promise<GraphQLParams>
 
     if (request.method === 'GET') {
-      console.log('[INFO]', request.url)
+      console.log('[INFO] URL', request.url)
       const urlQuery = request.url.substring(request.url.indexOf('?'))
-      console.log('[INFO]', urlQuery)
+      console.log('[INFO] URL QUERY', urlQuery)
       const queryParams = new URLSearchParams(urlQuery)
       console.log('[INFO] SEARCH', queryParams)
 
