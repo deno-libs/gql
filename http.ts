@@ -60,12 +60,16 @@ export function GraphQLHTTP<
         options.graphiql && typeList[0] === 'text/html' &&
         !queryParams.has('raw')
       ) {
+        console.log('[INFO]', 'BEFORE IMPORT')
         const { renderPlaygroundPage } = await import('./graphiql/render.ts')
+        console.log('[INFO]', 'AFTER IMPORT')
         const playground = renderPlaygroundPage({
           ...playgroundOptions,
           endpoint: '/graphql',
         })
+        console.log('[INFO]', 'AFTER PLAYGROUND')
 
+        console.log('[INFO]', 'RETURN RESPONSE')
         return new Response(playground, {
           headers: new Headers({
             'Content-Type': 'text/html',
