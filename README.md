@@ -52,7 +52,7 @@ const s = new Server({
         })(req)
       : new Response('Not Found', { status: 404 })
   },
-  addr: ':3000'
+  port: 3000
 })
 
 s.listenAndServe()
