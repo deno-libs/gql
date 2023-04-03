@@ -81,7 +81,7 @@ Or in [GraphQL Playground](https://localhost:3000/graphql):
 
 [docs-badge]: https://img.shields.io/github/v/release/deno-libs/gql?label=Docs&logo=deno&style=for-the-badge&color=DD3FAA
 [docs]: https://doc.deno.land/https/deno.land/x/gql/mod.ts
-[gh-actions-img]: https://img.shields.io/github/actions/workflow/status/deno-libs/gql/main.yml?branch=master&style=for-the-badge&logo=github&label=&color=DD3FAA
+[gh-actions-img]: https://img.shields.io/github/actions/workflow/status/deno-libs/gql/main.yml?branch=master&style=for-the-badge&logo=github&label=&color=DD3FAA&
 [github-actions]: https://github.com/deno-libs/gql/actions
 [cov]: https://coveralls.io/github/deno-libs/gql
 [cov-badge]: https://img.shields.io/coveralls/github/deno-libs/gql?style=for-the-badge&color=DD3FAA
