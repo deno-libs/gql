@@ -1,0 +1,10 @@
+{
+    "$schema": "https://raw.githubusercontent.com/skymethod/denoflare/v0.5.11/common/config.schema.json",
+    "scripts": {
+        "graphql": {
+            "path": "mod.ts",
+            "localPort": 3030
+        }
+    }
+    
+}
