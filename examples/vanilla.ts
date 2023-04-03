@@ -1,6 +1,6 @@
-import { Server } from 'https://deno.land/std@0.179.0/http/server.ts'
+import { serve } from 'https://deno.land/std@0.182.0/http/server.ts'
 import { GraphQLHTTP } from '../mod.ts'
-import { makeExecutableSchema } from 'https://esm.sh/@graphql-tools/schema@9.0.17'
+import { makeExecutableSchema } from 'https://esm.sh/@graphql-tools/schema@9.0.17?target=deno'
 import { gql } from 'https://deno.land/x/graphql_tag@0.1.1/mod.ts'
 
 const typeDefs = gql`
@@ -17,20 +17,17 @@ const resolvers = {
 
 const schema = makeExecutableSchema({ resolvers, typeDefs })
 
-const s = new Server({
-  handler: async (req) => {
-    const { pathname } = new URL(req.url)
+await serve(async (req) => {
+  const { pathname } = new URL(req.url)
 
-    return pathname === '/graphql'
-      ? await GraphQLHTTP<Request>({
-        schema,
-        graphiql: true,
-      })(req)
-      : new Response('Not Found', { status: 404 })
-  },
+  return pathname === '/graphql'
+    ? await GraphQLHTTP<Request>({
+      schema,
+      graphiql: true,
+    })(req)
+    : new Response('Not Found', { status: 404 })
+}, {
   port: 3000,
+  onListen: ({ hostname, port }) =>
+    console.log(`☁  Started on http://${hostname}:${port}`),
 })
-
-s.listenAndServe()
-
-console.log(`☁  Started on http://localhost:3000`)
