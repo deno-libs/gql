@@ -23,8 +23,6 @@ Universal [GraphQL](https://www.graphql.com/) HTTP middleware for Deno.
 
 ## Get started
 
-### Vanilla
-
 The simplest setup with `std/http`:
 
 ```ts
