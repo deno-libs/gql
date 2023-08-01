@@ -1,12 +1,12 @@
-import { superdeno } from 'https://deno.land/x/superdeno@4.8.0/mod.ts?target=deno#='
+import { superdeno } from 'https://deno.land/x/superdeno@4.8.0/mod.ts?target=deno'
 import {
   describe,
   expect,
   it,
   run,
 } from 'https://deno.land/x/tincan@1.0.1/mod.ts'
-import type { GraphQLResolveInfo } from 'https://esm.sh/graphql@16.6.0/type?#='
-import { buildSchema } from 'https://esm.sh/graphql@16.6.0/utilities?#='
+import type { GraphQLResolveInfo } from 'npm:graphql@16.6.0/type'
+import { buildSchema } from 'npm:graphql@16.6.0'
 import { runHttpQuery } from './common.ts'
 import { GraphQLHTTP } from './http.ts'
 

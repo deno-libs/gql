@@ -1,4 +1,4 @@
-import * as xss from 'https://esm.sh/xss?no-check'
+import * as xss from 'https://esm.sh/xss'
 import { getLoadingMarkup } from './markup.ts'
 
 const { filterXSS } = xss.default as any
