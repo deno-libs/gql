@@ -19,7 +19,7 @@ Universal [GraphQL](https://www.graphql.com/) HTTP middleware for Deno.
 
 ## Features
 
-- ✨ Works with `std/http`, [Opine](https://github.com/asos-craigmorten/opine)
+- ✨ Works with `Deno.serve`, [Opine](https://github.com/asos-craigmorten/opine)
   and [oak](https://github.com/oakserver/oak)
 - ⚡
   [GraphQL Playground](https://github.com/graphql/graphql-playground/tree/master/packages/graphql-playground-html)
@@ -27,7 +27,7 @@ Universal [GraphQL](https://www.graphql.com/) HTTP middleware for Deno.
 
 ## Get started
 
-The simplest setup with `std/http`:
+The simplest setup with `Deno.serve`:
 
 ```ts
 import { GraphQLHTTP } from 'https://deno.land/x/gql@1.2.2/mod.ts'
