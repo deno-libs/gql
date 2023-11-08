@@ -2,11 +2,56 @@
   "version": "3",
   "packages": {
     "specifiers": {
+      "npm:@graphql-tools/schema@10.0.0": "npm:@graphql-tools/schema@10.0.0_graphql@16.6.0",
       "npm:graphql-http@1.22.0": "npm:graphql-http@1.22.0_graphql@16.6.0",
       "npm:graphql@16.6": "npm:graphql@16.6.0",
       "npm:graphql@16.8.1": "npm:graphql@16.8.1"
     },
     "npm": {
+      "@graphql-tools/merge@9.0.0_graphql@16.6.0": {
+        "integrity": "sha512-J7/xqjkGTTwOJmaJQJ2C+VDBDOWJL3lKrHJN4yMaRLAJH3PosB7GiPRaSDZdErs0+F77sH2MKs2haMMkywzx7Q==",
+        "dependencies": {
+          "@graphql-tools/utils": "@graphql-tools/utils@10.0.8_graphql@16.6.0",
+          "graphql": "graphql@16.6.0",
+          "tslib": "tslib@2.6.2"
+        }
+      },
+      "@graphql-tools/schema@10.0.0_graphql@16.6.0": {
+        "integrity": "sha512-kf3qOXMFcMs2f/S8Y3A8fm/2w+GaHAkfr3Gnhh2LOug/JgpY/ywgFVxO3jOeSpSEdoYcDKLcXVjMigNbY4AdQg==",
+        "dependencies": {
+          "@graphql-tools/merge": "@graphql-tools/merge@9.0.0_graphql@16.6.0",
+          "@graphql-tools/utils": "@graphql-tools/utils@10.0.8_graphql@16.6.0",
+          "graphql": "graphql@16.6.0",
+          "tslib": "tslib@2.6.2",
+          "value-or-promise": "value-or-promise@1.0.12"
+        }
+      },
+      "@graphql-tools/utils@10.0.8_graphql@16.6.0": {
+        "integrity": "sha512-yjyA8ycSa1WRlJqyX/aLqXeE5DvF/H02+zXMUFnCzIDrj0UvLMUrxhmVFnMK0Q2n3bh4uuTeY3621m5za9ovXw==",
+        "dependencies": {
+          "@graphql-typed-document-node/core": "@graphql-typed-document-node/core@3.2.0_graphql@16.6.0",
+          "cross-inspect": "cross-inspect@1.0.0",
+          "dset": "dset@3.1.3",
+          "graphql": "graphql@16.6.0",
+          "tslib": "tslib@2.6.2"
+        }
+      },
+      "@graphql-typed-document-node/core@3.2.0_graphql@16.6.0": {
+        "integrity": "sha512-mB9oAsNCm9aM3/SOv4YtBMqZbYj10R7dkq8byBqxGY/ncFwhf2oQzMV+LCRlWoDSEBJ3COiR1yeDvMtsoOsuFQ==",
+        "dependencies": {
+          "graphql": "graphql@16.6.0"
+        }
+      },
+      "cross-inspect@1.0.0": {
+        "integrity": "sha512-4PFfn4b5ZN6FMNGSZlyb7wUhuN8wvj8t/VQHZdM4JsDcruGJ8L2kf9zao98QIrBPFCpdk27qst/AGTl7pL3ypQ==",
+        "dependencies": {
+          "tslib": "tslib@2.6.2"
+        }
+      },
+      "dset@3.1.3": {
+        "integrity": "sha512-20TuZZHCEZ2O71q9/+8BwKwZ0QtD9D8ObhrihJPr+vLLYlSuAU3/zL4cSlgbfeoGHTjCSJBa7NGcrF9/Bx/WJQ==",
+        "dependencies": {}
+      },
       "graphql-http@1.22.0_graphql@16.6.0": {
         "integrity": "sha512-9RBUlGJWBFqz9LwfpmAbjJL/8j/HCNkZwPBU5+Bfmwez+1Ay43DocMNQYpIWsWqH0Ftv6PTNAh2aRnnMCBJgLw==",
         "dependencies": {
@@ -19,6 +64,14 @@
       },
       "graphql@16.8.1": {
         "integrity": "sha512-59LZHPdGZVh695Ud9lRzPBVTtlX9ZCV150Er2W43ro37wVof0ctenSaskPPjN7lVTIN8mSZt8PHUNKZuNQUuxw==",
+        "dependencies": {}
+      },
+      "tslib@2.6.2": {
+        "integrity": "sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==",
+        "dependencies": {}
+      },
+      "value-or-promise@1.0.12": {
+        "integrity": "sha512-Z6Uz+TYwEqE7ZN50gwn+1LCVo9ZVrpxRPOhOLnncYkY1ZzOYtrX8Fwf/rFktZ8R5mJms6EZf5TqNOMeZmnPq9Q==",
         "dependencies": {}
       }
     }
@@ -47,6 +100,8 @@
     "https://deno.land/x/expect@v0.4.0/matchers.ts": "55acf74a3c4a308d079798930f05ab11da2080ec7acd53517193ca90d1296bf7",
     "https://deno.land/x/expect@v0.4.0/mock.ts": "562d4b1d735d15b0b8e935f342679096b64fe452f86e96714fe8616c0c884914",
     "https://deno.land/x/expect@v0.4.0/mod.ts": "0304d2430e1e96ba669a8495e24ba606dcc3d152e1f81aaa8da898cea24e36c2",
+    "https://deno.land/x/graphql_tag@0.1.2/deps.ts": "5696461c8bb42db7c83486db452e125f7cfdc62a2c628bb470a4447d934b90b3",
+    "https://deno.land/x/graphql_tag@0.1.2/mod.ts": "57fd56de5f7cbc66e23ce896cc8e99521d286e89969d83e09d960642b0a9d652",
     "https://deno.land/x/opine@2.1.2/src/methods.ts": "0481daecc6068d24e9e5391818baddf555ab803d39a465dcd259161f8bd8ee49",
     "https://deno.land/x/opine@2.1.2/src/utils/mergeDescriptors.ts": "1fe498d4a1a8dcfd3570f9ca5e0647590d86d029b3c340bfcfdb57002851e41b",
     "https://deno.land/x/superdeno@4.8.0/deps.ts": "e2cf96d1129c38e1daf87a405878fa51d5771a0ba9b1c250baa75db0a8cb99df",
@@ -69,7 +124,9 @@
     "https://deno.land/x/tincan@1.0.2/src/nodes/utilities.ts": "5e6a6f0e2650df4e10f7dfde889ef88a588fe9c3b3618aca2acd47e80b3ee3d8",
     "https://deno.land/x/tincan@1.0.2/src/reporter.ts": "84e09297da18c840076be951c02c749678b75dc89b2575f34db1378cbb509939",
     "https://deno.land/x/tincan@1.0.2/src/runner.ts": "54e1a0934a52469437bd4655df51f0c9148327d94a2b0d6c175f6f992a697b86",
+    "https://esm.sh/graphql@16.6.0/language/parser#=": "d2136c12ba1c7ac94b6f298bd2f81433cd0df9b874b9e08e512bda768a5ea8ae",
     "https://esm.sh/v133/cssfilter@0.0.10/denonext/cssfilter.mjs": "b2dec5f4b51c7574509f04305aa54e33f9de336d66eade79f05552312f18f40b",
+    "https://esm.sh/v133/graphql@16.6.0/denonext/language/parser.js": "82063e5ee234089909652e04ccd9f0e1c0670c04ac6db896099a638ae759b182",
     "https://esm.sh/v133/xss@1.0.14/denonext/xss.mjs": "d3093ce2e72808314a367efb26a944fe0a83761efd7fec308c1636e6b9934cfb",
     "https://esm.sh/xss@1.0.14": "e12dc644496b685f0af21df487889bd39825a269bc0b10c79c80f02e6accf582",
     "https://jspm.dev/npm:call-bind@1.0.5!cjs": "09f8399c727fc1e9d58fdafc0a729b45bf37b7ee0c11d9d0b39abe37ac42ccf5",
