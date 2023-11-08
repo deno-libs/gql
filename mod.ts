@@ -1,44 +1,47 @@
-import { createHandler, RawRequest } from './deps.ts'
+import {
+  createHandler,
+  OperationContext,
+  RawRequest,
+  Status,
+  STATUS_TEXT,
+} from './deps.ts'
 import { GQLOptions } from './types.ts'
 
-function toRequest<Req extends Request = Request>(
-  req: Request,
-): RawRequest<Req, unknown> {
+function toRequest<Req = Request, Ctx = unknown>(
+  req: Pick<Request, 'method' | 'url' | 'headers' | 'text'>,
+  context: Ctx,
+): RawRequest<Req, Ctx> {
   return {
     method: req.method,
     url: req.url,
     headers: req.headers,
     body: () => req.text(),
     raw: req as Req,
-    context: {},
+    context,
   }
 }
 
-export function GraphQLHTTP<Req extends Request = Request>(
-  { schema, context, headers = {}, graphiql, playgroundOptions, ...options }:
-    GQLOptions<Req>,
+export function GraphQLHTTP<
+  Req = Request,
+  Context extends OperationContext = { request: Req },
+  ReqCtx extends { request: Req } = { request: Req },
+>(
+  {
+    headers = {},
+    graphiql,
+    playgroundOptions = {},
+    ...options
+  }: GQLOptions<Req, ReqCtx, Context>,
+  reqCtx?: (req: Req) => ReqCtx,
 ) {
-  const handler = createHandler({
-    schema,
-    context,
-    ...options,
-  })
+  const handler = createHandler(options)
 
   return async function handleRequest(req: Request): Promise<Response> {
     try {
       const accept = req.headers.get('Accept') || ''
 
-      const typeList = ['text/html', 'text/plain', 'application/json', '*/*']
-        .map((contentType) => ({
-          contentType,
-          index: accept.indexOf(contentType),
-        }))
-        .filter(({ index }) => index >= 0)
-        .sort((a, b) => a.index - b.index)
-        .map(({ contentType }) => contentType)
-
       if (
-        req.method === 'GET' && graphiql && typeList[0] === 'text/html'
+        req.method === 'GET' && graphiql && accept.split(';')[0] === 'text/html'
       ) {
         const urlQuery = req.url.substring(req.url.indexOf('?'))
         const queryParams = new URLSearchParams(urlQuery)
@@ -58,21 +61,24 @@ export function GraphQLHTTP<Req extends Request = Request>(
           })
         }
       }
-      const [body, init] = await handler(toRequest(req))
+      const [body, init] = await handler(
+        toRequest<Req, ReqCtx>(
+          req,
+          reqCtx ? reqCtx(req as Req) : { request: req } as ReqCtx,
+        ),
+      )
 
-      return new Response(body, {
+      return new Response(body || STATUS_TEXT[init.status as Status], {
         ...init,
         headers: new Headers({ ...init.headers, ...headers }),
       })
     } catch (e) {
-      console.error(e)
-      return new Response(
-        'Malformed Request ' + (req.method === 'GET' ? 'Query' : 'Body'),
-        {
-          status: 400,
-          headers: new Headers(headers),
-        },
+      console.error(
+        'Internal error occurred during request handling. ' +
+          'Please check your implementation.',
+        e,
       )
+      return new Response(null, { status: 500 })
     }
   }
 }

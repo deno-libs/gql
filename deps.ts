@@ -7,7 +7,12 @@ export {
 export {
   createHandler,
   type HandlerOptions,
+  type OperationContext,
   parseRequestParams as rawParseRequestParams,
   type Request as RawRequest,
   type RequestParams,
 } from 'npm:graphql-http@1.22.0'
+export {
+  Status,
+  STATUS_TEXT,
+} from 'https://deno.land/std@0.205.0/http/status.ts'

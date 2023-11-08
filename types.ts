@@ -1,11 +1,14 @@
-import type { HandlerOptions } from './deps.ts'
+import type { HandlerOptions, OperationContext } from './deps.ts'
 import type { RenderPageOptions } from './graphiql/render.ts'
 
 /**
  * gql options
  */
-export interface GQLOptions<Req extends Request = Request>
-  extends HandlerOptions<Req> {
+export interface GQLOptions<
+  Req = Request,
+  ReqCtx = unknown,
+  Context extends OperationContext = OperationContext,
+> extends HandlerOptions<Req, ReqCtx, Context> {
   /**
    * GraphQL playground
    */
