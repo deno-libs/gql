@@ -3,7 +3,7 @@ export {
   graphql,
   type GraphQLArgs,
   type GraphQLSchema,
-} from 'npm:graphql@16.6'
+} from 'npm:graphql@16.8.1'
 export {
   createHandler,
   type HandlerOptions,
