@@ -2,7 +2,7 @@ import { opine, OpineRequest } from 'https://deno.land/x/opine@2.3.4/mod.ts'
 import { GraphQLHTTP } from '../mod.ts'
 import { makeExecutableSchema } from 'npm:@graphql-tools/schema@10.0.0'
 import { gql } from 'https://deno.land/x/graphql_tag@0.1.2/mod.ts'
-import { readAll } from 'https://deno.land/std@0.196.0/streams/read_all.ts'
+import { readAll } from 'https://deno.land/std@0.205.0/streams/read_all.ts'
 import type { GraphQLParams } from '../types.ts'
 
 type Request = OpineRequest & { json: () => Promise<GraphQLParams> }

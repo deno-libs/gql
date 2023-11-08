@@ -1,7 +1,5 @@
-import * as xss from 'https://esm.sh/xss'
+import { filterXSS } from 'https://esm.sh/xss@1.0.14'
 import { getLoadingMarkup } from './markup.ts'
-
-const { filterXSS } = xss.default as any
 
 export interface MiddlewareOptions {
   endpoint?: string

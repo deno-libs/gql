@@ -2,7 +2,7 @@ import {
   Application,
   Middleware,
   Router,
-} from 'https://deno.land/x/oak@v12.6.0/mod.ts'
+} from 'https://deno.land/x/oak@v12.6.1/mod.ts'
 import { GraphQLHTTP } from '../mod.ts'
 import { makeExecutableSchema } from 'npm:@graphql-tools/schema@10.0.0'
 import { gql } from 'https://deno.land/x/graphql_tag@0.1.2/mod.ts'

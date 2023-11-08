@@ -4,9 +4,9 @@ import {
   expect,
   it,
   run,
-} from 'https://deno.land/x/tincan@1.0.1/mod.ts'
-import type { GraphQLResolveInfo } from 'npm:graphql@16.6.0/type'
-import { buildSchema } from 'npm:graphql@16.6.0'
+} from 'https://deno.land/x/tincan@1.0.2/mod.ts'
+import type { GraphQLResolveInfo } from 'npm:graphql@16.6/type'
+import { buildSchema } from 'npm:graphql@16.6'
 import { runHttpQuery } from './common.ts'
 import { GraphQLHTTP } from './http.ts'
 
