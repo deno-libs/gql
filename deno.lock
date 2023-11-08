@@ -3,6 +3,7 @@
   "packages": {
     "specifiers": {
       "npm:@graphql-tools/schema@10.0.0": "npm:@graphql-tools/schema@10.0.0_graphql@16.6.0",
+      "npm:graphql-http": "npm:graphql-http@1.22.0_graphql@16.6.0",
       "npm:graphql-http@1.22.0": "npm:graphql-http@1.22.0_graphql@16.6.0",
       "npm:graphql@16.6": "npm:graphql@16.6.0"
     },

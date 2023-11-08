@@ -11,16 +11,12 @@
 
 # gql
 
-> I'm building [Stauro](https://flash-dev.vercel.app) - a service to deploy web apps on the new decentralized stack.
->
-> If you'd like to try or collab, [dm](https://t.me/v_1rtl) or [email](mailto:yo@v1rtl.site)
-
-Universal [GraphQL](https://www.graphql.com/) HTTP middleware for Deno.
+Universal [GraphQL](https://www.graphql.com/) HTTP middleware for Deno. Based on
+[graphql-http](https://github.com/graphql/graphql-http).
 
 ## Features
 
-- ✨ Works with `Deno.serve`, [Opine](https://github.com/asos-craigmorten/opine)
-  and [oak](https://github.com/oakserver/oak)
+- ✨ Works with `Deno.serve` and [oak](https://github.com/oakserver/oak)
 - ⚡
   [GraphQL Playground](https://github.com/graphql/graphql-playground/tree/master/packages/graphql-playground-html)
   integration (via `graphiql: true`)
@@ -67,7 +63,7 @@ Deno.serve({
 Then run:
 
 ```sh
-$ curl -X POST localhost:3000/graphql -d '{ "query": "{ hello }" }'
+$ curl -X POST localhost:3000/graphql -d '{ "query": "{ hello }" }' -H "Content-Type: application/json"
 {
   "data": {
     "hello": "Hello World!"
