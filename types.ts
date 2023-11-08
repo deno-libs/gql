@@ -39,7 +39,3 @@ interface MutationParams extends Params {
 }
 
 export type GraphQLParams = QueryParams | MutationParams
-
-export type GQLRequest = Request & {
-  json: () => Promise<GraphQLParams>
-}
