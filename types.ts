@@ -1,13 +1,11 @@
-import type { GraphQLArgs, GraphQLSchema } from './deps.ts'
+import type { HandlerOptions } from './deps.ts'
 import type { RenderPageOptions } from './graphiql/render.ts'
 
 /**
  * gql options
  */
-export interface GQLOptions<Context = any, Req extends GQLRequest = GQLRequest>
-  extends Omit<GraphQLArgs, 'source'> {
-  schema: GraphQLSchema
-  context?: (val: Req) => Context | Promise<Context>
+export interface GQLOptions<Req extends Request = Request>
+  extends HandlerOptions<Req> {
   /**
    * GraphQL playground
    */
@@ -39,9 +37,6 @@ interface MutationParams extends Params {
 
 export type GraphQLParams = QueryParams | MutationParams
 
-export type GQLRequest = {
-  url: string
-  method: string
-  headers: Headers
+export type GQLRequest = Request & {
   json: () => Promise<GraphQLParams>
 }

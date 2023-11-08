@@ -7,8 +7,7 @@ import {
 } from 'https://deno.land/x/tincan@1.0.2/mod.ts'
 import type { GraphQLResolveInfo } from 'npm:graphql@16.6/type'
 import { buildSchema } from 'npm:graphql@16.6'
-import { runHttpQuery } from './common.ts'
-import { GraphQLHTTP } from './http.ts'
+import { GraphQLHTTP } from './mod.ts'
 
 const schema = buildSchema(`
 type Query {
@@ -257,58 +256,6 @@ describe('GraphQLHTTP({ schema, rootValue })', () => {
         .send('{ "query": "{ hello }" }')
         .expect(200, '{\n  "data": {\n    "hello": "Hello World!"\n  }\n}')
     })
-  })
-})
-
-describe('runHttpQuery(params, options, context)', () => {
-  it('should resolve GraphQL query', async () => {
-    const result = await runHttpQuery(
-      {
-        query: '{ hello }',
-      },
-      { schema, rootValue },
-    )
-
-    expect(result.data).toEqual({ hello: 'Hello World!' })
-
-    expect(result.errors).toEqual(undefined)
-  })
-  it('should send errors on incorrect query', async () => {
-    const result = await runHttpQuery(
-      {
-        query: '{ world }',
-      },
-      { schema },
-    )
-
-    expect(result.data).toEqual(undefined)
-
-    expect(result.errors?.[0].message).toBe(
-      'Cannot query field "world" on type "Query".',
-    )
-  })
-  it('should use properties passed to context', async () => {
-    const obj = { a: 'Context prop' }
-
-    const result = await runHttpQuery<Request, typeof obj>(
-      { query: '{ hello }' },
-      {
-        schema,
-        fieldResolver: (
-          _: unknown,
-          __: unknown,
-          ctx: typeof obj,
-          info: GraphQLResolveInfo,
-        ) => {
-          if (info.fieldName === 'hello') {
-            return ctx.a
-          }
-        },
-      },
-      obj,
-    )
-
-    expect(result.data).toEqual({ hello: 'Context prop' })
   })
 })
 
