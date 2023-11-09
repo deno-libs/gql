@@ -1,11 +1,11 @@
 import { superdeno } from 'https://deno.land/x/superdeno@4.8.0/mod.ts?target=deno'
-import { describe, it, run } from 'https://deno.land/x/tincan@1.0.2/mod.ts'
+import { describe, it } from 'https://deno.land/std@0.205.0/testing/bdd.ts'
 import {
   buildSchema,
   GraphQLObjectType,
   GraphQLSchema,
   GraphQLString,
-} from 'npm:graphql@16.6'
+} from 'npm:graphql@16.8.1'
 import { GraphQLHTTP } from './mod.ts'
 
 const schema = buildSchema(`
@@ -264,5 +264,3 @@ describe('GraphQLHTTP({ schema, rootValue })', () => {
     })
   })
 })
-
-run()

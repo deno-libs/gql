@@ -5,6 +5,7 @@ import {
   Status,
   STATUS_TEXT,
 } from './deps.ts'
+import { accepts } from 'https://deno.land/std@0.205.0/http/negotiation.ts'
 import { GQLOptions } from './types.ts'
 
 function toRequest<Req = Request, Ctx = unknown>(
@@ -38,10 +39,8 @@ export function GraphQLHTTP<
 
   return async function handleRequest(req: Request): Promise<Response> {
     try {
-      const accept = req.headers.get('Accept') || ''
-
       if (
-        req.method === 'GET' && graphiql && accept.split(';')[0] === 'text/html'
+        req.method === 'GET' && graphiql && accepts(req)[0] === 'text/html'
       ) {
         const urlQuery = req.url.substring(req.url.indexOf('?'))
         const queryParams = new URLSearchParams(urlQuery)

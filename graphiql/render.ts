@@ -5,8 +5,7 @@ export interface MiddlewareOptions {
   endpoint?: string
   subscriptionEndpoint?: string
   workspaceName?: string
-  env?: any
-  config?: any
+  config?: unknown
   settings?: ISettings
   schema?: IntrospectionResult
   tabs?: Tab[]
@@ -63,7 +62,6 @@ export interface IntrospectionResult {
 export interface RenderPageOptions extends MiddlewareOptions {
   version?: string
   cdnUrl?: string
-  env?: any
   title?: string
   faviconUrl?: string | null
 }
@@ -83,8 +81,6 @@ const CONFIG_ID = 'playground-config'
 
 const filter = (val: string) => {
   return filterXSS(val, {
-    // @ts-ignore
-    whiteList: [],
     stripIgnoreTag: true,
     stripIgnoreTagBody: ['script'],
   })
@@ -151,7 +147,6 @@ export function renderPlaygroundPage(options: RenderPageOptions) {
     extendedOptions.configString = JSON.stringify(options.config, null, 2)
   }
   if (!extendedOptions.endpoint && !extendedOptions.configString) {
-    /* tslint:disable-next-line */
     console.warn(
       `WARNING: You didn't provide an endpoint and don't have a .graphqlconfig. Make sure you have at least one of them.`,
     )
@@ -167,11 +162,7 @@ export function renderPlaygroundPage(options: RenderPageOptions) {
     <meta name="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Source+Code+Pro:400,700" rel="stylesheet">
     <title>${extendedOptions.title || 'GraphQL Playground'}</title>
-    ${
-    extendedOptions.env === 'react' || extendedOptions.env === 'electron'
-      ? ''
-      : getCdnMarkup(extendedOptions)
-  }
+    ${getCdnMarkup(extendedOptions)}
   </head>
   <body>
     <style type="text/css">
