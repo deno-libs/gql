@@ -31,4 +31,13 @@ describe('renderPlaygroundPage', () => {
 
     expect(html).toContain(`/grafql`)
   })
+  it('supports custom favicon', () => {
+    const html = renderPlaygroundPage({
+      faviconUrl: 'https://tinyhttp.v1rtl.site/favicon.png',
+    })
+
+    expect(html).toContain(
+      `<link rel="shortcut icon" href="https://tinyhttp.v1rtl.site/favicon.png" />`,
+    )
+  })
 })
