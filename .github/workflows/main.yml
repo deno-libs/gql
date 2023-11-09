@@ -17,7 +17,7 @@ jobs:
         with:
           deno-version: v1.x
       - name: Run tests
-        run: deno test --allow-net --coverage=coverage
+        run: deno task test
       - name: Create coverage report
         run: deno coverage ./coverage --lcov > coverage.lcov
       - name: Coveralls

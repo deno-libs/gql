@@ -9,7 +9,7 @@
     }
   },
   "tasks": {
-    "test": "deno test --allow-net mod_test.ts",
+    "test": "deno test --allow-net mod_test.ts --coverage=coverage",
     "test:audit": "deno test --allow-net audit_test.ts"
   }
 }
