@@ -1,19 +1,17 @@
 import { superdeno } from 'https://deno.land/x/superdeno@4.8.0/mod.ts?target=deno'
+import { describe, it } from 'https://deno.land/std@0.205.0/testing/bdd.ts'
 import {
-  describe,
-  expect,
-  it,
-  run,
-} from 'https://deno.land/x/tincan@1.0.1/mod.ts'
-import type { GraphQLResolveInfo } from 'npm:graphql@16.6.0/type'
-import { buildSchema } from 'npm:graphql@16.6.0'
-import { runHttpQuery } from './common.ts'
-import { GraphQLHTTP } from './http.ts'
+  buildSchema,
+  GraphQLObjectType,
+  GraphQLSchema,
+  GraphQLString,
+} from 'npm:graphql@16.8.1'
+import { GraphQLHTTP } from './mod.ts'
 
 const schema = buildSchema(`
-type Query {
-  hello: String
-}
+  type Query {
+    hello: String
+  }
 `)
 
 const rootValue = {
@@ -26,27 +24,31 @@ describe('GraphQLHTTP({ schema, rootValue })', () => {
   it('should send 400 on malformed request query', async () => {
     const request = superdeno(app)
 
-    await request.get('/').expect(400, 'Malformed Request Query')
+    await request.get('/').expect(400, {
+      'errors': [{ 'message': 'Missing query' }],
+    })
   })
-  it('should send 400 on malformed request body', async () => {
+  it('should send unsupported media type on empty request body', async () => {
     const request = superdeno(app)
 
-    await request.post('/').expect(400, 'Malformed Request Body')
+    await request.post('/').expect(415)
   })
   it('should send resolved POST GraphQL query', async () => {
     const request = superdeno(app)
 
     await request
       .post('/')
-      .send('{ "query": "{ hello }" }')
-      .expect(200, '{\n  "data": {\n    "hello": "Hello World!"\n  }\n}')
+      .send({
+        'query': '\n{\n  hello\n}',
+      })
+      .expect(200, { data: { hello: 'Hello World!' } })
   })
   it('should send resolved GET GraphQL query', async () => {
     const request = superdeno(app)
 
     await request.get('/?query={hello}').expect(
       200,
-      '{\n  "data": {\n    "hello": "Hello World!"\n  }\n}',
+      { data: { hello: 'Hello World!' } },
     )
   })
   it('should send resolved GET GraphQL query when Accept is application/json', async () => {
@@ -55,8 +57,8 @@ describe('GraphQLHTTP({ schema, rootValue })', () => {
     await request
       .get('/?query={hello}')
       .set('Accept', 'application/json')
-      .expect(200, '{\n  "data": {\n    "hello": "Hello World!"\n  }\n}')
-      .expect('Content-Type', 'application/json')
+      .expect(200, { data: { hello: 'Hello World!' } })
+      .expect('Content-Type', 'application/json; charset=utf-8')
   })
   it('should send resolved GET GraphQL query when Accept is */*', async () => {
     const request = superdeno(app)
@@ -64,18 +66,8 @@ describe('GraphQLHTTP({ schema, rootValue })', () => {
     await request
       .get('/?query={hello}')
       .set('Accept', '*/*')
-      .expect(200, '{\n  "data": {\n    "hello": "Hello World!"\n  }\n}')
-      .expect('Content-Type', 'application/json')
-  })
-
-  it('should send resolved GET GraphQL query when Accept is text/plain', async () => {
-    const request = superdeno(app)
-
-    await request
-      .get('/?query={hello}')
-      .set('Accept', 'text/plain')
-      .expect(200, '{\n  "data": {\n    "hello": "Hello World!"\n  }\n}')
-      .expect('Content-Type', 'text/plain')
+      .expect(200, { data: { hello: 'Hello World!' } })
+      .expect('Content-Type', 'application/json; charset=utf-8')
   })
   it('should send 406 not acceptable when Accept is other (text/html)', async () => {
     const request = superdeno(app)
@@ -97,26 +89,31 @@ describe('GraphQLHTTP({ schema, rootValue })', () => {
     type Context = { request: Request }
 
     const app = GraphQLHTTP<Request, Context>({
-      schema,
-      fieldResolver: (
-        _: any,
-        __: any,
-        { request: { url } }: Context,
-        info: any,
-      ) => {
-        if (info.fieldName === 'hello') {
-          return `Request from ${url.slice(url.lastIndexOf('/'))}`
-        }
-      },
-      context: (request) => ({ request }),
+      schema: new GraphQLSchema({
+        query: new GraphQLObjectType({
+          name: 'Query',
+          fields: {
+            'hello': {
+              type: GraphQLString,
+              resolve: (_root, _args, { request: { url } }: Context) =>
+                `Request from ${url.slice(url.lastIndexOf('/'))}`,
+            },
+          },
+        }),
+      }),
+      context: (req) => ({ request: req.raw }),
     })
 
     const request = superdeno(app)
 
     await request
       .post('/')
-      .send('{ "query": "{ hello }" }')
-      .expect(200, '{\n  "data": {\n    "hello": "Request from /"\n  }\n}')
+      .send({
+        'query': '\n{\n  hello\n}',
+        'variables': {},
+        'operationName': null,
+      })
+      .expect(200, { data: { hello: 'Request from /' } })
   })
 
   describe('graphiql', () => {
@@ -127,7 +124,7 @@ describe('GraphQLHTTP({ schema, rootValue })', () => {
 
       await request.get('/?query={hello}').expect(
         200,
-        '{\n  "data": {\n    "hello": "Hello World!"\n  }\n}',
+        { data: { hello: 'Hello World!' } },
       )
     })
     it('should allow query GET requests when set to true', async () => {
@@ -137,7 +134,7 @@ describe('GraphQLHTTP({ schema, rootValue })', () => {
 
       await request.get('/?query={hello}').expect(
         200,
-        '{\n  "data": {\n    "hello": "Hello World!"\n  }\n}',
+        { data: { hello: 'Hello World!' } },
       )
     })
     it('should send 406 when Accept is only text/html when set to false', async () => {
@@ -243,8 +240,12 @@ describe('GraphQLHTTP({ schema, rootValue })', () => {
 
       await request
         .post('/')
-        .send('{ "query": "{ hello }" }')
-        .expect(200, '{\n  "data": {\n    "hello": "Hello World!"\n  }\n}')
+        .send({
+          'query': '\n{\n  hello\n}',
+          'variables': {},
+          'operationName': null,
+        })
+        .expect(200, { data: { hello: 'Hello World!' } })
         .expect('Key', 'Value')
     })
     it('does not error with empty header object', async () => {
@@ -254,62 +255,12 @@ describe('GraphQLHTTP({ schema, rootValue })', () => {
 
       await request
         .post('/')
-        .send('{ "query": "{ hello }" }')
-        .expect(200, '{\n  "data": {\n    "hello": "Hello World!"\n  }\n}')
+        .send({
+          'query': '\n{\n  hello\n}',
+          'variables': {},
+          'operationName': null,
+        })
+        .expect(200, { data: { hello: 'Hello World!' } })
     })
   })
 })
-
-describe('runHttpQuery(params, options, context)', () => {
-  it('should resolve GraphQL query', async () => {
-    const result = await runHttpQuery(
-      {
-        query: '{ hello }',
-      },
-      { schema, rootValue },
-    )
-
-    expect(result.data).toEqual({ hello: 'Hello World!' })
-
-    expect(result.errors).toEqual(undefined)
-  })
-  it('should send errors on incorrect query', async () => {
-    const result = await runHttpQuery(
-      {
-        query: '{ world }',
-      },
-      { schema },
-    )
-
-    expect(result.data).toEqual(undefined)
-
-    expect(result.errors?.[0].message).toBe(
-      'Cannot query field "world" on type "Query".',
-    )
-  })
-  it('should use properties passed to context', async () => {
-    const obj = { a: 'Context prop' }
-
-    const result = await runHttpQuery<Request, typeof obj>(
-      { query: '{ hello }' },
-      {
-        schema,
-        fieldResolver: (
-          _: unknown,
-          __: unknown,
-          ctx: typeof obj,
-          info: GraphQLResolveInfo,
-        ) => {
-          if (info.fieldName === 'hello') {
-            return ctx.a
-          }
-        },
-      },
-      obj,
-    )
-
-    expect(result.data).toEqual({ hello: 'Context prop' })
-  })
-})
-
-run()
