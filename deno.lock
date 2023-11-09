@@ -76,6 +76,9 @@
       }
     }
   },
+  "redirects": {
+    "https://deno.land/std/testing/bdd.ts": "https://deno.land/std@0.205.0/testing/bdd.ts"
+  },
   "remote": {
     "https://deno.land/std@0.129.0/async/abortable.ts": "a896ac6b0d4237bd2d2d248217cfa1f0d85ccda93cb25ebda55e33850e526be6",
     "https://deno.land/std@0.129.0/async/deadline.ts": "48ac998d7564969f3e6ec6b6f9bf0217ebd00239b1b2292feba61272d5dd58d0",
@@ -93,6 +96,8 @@
     "https://deno.land/std@0.129.0/testing/asserts.ts": "0a95d9e8076dd3e7f0eeb605a67c148078b4b11f4abcd5eef115b0361b0736a2",
     "https://deno.land/std@0.197.0/fmt/colors.ts": "a7eecffdf3d1d54db890723b303847b6e0a1ab4b528ba6958b8f2e754cf1b3bc",
     "https://deno.land/std@0.205.0/http/status.ts": "1353e82e27996ef123dc625e5fcc9d66b94d92e5175879fa5e9f0dc39330206a",
+    "https://deno.land/std@0.205.0/testing/_test_suite.ts": "30f018feeb3835f12ab198d8a518f9089b1bcb2e8c838a8b615ab10d5005465c",
+    "https://deno.land/std@0.205.0/testing/bdd.ts": "3f446df5ef8e856a869e8eec54c8482590415741ff0b6358a00c43486cc15769",
     "https://deno.land/std@0.97.0/fmt/colors.ts": "db22b314a2ae9430ae7460ce005e0a7130e23ae1c999157e3bb77cf55800f7e4",
     "https://deno.land/std@0.97.0/testing/_diff.ts": "961eaf6d9f5b0a8556c9d835bbc6fa74f5addd7d3b02728ba7936ff93364f7a3",
     "https://deno.land/std@0.97.0/testing/asserts.ts": "341292d12eebc44be4c3c2ca101ba8b6b5859cef2fa69d50c217f9d0bfbcfd1f",
@@ -124,8 +129,10 @@
     "https://deno.land/x/tincan@1.0.2/src/nodes/utilities.ts": "5e6a6f0e2650df4e10f7dfde889ef88a588fe9c3b3618aca2acd47e80b3ee3d8",
     "https://deno.land/x/tincan@1.0.2/src/reporter.ts": "84e09297da18c840076be951c02c749678b75dc89b2575f34db1378cbb509939",
     "https://deno.land/x/tincan@1.0.2/src/runner.ts": "54e1a0934a52469437bd4655df51f0c9148327d94a2b0d6c175f6f992a697b86",
+    "https://esm.sh/graphql@16.6.0/language/ast#=": "e247e9d338dda824713c8b77dea7b638c7e13d4f9bdfe880e77b93d013e9db32",
     "https://esm.sh/graphql@16.6.0/language/parser#=": "d2136c12ba1c7ac94b6f298bd2f81433cd0df9b874b9e08e512bda768a5ea8ae",
     "https://esm.sh/v133/cssfilter@0.0.10/denonext/cssfilter.mjs": "b2dec5f4b51c7574509f04305aa54e33f9de336d66eade79f05552312f18f40b",
+    "https://esm.sh/v133/graphql@16.6.0/denonext/language/ast.js": "1c8cc697db4ec96d354496fa69a2d6552ec5801a6c3bdbe5505f369d872d594c",
     "https://esm.sh/v133/graphql@16.6.0/denonext/language/parser.js": "82063e5ee234089909652e04ccd9f0e1c0670c04ac6db896099a638ae759b182",
     "https://esm.sh/v133/xss@1.0.14/denonext/xss.mjs": "d3093ce2e72808314a367efb26a944fe0a83761efd7fec308c1636e6b9934cfb",
     "https://esm.sh/xss@1.0.14": "e12dc644496b685f0af21df487889bd39825a269bc0b10c79c80f02e6accf582",

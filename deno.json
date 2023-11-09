@@ -7,5 +7,9 @@
       "singleQuote": true,
       "semiColons": false
     }
+  },
+  "tasks": {
+    "test": "deno test --allow-net mod_test.ts",
+    "test:audit": "deno test --allow-net audit_test.ts"
   }
 }

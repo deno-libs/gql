@@ -11,9 +11,8 @@ for (
       throw result.reason
     }
     if (result.status === 'warn') {
-      console.warn(result.reason) // or throw if you want full compliance (warnings are not requirements)
+      console.warn(result.reason)
     }
-    // Avoid leaking resources
     if ('body' in result && result.body instanceof ReadableStream) {
       await result.body.cancel()
     }
