@@ -11,8 +11,8 @@
 
 # gql
 
-Universal [GraphQL](https://www.graphql.com/) HTTP middleware for Deno. Based on
-[graphql-http](https://github.com/graphql/graphql-http).
+Universal and spec-compliant [GraphQL](https://www.graphql.com/) HTTP middleware
+for Deno. Based on [graphql-http](https://github.com/graphql/graphql-http).
 
 ## Features
 
@@ -71,7 +71,7 @@ $ curl -X POST localhost:3000/graphql -d '{ "query": "{ hello }" }' -H "Content-
 }
 ```
 
-Or in [GraphQL Playground](https://localhost:3000/graphql):
+Or in the GraphQL Playground:
 
 ![image](https://user-images.githubusercontent.com/35937217/112218821-4133c800-8c35-11eb-984a-5c21fa71c229.png)
 
