@@ -13,6 +13,6 @@ export {
   type RequestParams,
 } from 'npm:graphql-http@1.22.0'
 export {
-  Status,
   STATUS_TEXT,
-} from 'https://deno.land/std@0.205.0/http/status.ts'
+  type StatusCode,
+} from 'https://deno.land/std@0.210.0/http/status.ts'

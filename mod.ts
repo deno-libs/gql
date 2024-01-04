@@ -2,10 +2,10 @@ import {
   createHandler,
   OperationContext,
   RawRequest,
-  Status,
   STATUS_TEXT,
+  type StatusCode,
 } from './deps.ts'
-import { accepts } from 'https://deno.land/std@0.205.0/http/negotiation.ts'
+import { accepts } from 'https://deno.land/std@0.210.0/http/negotiation.ts'
 import { GQLOptions } from './types.ts'
 
 function toRequest<Req = Request, Ctx = unknown>(
@@ -67,10 +67,13 @@ export function GraphQLHTTP<
         ),
       )
 
-      return new Response(body || STATUS_TEXT[init.status as Status], {
-        ...init,
-        headers: new Headers({ ...init.headers, ...headers }),
-      })
+      return new Response(
+        body || STATUS_TEXT[init.status as StatusCode],
+        {
+          ...init,
+          headers: new Headers({ ...init.headers, ...headers }),
+        },
+      )
     } catch (e) {
       console.error(
         'Internal error occurred during request handling. ' +
