@@ -15,4 +15,4 @@ export {
 export {
   STATUS_TEXT,
   type StatusCode,
-} from 'https://deno.land/std@0.210.0/http/status.ts'
+} from 'https://deno.land/std@0.221.0/http/status.ts'

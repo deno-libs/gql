@@ -1,5 +1,5 @@
-import { superdeno } from 'https://deno.land/x/superdeno@4.8.0/mod.ts?target=deno'
-import { describe, it } from 'https://deno.land/std@0.210.0/testing/bdd.ts'
+import { superdeno } from 'https://deno.land/x/superdeno@4.9.0/mod.ts?target=deno'
+import { describe, it } from 'https://deno.land/std@0.221.0/testing/bdd.ts'
 import {
   buildSchema,
   GraphQLObjectType,

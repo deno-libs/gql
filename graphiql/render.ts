@@ -1,4 +1,4 @@
-import { filterXSS } from 'https://esm.sh/xss@1.0.14'
+import { filterXSS } from 'https://esm.sh/xss@1.0.15/'
 import { getLoadingMarkup } from './markup.ts'
 
 export interface MiddlewareOptions {
