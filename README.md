@@ -12,11 +12,11 @@
 # gql
 
 Universal and spec-compliant [GraphQL](https://www.graphql.com/) HTTP middleware
-for Deno. Based on [graphql-http](https://github.com/graphql/graphql-http).
+for Deno and Bun. Based on [graphql-http](https://github.com/graphql/graphql-http).
 
 ## Features
 
-- ✨ Works with `Deno.serve` and [oak](https://github.com/oakserver/oak)
+- ✨ Works with `Deno.serve`, `Bun.serve` and [oak](https://github.com/oakserver/oak)
 - ⚡
   [GraphQL Playground](https://github.com/graphql/graphql-playground/tree/master/packages/graphql-playground-html)
   integration (via `graphiql: true`)
