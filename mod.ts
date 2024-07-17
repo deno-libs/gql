@@ -1,12 +1,12 @@
 import {
+  accepts,
   createHandler,
-  OperationContext,
-  RawRequest,
+  type OperationContext,
+  type RawRequest,
   STATUS_TEXT,
   type StatusCode,
 } from './deps.ts'
-import { accepts } from 'https://deno.land/std@0.221.0/http/negotiation.ts'
-import { GQLOptions } from './types.ts'
+import type { GQLOptions } from './types.ts'
 
 function toRequest<Req = Request, Ctx = unknown>(
   req: Pick<Request, 'method' | 'url' | 'headers' | 'text'>,

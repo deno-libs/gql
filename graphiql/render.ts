@@ -1,4 +1,4 @@
-import { filterXSS } from 'https://esm.sh/xss@1.0.15/'
+import { filterXSS } from 'https://esm.sh/xss@1.0.15'
 import { getLoadingMarkup } from './markup.ts'
 
 export interface MiddlewareOptions {
@@ -56,6 +56,7 @@ export interface EditorColours {
 }
 
 export interface IntrospectionResult {
+  // deno-lint-ignore no-explicit-any
   __schema: any
 }
 
@@ -148,7 +149,7 @@ export function renderPlaygroundPage(options: RenderPageOptions) {
   }
   if (!extendedOptions.endpoint && !extendedOptions.configString) {
     console.warn(
-      `WARNING: You didn't provide an endpoint and don't have a .graphqlconfig. Make sure you have at least one of them.`,
+      `WARNING: You didn't provide an endpoint and don't have a config. Make sure you have at least one of them.`,
     )
   } else if (extendedOptions.endpoint) {
     extendedOptions.endpoint = filter(extendedOptions.endpoint || '')

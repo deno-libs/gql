@@ -14,5 +14,12 @@
   },
   "test": {
     "exclude": ["audit_test.ts"]
+  },
+  "name": "@deno-libs/gql",
+  "version": "3.0.1",
+  "exports": {
+    "./": "./mod.ts",
+    "./types": "./types.ts",
+    "./graphiql/render": "./graphiql/render.ts"
   }
 }

@@ -26,8 +26,8 @@ for Deno. Based on [graphql-http](https://github.com/graphql/graphql-http).
 The simplest setup with `Deno.serve`:
 
 ```ts
-import { GraphQLHTTP } from 'https://deno.land/x/gql@1.2.4/mod.ts'
-import { makeExecutableSchema } from 'npm:@graphql-tools/schema@10.0.0'
+import { GraphQLHTTP } from 'jsr:@deno-libs/gql@3.0.1/mod.ts'
+import { makeExecutableSchema } from 'npm:@graphql-tools/schema@10.0.3'
 import { gql } from 'https://deno.land/x/graphql_tag@0.1.2/mod.ts'
 
 const typeDefs = gql`

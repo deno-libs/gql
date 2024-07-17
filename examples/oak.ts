@@ -1,9 +1,9 @@
 import {
   Application,
-  Middleware,
-  Request as OakRequest,
+  type Middleware,
+  type Request as OakRequest,
   Router,
-} from 'https://deno.land/x/oak@14.2.0/mod.ts'
+} from 'https://deno.land/x/oak@v16.1.0/mod.ts'
 import { GraphQLHTTP } from '../mod.ts'
 import { makeExecutableSchema } from 'npm:@graphql-tools/schema@10.0.3'
 import { gql } from 'https://deno.land/x/graphql_tag@0.1.2/mod.ts'
@@ -27,7 +27,7 @@ const schema = makeExecutableSchema({ typeDefs, resolvers })
 const handleGraphQL: Middleware = async (ctx) => {
   // cast Oak request into a normal Request
   const req = new Request(ctx.request.url.toString(), {
-    body: ctx.request.originalRequest.getBody().body,
+    body: await ctx.request.body.blob(),
     headers: ctx.request.headers,
     method: ctx.request.method,
   })

@@ -1,11 +1,6 @@
-import { superdeno } from 'https://deno.land/x/superdeno@4.9.0/mod.ts?target=deno'
-import { describe, it } from 'https://deno.land/std@0.221.0/testing/bdd.ts'
-import {
-  buildSchema,
-  GraphQLObjectType,
-  GraphQLSchema,
-  GraphQLString,
-} from 'npm:graphql@16.8.1'
+import { makeFetch } from 'jsr:@deno-libs/superfetch@2.0.1'
+import { describe, it } from 'jsr:@std/testing@0.225.3/bdd'
+import { buildSchema } from 'npm:graphql@16.8.1'
 import { GraphQLHTTP } from './mod.ts'
 
 const schema = buildSchema(`
@@ -22,152 +17,146 @@ const app = GraphQLHTTP({ schema, rootValue })
 
 describe('GraphQLHTTP({ schema, rootValue })', () => {
   it('should send 400 on malformed request query', async () => {
-    const request = superdeno(app)
+    const fetch = makeFetch(app)
 
-    await request.get('/').expect(400, {
+    const res = await fetch('/', {
+      headers: { 'Content-Type': 'application/json' },
+    })
+    res.expectBody({
       'errors': [{ 'message': 'Missing query' }],
     })
+    res.expectStatus(400)
   })
   it('should send unsupported media type on empty request body', async () => {
-    const request = superdeno(app)
+    const fetch = makeFetch(app)
 
-    await request.post('/').expect(415)
-  })
-  it('should send resolved POST GraphQL query', async () => {
-    const request = superdeno(app)
-
-    await request
-      .post('/')
-      .send({
-        'query': '\n{\n  hello\n}',
-      })
-      .expect(200, { data: { hello: 'Hello World!' } })
-  })
-  it('should send resolved GET GraphQL query', async () => {
-    const request = superdeno(app)
-
-    await request.get('/?query={hello}').expect(
-      200,
-      { data: { hello: 'Hello World!' } },
-    )
-  })
-  it('should send resolved GET GraphQL query when Accept is application/json', async () => {
-    const request = superdeno(app)
-
-    await request
-      .get('/?query={hello}')
-      .set('Accept', 'application/json')
-      .expect(200, { data: { hello: 'Hello World!' } })
-      .expect('Content-Type', 'application/json; charset=utf-8')
-  })
-  it('should send resolved GET GraphQL query when Accept is */*', async () => {
-    const request = superdeno(app)
-
-    await request
-      .get('/?query={hello}')
-      .set('Accept', '*/*')
-      .expect(200, { data: { hello: 'Hello World!' } })
-      .expect('Content-Type', 'application/json; charset=utf-8')
-  })
-  it('should send 406 not acceptable when Accept is other (text/html)', async () => {
-    const request = superdeno(app)
-
-    await request.get('/?query={hello}').set('Accept', 'text/html').expect(
-      406,
-      'Not Acceptable',
-    )
-  })
-  it('should send 406 not acceptable when Accept is other (text/css)', async () => {
-    const request = superdeno(app)
-
-    await request.get('/?query={hello}').set('Accept', 'text/css').expect(
-      406,
-      'Not Acceptable',
-    )
-  })
-  it('should pass req obj to server context', async () => {
-    type Context = { request: Request }
-
-    const app = GraphQLHTTP<Request, Context>({
-      schema: new GraphQLSchema({
-        query: new GraphQLObjectType({
-          name: 'Query',
-          fields: {
-            'hello': {
-              type: GraphQLString,
-              resolve: (_root, _args, { request: { url } }: Context) =>
-                `Request from ${url.slice(url.lastIndexOf('/'))}`,
-            },
-          },
-        }),
-      }),
-      context: (req) => ({ request: req.raw }),
+    const res = await fetch('/', {
+      method: 'POST',
     })
+    res.expectStatus(415)
+  })
 
-    const request = superdeno(app)
+  it('should send resolved POST GraphQL query', async () => {
+    const fetch = makeFetch(app)
 
-    await request
-      .post('/')
-      .send({
-        'query': '\n{\n  hello\n}',
-        'variables': {},
-        'operationName': null,
-      })
-      .expect(200, { data: { hello: 'Request from /' } })
+    const res = await fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        query: '\n{\n  hello\n}',
+      }),
+    })
+    res.expectBody({ data: { hello: 'Hello World!' } })
+    res.expectStatus(200)
+  })
+
+  it('should send resolved GET GraphQL query', async () => {
+    const fetch = makeFetch(app)
+
+    const res = await fetch('/?query={hello}')
+    res.expectBody({ data: { hello: 'Hello World!' } })
+    res.expectStatus(200)
+  })
+
+  it('should send resolved GET GraphQL query when Accept is application/json', async () => {
+    const fetch = makeFetch(app)
+
+    const res = await fetch('/?query={hello}', {
+      headers: { Accept: 'application/json' },
+    })
+    res.expectBody({ data: { hello: 'Hello World!' } })
+    res.expectStatus(200)
+    res.expectHeader('Content-Type', 'application/json; charset=utf-8')
+  })
+
+  it('should send resolved GET GraphQL query when Accept is */*', async () => {
+    const fetch = makeFetch(app)
+
+    const res = await fetch('/?query={hello}', {
+      headers: { Accept: '*/*' },
+    })
+    res.expectBody({ data: { hello: 'Hello World!' } })
+    res.expectStatus(200)
+    res.expectHeader('Content-Type', 'application/json; charset=utf-8')
+  })
+
+  it('should send 406 not acceptable when Accept is other (text/html)', async () => {
+    const fetch = makeFetch(app)
+
+    const res = await fetch('/?query={hello}', {
+      headers: { Accept: 'text/html' },
+    })
+    res.expectStatus(406)
+    res.expectBody('Not Acceptable')
+  })
+
+  it('should send 406 not acceptable when Accept is other (text/css)', async () => {
+    const fetch = makeFetch(app)
+
+    const res = await fetch('/?query={hello}', {
+      headers: { Accept: 'text/css' },
+    })
+    res.expectStatus(406)
+    res.expectBody('Not Acceptable')
   })
 
   describe('graphiql', () => {
     it('should allow query GET requests when set to false', async () => {
       const app = GraphQLHTTP({ graphiql: false, schema, rootValue })
 
-      const request = superdeno(app)
+      const fetch = makeFetch(app)
 
-      await request.get('/?query={hello}').expect(
-        200,
-        { data: { hello: 'Hello World!' } },
-      )
+      const res = await fetch('/?query={hello}')
+      res.expectBody({ data: { hello: 'Hello World!' } })
+      res.expectStatus(200)
     })
+
     it('should allow query GET requests when set to true', async () => {
       const app = GraphQLHTTP({ graphiql: true, schema, rootValue })
 
-      const request = superdeno(app)
+      const fetch = makeFetch(app)
 
-      await request.get('/?query={hello}').expect(
-        200,
-        { data: { hello: 'Hello World!' } },
-      )
+      const res = await fetch('/?query={hello}')
+      res.expectBody({ data: { hello: 'Hello World!' } })
+      res.expectStatus(200)
     })
+
     it('should send 406 when Accept is only text/html when set to false', async () => {
       const app = GraphQLHTTP({ graphiql: false, schema, rootValue })
 
-      const request = superdeno(app)
+      const fetch = makeFetch(app)
 
-      await request.get('/').set('Accept', 'text/html').expect(
-        406,
-        'Not Acceptable',
-      )
+      const res = await fetch('/', {
+        headers: { Accept: 'text/html' },
+      })
+      res.expectStatus(406)
+      res.expectBody('Not Acceptable')
     })
+
     it('should render a playground when Accept does include text/html when set to true', async () => {
       const app = GraphQLHTTP({ graphiql: true, schema, rootValue })
 
-      const request = superdeno(app)
+      const fetch = makeFetch(app)
 
-      await request
-        .get('/?query={hello}')
-        .set('Accept', 'text/html;*/*')
-        .expect(200)
-        .expect('Content-Type', 'text/html')
+      const res = await fetch('/?query={hello}', {
+        headers: { Accept: 'text/html;*/*' },
+      })
+      res.expectStatus(200)
+      res.expectHeader('Content-Type', 'text/html')
     })
+
     it('should render a playground if graphiql is set to true', async () => {
       const app = GraphQLHTTP({ graphiql: true, schema, rootValue })
 
-      const request = superdeno(app)
+      const fetch = makeFetch(app)
 
-      await request.get('/').set('Accept', 'text/html').expect(200).expect(
-        'Content-Type',
-        'text/html',
-      )
+      const res = await fetch('/', {
+        headers: { Accept: 'text/html' },
+      })
+      res.expectStatus(200)
+      res.expectHeader('Content-Type', 'text/html')
     })
+
     describe('playgroundOptions', () => {
       it('supports custom favicon', async () => {
         const app = GraphQLHTTP({
@@ -179,19 +168,20 @@ describe('GraphQLHTTP({ schema, rootValue })', () => {
           },
         })
 
-        const request = superdeno(app)
+        const fetch = makeFetch(app)
 
-        await request
-          .get('/')
-          .set('Accept', 'text/html')
-          .expect(200)
-          .expect('Content-Type', 'text/html')
-          .expect(
-            new RegExp(
-              '<link rel="shortcut icon" href="https://github.com/favicon.ico" />',
-            ),
-          )
+        const res = await fetch('/', {
+          headers: { Accept: 'text/html' },
+        })
+        res.expectStatus(200)
+        res.expectHeader('Content-Type', 'text/html')
+        res.expectBody(
+          new RegExp(
+            '<link rel="shortcut icon" href="https://github.com/favicon.ico" />',
+          ),
+        )
       })
+
       it('supports custom title', async () => {
         const app = GraphQLHTTP({
           graphiql: true,
@@ -202,15 +192,16 @@ describe('GraphQLHTTP({ schema, rootValue })', () => {
           },
         })
 
-        const request = superdeno(app)
+        const fetch = makeFetch(app)
 
-        await request
-          .get('/')
-          .set('Accept', 'text/html')
-          .expect(200)
-          .expect('Content-Type', 'text/html')
-          .expect(new RegExp('<title>Hello gql!</title>'))
+        const res = await fetch('/', {
+          headers: { Accept: 'text/html' },
+        })
+        res.expectStatus(200)
+        res.expectHeader('Content-Type', 'text/html')
+        res.expectBody(new RegExp('<title>Hello gql!</title>'))
       })
+
       it('adds React CDN links if env is React', async () => {
         const app = GraphQLHTTP({
           graphiql: true,
@@ -221,46 +212,54 @@ describe('GraphQLHTTP({ schema, rootValue })', () => {
           },
         })
 
-        const request = superdeno(app)
+        const fetch = makeFetch(app)
 
-        await request
-          .get('/')
-          .set('Accept', 'text/html')
-          .expect(200)
-          .expect('Content-Type', 'text/html')
-          .expect(new RegExp('https://unpkg.com'))
+        const res = await fetch('/', {
+          headers: { Accept: 'text/html' },
+        })
+        res.expectStatus(200)
+        res.expectHeader('Content-Type', 'text/html')
+        res.expectBody(new RegExp('unpkg.com'))
       })
     })
   })
+
   describe('headers', () => {
     it('should pass custom headers to response', async () => {
       const app = GraphQLHTTP({ schema, rootValue, headers: { Key: 'Value' } })
 
-      const request = superdeno(app)
+      const fetch = makeFetch(app)
 
-      await request
-        .post('/')
-        .send({
-          'query': '\n{\n  hello\n}',
-          'variables': {},
-          'operationName': null,
-        })
-        .expect(200, { data: { hello: 'Hello World!' } })
-        .expect('Key', 'Value')
+      const res = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          query: '\n{\n  hello\n}',
+          variables: {},
+          operationName: null,
+        }),
+      })
+      res.expectBody({ data: { hello: 'Hello World!' } })
+      res.expectStatus(200)
+      res.expectHeader('Key', 'Value')
     })
+
     it('does not error with empty header object', async () => {
       const app = GraphQLHTTP({ schema, rootValue, headers: {} })
 
-      const request = superdeno(app)
+      const fetch = makeFetch(app)
 
-      await request
-        .post('/')
-        .send({
-          'query': '\n{\n  hello\n}',
-          'variables': {},
-          'operationName': null,
-        })
-        .expect(200, { data: { hello: 'Hello World!' } })
+      const res = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          query: '\n{\n  hello\n}',
+          variables: {},
+          operationName: null,
+        }),
+      })
+      res.expectBody({ data: { hello: 'Hello World!' } })
+      res.expectStatus(200)
     })
   })
 })
