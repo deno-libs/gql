@@ -34,7 +34,7 @@ export function GraphQLHTTP<
     ...options
   }: GQLOptions<Req, ReqCtx, Context>,
   reqCtx?: (req: Req) => ReqCtx,
-) {
+): (req: Request) => Promise<Response> {
   const handler = createHandler(options)
 
   return async function handleRequest(req: Request): Promise<Response> {
