@@ -1,6 +1,6 @@
-import { makeFetch } from 'jsr:@deno-libs/superfetch@2.0.1'
+import { makeFetch } from 'jsr:@deno-libs/superfetch@3.0.0'
 import { describe, it } from 'jsr:@std/testing@0.225.3/bdd'
-import { buildSchema } from 'npm:graphql@16.8.1'
+import { buildSchema } from 'npm:graphql@16.10.0'
 import { GraphQLHTTP } from './mod.ts'
 
 const schema = buildSchema(`
