@@ -16,7 +16,7 @@
     "exclude": ["audit_test.ts"]
   },
   "name": "@deno-libs/gql",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "exports": {
     ".": "./mod.ts",
     "./types": "./types.ts",
