@@ -40,4 +40,38 @@ describe('renderPlaygroundPage', () => {
       `<link rel="shortcut icon" href="https://tinyhttp.v1rtl.site/favicon.png" />`,
     )
   })
+  it('supports empty string favicon (no favicon)', () => {
+    const html = renderPlaygroundPage({
+      faviconUrl: '',
+    })
+
+    expect(html).toContain('<link rel="shortcut icon" href="" />')
+  })
+  it('supports null favicon (no favicon)', () => {
+    const html = renderPlaygroundPage({
+      faviconUrl: null,
+    })
+
+    expect(html).not.toContain('shortcut icon')
+  })
+  it('supports config option', () => {
+    const html = renderPlaygroundPage({
+      endpoint: '/graphql',
+      config: { test: 'value' },
+    })
+
+    expect(html).toContain('playground-config')
+    expect(html).toContain('{')
+  })
+  it('supports version with endpoint', () => {
+    const html = renderPlaygroundPage({
+      version: '1.7.27',
+      endpoint: '/graphql',
+      cdnUrl: 'https://cdn.example.com',
+    })
+
+    expect(html).toContain('cdn.example.com')
+    expect(html).toContain('1.7.27')
+    expect(html).toContain('/graphql')
+  })
 })

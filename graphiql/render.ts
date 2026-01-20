@@ -96,10 +96,10 @@ const getCdnMarkup = ({
   version?: string
   cdnUrl?: string
 }) => {
-  const buildCDNUrl = (packageName: string, suffix: string) =>
-    filter(
-      `${cdnUrl}/${packageName}${version ? `@${version}` : ''}/${suffix}` || '',
-    )
+  const buildCDNUrl = (packageName: string, suffix: string) => {
+    const versionPart = version ? `@${version}` : ''
+    return filter(`${cdnUrl}/${packageName}${versionPart}/${suffix}`)
+  }
   return `
     <link 
       rel="stylesheet" 
@@ -152,7 +152,7 @@ export function renderPlaygroundPage(options: RenderPageOptions): string {
       `WARNING: You didn't provide an endpoint and don't have a config. Make sure you have at least one of them.`,
     )
   } else if (extendedOptions.endpoint) {
-    extendedOptions.endpoint = filter(extendedOptions.endpoint || '')
+    extendedOptions.endpoint = filter(extendedOptions.endpoint)
   }
 
   return `

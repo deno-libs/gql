@@ -262,4 +262,70 @@ describe('GraphQLHTTP({ schema, rootValue })', () => {
       res.expectStatus(200)
     })
   })
+
+  describe('error handling', () => {
+    it('should handle resolver errors gracefully', async () => {
+      const badSchema = buildSchema(`
+        type Query {
+          error: String
+        }
+      `)
+
+      const badRootValue = {
+        error: () => {
+          throw new Error('Intentional error')
+        },
+      }
+
+      const app = GraphQLHTTP({ schema: badSchema, rootValue: badRootValue })
+      const fetch = makeFetch(app)
+
+      const res = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          query: '{ error }',
+        }),
+      })
+      res.expectStatus(200)
+    })
+
+    it('should catch handler errors and return 500', async () => {
+      // @ts-ignore - intentionally passing invalid schema to trigger error
+      const app = GraphQLHTTP({ schema: null })
+      const fetch = makeFetch(app)
+
+      const res = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          query: '{ hello }',
+        }),
+      })
+      res.expectStatus(500)
+    })
+  })
+
+  describe('reqCtx parameter', () => {
+    it('should support custom request context', async () => {
+      interface ReqCtx {
+        request: Request
+        customData: string
+      }
+
+      const app = GraphQLHTTP<Request, { request: Request }, ReqCtx>(
+        {
+          schema,
+          rootValue,
+        },
+        (req: Request) => ({ request: req, customData: 'custom' }),
+      )
+
+      const fetch = makeFetch(app)
+
+      const res = await fetch('/?query={hello}')
+      res.expectBody({ data: { hello: 'Hello World!' } })
+      res.expectStatus(200)
+    })
+  })
 })
