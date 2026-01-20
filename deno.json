@@ -9,8 +9,8 @@
     }
   },
   "tasks": {
-    "test": "deno test --allow-net --coverage=coverage",
-    "test:audit": "deno test --allow-net audit_test.ts"
+    "test": "deno test --allow-net --allow-env --coverage=coverage",
+    "test:audit": "deno test --allow-net --allow-env audit_test.ts"
   },
   "test": {
     "exclude": ["audit_test.ts"]

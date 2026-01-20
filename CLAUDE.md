@@ -16,8 +16,8 @@ deno task test
 # Run audit tests specifically
 deno task test:audit
 
-# Run tests with coverage
-deno test --allow-net --coverage=coverage
+# Run tests with coverage (requires --allow-net and --allow-env)
+deno test --allow-net --allow-env --coverage=coverage
 ```
 
 ### Formatting
