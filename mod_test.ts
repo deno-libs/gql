@@ -327,5 +327,65 @@ describe('GraphQLHTTP({ schema, rootValue })', () => {
       res.expectBody({ data: { hello: 'Hello World!' } })
       res.expectStatus(200)
     })
+
+    it('should support async request context', async () => {
+      interface ReqCtx {
+        request: Request
+        asyncData: string
+      }
+
+      const app = GraphQLHTTP<Request, { request: Request }, ReqCtx>(
+        {
+          schema,
+          rootValue,
+        },
+        async (req: Request) => {
+          // Simulate async operation like DB query or auth check
+          await new Promise((resolve) => setTimeout(resolve, 10))
+          return { request: req, asyncData: 'async-value' }
+        },
+      )
+
+      const fetch = makeFetch(app)
+
+      const res = await fetch('/?query={hello}')
+      res.expectBody({ data: { hello: 'Hello World!' } })
+      res.expectStatus(200)
+    })
+
+    it('should support async context with resolver access', async () => {
+      const customSchema = buildSchema(`
+        type Query {
+          currentUser: String
+        }
+      `)
+
+      const customRootValue = {
+        currentUser: (_args: unknown, context: { userId: string }) => {
+          return `User: ${context.userId}`
+        },
+      }
+
+      const app = GraphQLHTTP(
+        {
+          schema: customSchema,
+          rootValue: customRootValue,
+          context: (rawReq) => ({
+            userId: rawReq.context.userId,
+          }),
+        },
+        async (req: Request) => {
+          // Simulate async auth check
+          await new Promise((resolve) => setTimeout(resolve, 5))
+          return { request: req, userId: 'user-123' }
+        },
+      )
+
+      const fetch = makeFetch(app)
+
+      const res = await fetch('/?query={currentUser}')
+      res.expectBody({ data: { currentUser: 'User: user-123' } })
+      res.expectStatus(200)
+    })
   })
 })

@@ -82,14 +82,16 @@ The library supports a two-level context system:
 
 1. **Request Context (`ReqCtx`)** - Created from incoming request via optional `reqCtx` callback
    - Available as `context` property in the raw GraphQL request
+   - Supports both synchronous and asynchronous initialization
    - Example: `{ request: Request, isRequestContext: boolean }`
+   - Use async context for database queries, auth checks, or API calls
 
 2. **GraphQL Context (`Context`)** - Passed to resolvers
    - Created via `context` option in `GQLOptions`
    - Receives the `RawRequest` containing the request context
    - Example: `{ request: Request, originalReq: GQLRequest<Request, ReqCtx> }`
 
-See `examples/req-ctx.ts` for usage pattern.
+See `examples/req-ctx.ts` for synchronous context and `examples/async-context.ts` for asynchronous context.
 
 ### Framework Integration Patterns
 

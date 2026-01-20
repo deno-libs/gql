@@ -20,6 +20,7 @@ for Deno and Bun. Based on [graphql-http](https://github.com/graphql/graphql-htt
 - ⚡
   [GraphQL Playground](https://github.com/graphql/graphql-playground/tree/master/packages/graphql-playground-html)
   integration (via `graphiql: true`)
+- 🔄 Async context initialization support for auth, DB queries, and more
 
 ## Get started
 

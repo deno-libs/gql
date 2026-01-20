@@ -1,5 +1,5 @@
 {
-  "version": "4",
+  "version": "5",
   "specifiers": {
     "jsr:@deno-libs/superfetch@2.0.1": "2.0.1",
     "jsr:@deno-libs/superfetch@3.0.0": "3.0.0",
@@ -219,7 +219,8 @@
       "dependencies": [
         "commander",
         "cssfilter"
-      ]
+      ],
+      "bin": true
     }
   },
   "remote": {
@@ -263,6 +264,7 @@
     "https://deno.land/x/oak@v16.1.0/utils/streams.ts": "6d55543fdeddc3c9c6f512de227b9b33ff4b0ec5e320edc109f0cbf9bef8963f",
     "https://deno.land/x/oak@v16.1.0/utils/type_guards.ts": "a1b42aa4c431c4c07d3f8a45a2142020f86d5a3e1e319af94fdf2f4c6c72465f",
     "https://esm.sh/graphql@16.6.0/denonext/language/parser.mjs": "21defd87cff28344044b53da1b11d1b027ea075148abbdc2c3457321d45b3194",
+    "https://esm.sh/graphql@16.6.0/language/ast#=": "7a63440f25d99e25a685047c3ee76b68023a45a5779d374a6b65c3cb53dc2da1",
     "https://esm.sh/graphql@16.6.0/language/parser#=": "18b458e1ae94961e5aae7f758aa56c5b3ea3a98fc25caf17ef5a53b7ece8f8d7"
   }
 }

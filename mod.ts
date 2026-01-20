@@ -33,7 +33,7 @@ export function GraphQLHTTP<
     playgroundOptions = {},
     ...options
   }: GQLOptions<Req, ReqCtx, Context>,
-  reqCtx?: (req: Req) => ReqCtx,
+  reqCtx?: (req: Req) => ReqCtx | Promise<ReqCtx>,
 ): (req: Request) => Promise<Response> {
   const handler = createHandler(options)
 
@@ -63,7 +63,7 @@ export function GraphQLHTTP<
       const [body, init] = await handler(
         toRequest<Req, ReqCtx>(
           req,
-          reqCtx ? reqCtx(req as Req) : { request: req } as ReqCtx,
+          reqCtx ? await reqCtx(req as Req) : { request: req } as ReqCtx,
         ),
       )
 
