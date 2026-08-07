@@ -1,6 +1,6 @@
 import { GraphQLHTTP } from '../mod.ts'
-import { makeExecutableSchema } from 'npm:@graphql-tools/schema@10.0.3'
-import { gql } from 'https://deno.land/x/graphql_tag@0.1.2/mod.ts'
+import { makeExecutableSchema } from '@graphql-tools/schema'
+import { gql } from '@deno-libs/graphql-tag'
 
 const typeDefs = gql`
   type Query {
@@ -25,7 +25,9 @@ const resolvers = {
       _args: unknown,
       ctx: { isAuthenticated: boolean },
     ) => {
-      return ctx.isAuthenticated ? 'Hello, authenticated user!' : 'Hello, guest!'
+      return ctx.isAuthenticated
+        ? 'Hello, authenticated user!'
+        : 'Hello, guest!'
     },
   },
 }
@@ -40,7 +42,11 @@ Deno.serve({
 }, async (req) => {
   const { pathname } = new URL(req.url)
   return pathname === '/graphql'
-    ? await GraphQLHTTP<Request, { userId: string; isAuthenticated: boolean }, ReqCtx>({
+    ? await GraphQLHTTP<
+      Request,
+      { userId: string; isAuthenticated: boolean },
+      ReqCtx
+    >({
       schema,
       graphiql: true,
       context: (rawReq) => ({

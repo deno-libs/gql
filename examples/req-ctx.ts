@@ -1,7 +1,7 @@
 import { GraphQLHTTP } from '../mod.ts'
-import { makeExecutableSchema } from 'npm:@graphql-tools/schema@10.0.3'
-import { gql } from 'https://deno.land/x/graphql_tag@0.1.2/mod.ts'
-import type { Request as GQLRequest } from 'npm:graphql-http@1.22.4'
+import { makeExecutableSchema } from '@graphql-tools/schema'
+import { gql } from '@deno-libs/graphql-tag'
+import type { Request as GQLRequest } from 'graphql-http'
 
 const typeDefs = gql`
   type Query {

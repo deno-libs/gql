@@ -8,6 +8,19 @@ import {
 } from './deps.ts'
 import type { GQLOptions } from './types.ts'
 
+/**
+ * graphql refuses to work with a schema built by a different copy of itself,
+ * which is the usual outcome of a major graphql upgrade on either side. The
+ * raw assertion says nothing about the cause, so point at it.
+ */
+function schemaMismatchHint(e: unknown): string {
+  return e instanceof Error && e.message.includes('to be a GraphQL schema')
+    ? '\nThe schema appears to come from a different copy of graphql than the ' +
+      'one gql resolves. Make sure both resolve the same graphql version ' +
+      '(see the compatibility table in the gql README).'
+    : ''
+}
+
 function toRequest<Req = Request, Ctx = unknown>(
   req: Pick<Request, 'method' | 'url' | 'headers' | 'text'>,
   context: Ctx,
@@ -77,10 +90,21 @@ export function GraphQLHTTP<
     } catch (e) {
       console.error(
         'Internal error occurred during request handling. ' +
-          'Please check your implementation.',
+          'Please check your implementation.' + schemaMismatchHint(e),
         e,
       )
-      return new Response(null, { status: 500 })
+      // Keep the details server-side, but answer in the GraphQL error shape
+      // clients already parse instead of an empty body.
+      return new Response(
+        JSON.stringify({ errors: [{ message: 'Internal server error' }] }),
+        {
+          status: 500,
+          headers: new Headers({
+            'Content-Type': 'application/json; charset=utf-8',
+            ...headers,
+          }),
+        },
+      )
     }
   }
 }

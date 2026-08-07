@@ -1,6 +1,7 @@
-import { makeFetch } from 'jsr:@deno-libs/superfetch@3.0.0'
-import { describe, it } from 'jsr:@std/testing@0.225.3/bdd'
-import { buildSchema } from 'npm:graphql@16.10.0'
+import { makeFetch } from '@deno-libs/superfetch'
+import { describe, it } from '@std/testing/bdd'
+import { expect } from '@std/expect'
+import { buildSchema } from 'graphql'
 import { GraphQLHTTP } from './mod.ts'
 
 const schema = buildSchema(`
@@ -303,6 +304,73 @@ describe('GraphQLHTTP({ schema, rootValue })', () => {
         }),
       })
       res.expectStatus(500)
+      res.expectHeader('Content-Type', 'application/json; charset=utf-8')
+      res.expectBody({ errors: [{ message: 'Internal server error' }] })
+    })
+
+    it('should apply custom headers to the 500 response', async () => {
+      const app = GraphQLHTTP({
+        // @ts-ignore - intentionally passing invalid schema to trigger error
+        schema: null,
+        headers: { Key: 'Value' },
+      })
+      const fetch = makeFetch(app)
+
+      const res = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: '{ hello }' }),
+      })
+      res.expectStatus(500)
+      res.expectHeader('Key', 'Value')
+    })
+
+    it('should hint at a graphql version mismatch on a foreign schema', async () => {
+      const logs: string[] = []
+      const error = console.error
+      console.error = (...args: unknown[]) => void logs.push(String(args[0]))
+
+      try {
+        // A plain object reaches graphql's assertSchema the same way a schema
+        // built by a second copy of graphql would.
+        // @ts-ignore - intentionally passing a non-schema
+        const app = GraphQLHTTP({ schema: {} })
+        const fetch = makeFetch(app)
+
+        const res = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query: '{ hello }' }),
+        })
+        res.expectStatus(500)
+      } finally {
+        console.error = error
+      }
+
+      expect(logs.join('\n')).toContain('different copy of graphql')
+    })
+
+    it('should not add the mismatch hint to unrelated errors', async () => {
+      const logs: string[] = []
+      const error = console.error
+      console.error = (...args: unknown[]) => void logs.push(String(args[0]))
+
+      try {
+        // @ts-ignore - intentionally passing invalid schema to trigger error
+        const app = GraphQLHTTP({ schema: null })
+        const fetch = makeFetch(app)
+
+        const res = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query: '{ hello }' }),
+        })
+        res.expectStatus(500)
+      } finally {
+        console.error = error
+      }
+
+      expect(logs.join('\n')).not.toContain('different copy of graphql')
     })
   })
 

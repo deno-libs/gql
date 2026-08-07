@@ -1,4 +1,4 @@
-import { filterXSS } from 'npm:xss@1.0.15'
+import { filterXSS } from 'xss'
 import { getLoadingMarkup } from './markup.ts'
 
 export interface MiddlewareOptions {

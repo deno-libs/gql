@@ -1,25 +1,45 @@
 {
-  "fmt": {
-    "options": {
-      "useTabs": false,
-      "lineWidth": 80,
-      "indentWidth": 2,
-      "singleQuote": true,
-      "semiColons": false
-    }
-  },
-  "tasks": {
-    "test": "deno test --allow-net --allow-env --coverage=coverage",
-    "test:audit": "deno test --allow-net --allow-env audit_test.ts"
-  },
-  "test": {
-    "exclude": ["audit_test.ts"]
-  },
   "name": "@deno-libs/gql",
-  "version": "4.1.0",
+  "version": "5.0.0",
   "exports": {
     ".": "./mod.ts",
     "./types": "./types.ts",
     "./graphiql/render": "./graphiql/render.ts"
+  },
+  "imports": {
+    "@deno-libs/graphql-tag": "jsr:@deno-libs/graphql-tag@^0.2.0",
+    "@deno-libs/superfetch": "jsr:@deno-libs/superfetch@^4.0.0",
+    "@graphql-tools/schema": "npm:@graphql-tools/schema@^10.0.38",
+    "@oak/oak": "jsr:@oak/oak@^17.2.0",
+    "@std/expect": "jsr:@std/expect@^1.0.20",
+    "@std/http": "jsr:@std/http@^1.1.3",
+    "@std/testing": "jsr:@std/testing@^1.0.20",
+    "graphql": "npm:graphql@^17.0.2",
+    "graphql-http": "npm:graphql-http@^1.22.4",
+    "xss": "npm:xss@^1.0.15"
+  },
+  "publish": {
+    "exclude": [
+      ".claude",
+      ".github",
+      ".vscode",
+      "coverage",
+      "examples",
+      "audit.ts",
+      "egg.json",
+      "CLAUDE.md",
+      "**/*_test.ts"
+    ]
+  },
+  "fmt": {
+    "useTabs": false,
+    "lineWidth": 80,
+    "indentWidth": 2,
+    "singleQuote": true,
+    "semiColons": false
+  },
+  "tasks": {
+    "test": "deno test --allow-net --allow-env --coverage=coverage",
+    "test:audit": "deno test --allow-net --allow-env audit.ts"
   }
 }

@@ -3,7 +3,7 @@ export {
   graphql,
   type GraphQLArgs,
   type GraphQLSchema,
-} from 'npm:graphql@16.10.0'
+} from 'graphql'
 export {
   createHandler,
   type HandlerOptions,
@@ -11,6 +11,6 @@ export {
   parseRequestParams as rawParseRequestParams,
   type Request as RawRequest,
   type RequestParams,
-} from 'npm:graphql-http@1.22.4'
-export { STATUS_TEXT, type StatusCode } from 'jsr:@std/http@0.224.5/status'
-export { accepts } from 'jsr:@std/http@0.224.5/negotiation'
+} from 'graphql-http'
+export { STATUS_TEXT, type StatusCode } from '@std/http/status'
+export { accepts } from '@std/http/negotiation'

@@ -1,4 +1,4 @@
-import { serverAudits } from 'npm:graphql-http@1.22.4'
+import { serverAudits } from 'graphql-http'
 
 for (
   const audit of serverAudits({

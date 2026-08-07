@@ -1,181 +1,157 @@
 {
   "version": "5",
   "specifiers": {
-    "jsr:@deno-libs/superfetch@2.0.1": "2.0.1",
-    "jsr:@deno-libs/superfetch@3.0.0": "3.0.0",
-    "jsr:@oak/commons@0.11": "0.11.0",
-    "jsr:@std/assert@0.223": "0.223.0",
-    "jsr:@std/assert@0.224": "0.224.0",
-    "jsr:@std/assert@0.226": "0.226.0",
-    "jsr:@std/assert@1.0.0": "1.0.0",
-    "jsr:@std/bytes@0.223": "0.223.0",
-    "jsr:@std/bytes@0.224": "0.224.0",
-    "jsr:@std/crypto@0.223": "0.223.0",
-    "jsr:@std/crypto@0.224": "0.224.0",
-    "jsr:@std/encoding@0.223": "0.223.0",
-    "jsr:@std/encoding@1.0.0-rc.2": "1.0.0-rc.2",
-    "jsr:@std/http@0.223": "0.223.0",
-    "jsr:@std/http@0.224": "0.224.5",
-    "jsr:@std/http@0.224.5": "0.224.5",
-    "jsr:@std/internal@^1.0.1": "1.0.5",
-    "jsr:@std/io@0.223": "0.223.0",
-    "jsr:@std/media-types@0.223": "0.223.0",
-    "jsr:@std/media-types@0.224": "0.224.1",
-    "jsr:@std/media-types@1.0.1": "1.0.1",
-    "jsr:@std/path@0.223": "0.223.0",
-    "jsr:@std/testing@0.225.3": "0.225.3",
-    "npm:@graphql-tools/schema@10.0.3": "10.0.3_graphql@16.10.0",
-    "npm:@types/node@*": "22.5.4",
-    "npm:graphql-http@1.22.4": "1.22.4_graphql@16.10.0",
-    "npm:graphql@16.10.0": "16.10.0",
-    "npm:path-to-regexp@6.2.1": "6.2.1",
-    "npm:xss@1.0.15": "1.0.15"
+    "jsr:@deno-libs/graphql-tag@0.2": "0.2.0",
+    "jsr:@deno-libs/superfetch@4": "4.0.0",
+    "jsr:@oak/commons@1": "1.0.1",
+    "jsr:@oak/oak@^17.2.0": "17.2.0",
+    "jsr:@std/assert@1": "1.0.19",
+    "jsr:@std/assert@^1.0.19": "1.0.19",
+    "jsr:@std/bytes@1": "1.0.6",
+    "jsr:@std/crypto@1": "1.1.0",
+    "jsr:@std/encoding@1": "1.0.11",
+    "jsr:@std/encoding@^1.0.11": "1.0.11",
+    "jsr:@std/expect@^1.0.20": "1.0.20",
+    "jsr:@std/http@1": "1.1.3",
+    "jsr:@std/http@^1.1.3": "1.1.3",
+    "jsr:@std/internal@^1.0.12": "1.0.14",
+    "jsr:@std/internal@^1.0.14": "1.0.14",
+    "jsr:@std/media-types@1": "1.1.0",
+    "jsr:@std/media-types@^1.1.0": "1.1.0",
+    "jsr:@std/path@1": "1.1.6",
+    "jsr:@std/path@^1.1.6": "1.1.6",
+    "jsr:@std/testing@^1.0.20": "1.0.20",
+    "npm:@graphql-tools/schema@^10.0.38": "10.0.38_graphql@17.0.2",
+    "npm:graphql-http@^1.22.4": "1.22.4_graphql@17.0.2",
+    "npm:graphql@16.12.0": "16.12.0",
+    "npm:graphql@^17.0.2": "17.0.2",
+    "npm:path-to-regexp@^6.3.0": "6.3.0",
+    "npm:xss@^1.0.15": "1.0.15"
   },
   "jsr": {
-    "@deno-libs/superfetch@2.0.1": {
-      "integrity": "16f40d931baf3075e53e9d119a40bf3ddc49a55f8bd25f80a18baa36f29b2ce0",
+    "@deno-libs/graphql-tag@0.2.0": {
+      "integrity": "28041bf3442ba4b540820567d22d1d1d61ac27c3381a2f97d4799c13c5c76149",
       "dependencies": [
-        "jsr:@std/assert@1.0.0",
-        "jsr:@std/media-types@1.0.1"
+        "npm:graphql@^17.0.2"
       ]
     },
-    "@deno-libs/superfetch@3.0.0": {
-      "integrity": "8504f17cd6cab62789aaa9cafe9ef07a263a4cafa46f96ee8caae52aa3d821f7",
+    "@deno-libs/superfetch@4.0.0": {
+      "integrity": "9731f93eba90c5bb874eb375d7abe5de1fe8cad0c174e130fa91e09b56311bae",
       "dependencies": [
-        "jsr:@std/assert@1.0.0",
-        "jsr:@std/media-types@1.0.1"
+        "jsr:@std/assert@^1.0.19",
+        "jsr:@std/media-types@^1.1.0"
       ]
     },
-    "@oak/commons@0.11.0": {
-      "integrity": "07702bfe5c07cd8144c422022994da1f9fea466b185824f4be63a2b1b1a65125",
+    "@oak/commons@1.0.1": {
+      "integrity": "889ff210f0b4292591721be07244ecb1b5c118742f5273c70cf30d7cd4184d0c",
       "dependencies": [
-        "jsr:@std/assert@0.226",
-        "jsr:@std/bytes@0.224",
-        "jsr:@std/crypto@0.224",
-        "jsr:@std/http@0.224",
-        "jsr:@std/media-types@0.224"
+        "jsr:@std/assert@1",
+        "jsr:@std/bytes",
+        "jsr:@std/crypto",
+        "jsr:@std/encoding@1",
+        "jsr:@std/http@1",
+        "jsr:@std/media-types@1"
       ]
     },
-    "@std/assert@0.223.0": {
-      "integrity": "eb8d6d879d76e1cc431205bd346ed4d88dc051c6366365b1af47034b0670be24"
-    },
-    "@std/assert@0.224.0": {
-      "integrity": "8643233ec7aec38a940a8264a6e3eed9bfa44e7a71cc6b3c8874213ff401967f"
-    },
-    "@std/assert@0.226.0": {
-      "integrity": "0dfb5f7c7723c18cec118e080fec76ce15b4c31154b15ad2bd74822603ef75b3"
-    },
-    "@std/assert@1.0.0": {
-      "integrity": "0e4f6d873f7f35e2a1e6194ceee39686c996b9e5d134948e644d35d4c4df2008",
+    "@oak/oak@17.2.0": {
+      "integrity": "938537a92fc7922a46a9984696c65fb189c9baad164416ac3e336768a9ff0cd1",
       "dependencies": [
-        "jsr:@std/internal"
+        "jsr:@oak/commons",
+        "jsr:@std/assert@1",
+        "jsr:@std/bytes",
+        "jsr:@std/http@1",
+        "jsr:@std/media-types@1",
+        "jsr:@std/path@1",
+        "npm:path-to-regexp"
       ]
     },
-    "@std/bytes@0.223.0": {
-      "integrity": "84b75052cd8680942c397c2631318772b295019098f40aac5c36cead4cba51a8"
-    },
-    "@std/bytes@0.224.0": {
-      "integrity": "a2250e1d0eb7d1c5a426f21267ab9bdeac2447fa87a3d0d1a467d3f7a6058e49"
-    },
-    "@std/crypto@0.223.0": {
-      "integrity": "1aa9555ff56b09e197ad988ea200f84bc6781fd4fd83f3a156ee44449af93000",
+    "@std/assert@1.0.19": {
+      "integrity": "eaada96ee120cb980bc47e040f82814d786fe8162ecc53c91d8df60b8755991e",
       "dependencies": [
-        "jsr:@std/assert@0.223",
-        "jsr:@std/encoding@0.223"
+        "jsr:@std/internal@^1.0.12"
       ]
     },
-    "@std/crypto@0.224.0": {
-      "integrity": "154ef3ff08ef535562ef1a718718c5b2c5fc3808f0f9100daad69e829bfcdf2d",
+    "@std/bytes@1.0.6": {
+      "integrity": "f6ac6adbd8ccd99314045f5703e23af0a68d7f7e58364b47d2c7f408aeb5820a"
+    },
+    "@std/crypto@1.1.0": {
+      "integrity": "b8d6d0a6377a32b213af2661ed7bf1062d94feac0c57def5526a8e74a95c3ec8"
+    },
+    "@std/encoding@1.0.11": {
+      "integrity": "e7cef2f0b3153bccc17431e7c864a1de03a4b6d9647389c43e08aaa775d37385"
+    },
+    "@std/expect@1.0.20": {
+      "integrity": "ffc4f3c33f732417e3e9acf3d995818c89984313c37d933b9ebbb4571d2887e9",
       "dependencies": [
-        "jsr:@std/assert@0.224"
+        "jsr:@std/assert@^1.0.19",
+        "jsr:@std/internal@^1.0.14",
+        "jsr:@std/path@^1.1.6"
       ]
     },
-    "@std/encoding@0.223.0": {
-      "integrity": "2b5615a75e00337ce113f34cf2f9b8c18182c751a8dcc8b1a2c2fc0e117bef00"
-    },
-    "@std/encoding@1.0.0-rc.2": {
-      "integrity": "160d7674a20ebfbccdf610b3801fee91cf6e42d1c106dd46bbaf46e395cd35ef"
-    },
-    "@std/http@0.223.0": {
-      "integrity": "15ab8a0c5a7e9d5be017a15b01600f20f66602ceec48b378939fa24fcec522aa",
+    "@std/http@1.1.3": {
+      "integrity": "73a98e05ff58aa18bea562d286172e6c815b1eddd4fcab194beda19e3683b88c",
       "dependencies": [
-        "jsr:@std/assert@0.223",
-        "jsr:@std/encoding@0.223"
+        "jsr:@std/encoding@^1.0.11"
       ]
     },
-    "@std/http@0.224.5": {
-      "integrity": "b03b5d1529f6c423badfb82f6640f9f2557b4034cd7c30655ba5bb447ff750a4",
+    "@std/internal@1.0.14": {
+      "integrity": "291516b3d4c35024d6ffbc0a9df5bf4c64116e05b50012cf846710152d2ffdf7"
+    },
+    "@std/media-types@1.1.0": {
+      "integrity": "c9d093f0c05c3512932b330e3cc1fe1d627b301db33a4c2c2185c02471d6eaa4"
+    },
+    "@std/path@1.1.6": {
+      "integrity": "c68485c2a4dfbb5ae3cc74fae4e8c4e5d874cf8a8ed12927917235c758b46cbe",
       "dependencies": [
-        "jsr:@std/encoding@1.0.0-rc.2"
+        "jsr:@std/internal@^1.0.14"
       ]
     },
-    "@std/internal@1.0.5": {
-      "integrity": "54a546004f769c1ac9e025abd15a76b6671ddc9687e2313b67376125650dc7ba"
-    },
-    "@std/io@0.223.0": {
-      "integrity": "2d8c3c2ab3a515619b90da2c6ff5ea7b75a94383259ef4d02116b228393f84f1",
+    "@std/testing@1.0.20": {
+      "integrity": "21380ed438672762e4ec549cbf4fe41c5b68f5598773a30b64abe7375513e721",
       "dependencies": [
-        "jsr:@std/bytes@0.223"
+        "jsr:@std/assert@^1.0.19",
+        "jsr:@std/internal@^1.0.14"
       ]
-    },
-    "@std/media-types@0.223.0": {
-      "integrity": "84684680c2eb6bc6d9369c6d6f26a49decaf2c7603ff531862dda575d9d6776e"
-    },
-    "@std/media-types@0.224.1": {
-      "integrity": "9e69a5daed37c5b5c6d3ce4731dc191f80e67f79bed392b0957d1d03b87f11e1"
-    },
-    "@std/media-types@1.0.1": {
-      "integrity": "f2ddc3497be0bd87ac0c9b9b26bb454f76bdc45e1b9a12146af47fab3ba2828c"
-    },
-    "@std/path@0.223.0": {
-      "integrity": "593963402d7e6597f5a6e620931661053572c982fc014000459edc1f93cc3989",
-      "dependencies": [
-        "jsr:@std/assert@0.223"
-      ]
-    },
-    "@std/testing@0.225.3": {
-      "integrity": "348c24d0479d44ab3dbb4f26170f242e19f24051b45935d4a9e7ca0ab7e37780"
     }
   },
   "npm": {
-    "@graphql-tools/merge@9.0.17_graphql@16.10.0": {
-      "integrity": "sha512-3K4g8KKbIqfdmK0L5+VtZsqwAeElPkvT5ejiH+KEhn2wyKNCi4HYHxpQk8xbu+dSwLlm9Lhet1hylpo/mWCkuQ==",
+    "@graphql-tools/merge@9.2.2_graphql@17.0.2": {
+      "integrity": "sha512-DSLLAztOIQId7QE3m8Ehk5lV+0pjxNSSRDHPzlYQ9E4KJ9AoUMBprC4C+eX3v4srh05S2ujm5/veqAr5yEWFSQ==",
       "dependencies": [
         "@graphql-tools/utils",
-        "graphql",
+        "graphql@17.0.2",
         "tslib"
       ]
     },
-    "@graphql-tools/schema@10.0.3_graphql@16.10.0": {
-      "integrity": "sha512-p28Oh9EcOna6i0yLaCFOnkcBDQECVf3SCexT6ktb86QNj9idnkhI+tCxnwZDh58Qvjd2nURdkbevvoZkvxzCog==",
+    "@graphql-tools/schema@10.0.38_graphql@17.0.2": {
+      "integrity": "sha512-Kckk2/vm+rELJ7ijvFaAn9ouWSVUTD0D4SJIvYF4rKeuQHAfCzE/jzMFonZVpTXleqJjPXLZjVbuaMorw7A5Og==",
       "dependencies": [
         "@graphql-tools/merge",
         "@graphql-tools/utils",
-        "graphql",
-        "tslib",
-        "value-or-promise"
-      ]
-    },
-    "@graphql-tools/utils@10.7.2_graphql@16.10.0": {
-      "integrity": "sha512-Wn85S+hfkzfVFpXVrQ0hjnePa3p28aB6IdAGCiD1SqBCSMDRzL+OFEtyAyb30nV9Mqflqs9lCqjqlR2puG857Q==",
-      "dependencies": [
-        "@graphql-typed-document-node/core",
-        "cross-inspect",
-        "dset",
-        "graphql",
+        "graphql@17.0.2",
         "tslib"
       ]
     },
-    "@graphql-typed-document-node/core@3.2.0_graphql@16.10.0": {
-      "integrity": "sha512-mB9oAsNCm9aM3/SOv4YtBMqZbYj10R7dkq8byBqxGY/ncFwhf2oQzMV+LCRlWoDSEBJ3COiR1yeDvMtsoOsuFQ==",
+    "@graphql-tools/utils@11.2.2_graphql@17.0.2": {
+      "integrity": "sha512-Do2A/t6ayqOma8m7PvpYMsCBswL+NB35BQSng4GWSBqafL2/BnfAZy/NSENPwV721Rm2fG0BHETFC0+FJJZmLw==",
       "dependencies": [
-        "graphql"
+        "@graphql-typed-document-node/core",
+        "@whatwg-node/promise-helpers",
+        "cross-inspect",
+        "graphql@17.0.2",
+        "tslib"
       ]
     },
-    "@types/node@22.5.4": {
-      "integrity": "sha512-FDuKUJQm/ju9fT/SeX/6+gBzoPzlVCzfzmGkwKvRHQVxi4BntVbyIwf6a4Xn62mrvndLiml6z/UBXIdEVjQLXg==",
+    "@graphql-typed-document-node/core@3.2.0_graphql@17.0.2": {
+      "integrity": "sha512-mB9oAsNCm9aM3/SOv4YtBMqZbYj10R7dkq8byBqxGY/ncFwhf2oQzMV+LCRlWoDSEBJ3COiR1yeDvMtsoOsuFQ==",
       "dependencies": [
-        "undici-types"
+        "graphql@17.0.2"
+      ]
+    },
+    "@whatwg-node/promise-helpers@1.3.2": {
+      "integrity": "sha512-Nst5JdK47VIl9UcGwtv2Rcgyn5lWtZ0/mhRQ4G8NN2isxpq2TO30iqHzmwoJycjWuyUfg3GFXqP/gFHXeV57IA==",
+      "dependencies": [
+        "tslib"
       ]
     },
     "commander@2.20.3": {
@@ -190,29 +166,23 @@
     "cssfilter@0.0.10": {
       "integrity": "sha512-FAaLDaplstoRsDR8XGYH51znUN0UY7nMc6Z9/fvE8EXGwvJE9hu7W2vHwx1+bd6gCYnln9nLbzxFTrcO9YQDZw=="
     },
-    "dset@3.1.4": {
-      "integrity": "sha512-2QF/g9/zTaPDc3BjNcVTGoBbXBgYfMTTceLaYcFJ/W9kggFUkhxD/hMEeuLKbugyef9SqAx8cpgwlIP/jinUTA=="
-    },
-    "graphql-http@1.22.4_graphql@16.10.0": {
+    "graphql-http@1.22.4_graphql@17.0.2": {
       "integrity": "sha512-OC3ucK988teMf+Ak/O+ZJ0N2ukcgrEurypp8ePyJFWq83VzwRAmHxxr+XxrMpxO/FIwI4a7m/Fzv3tWGJv0wPA==",
       "dependencies": [
-        "graphql"
+        "graphql@17.0.2"
       ]
     },
-    "graphql@16.10.0": {
-      "integrity": "sha512-AjqGKbDGUFRKIRCP9tCKiIGHyriz2oHEbPIbEtcSLSs4YjReZOIPQQWek4+6hjw62H9QShXHyaGivGiYVLeYFQ=="
+    "graphql@16.12.0": {
+      "integrity": "sha512-DKKrynuQRne0PNpEbzuEdHlYOMksHSUI8Zc9Unei5gTsMNA2/vMpoMz/yKba50pejK56qj98qM0SjYxAKi13gQ=="
     },
-    "path-to-regexp@6.2.1": {
-      "integrity": "sha512-JLyh7xT1kizaEvcaXOQwOc2/Yhw6KZOvPf1S8401UyLk86CU79LN3vl7ztXGm/pZ+YjoyAJ4rxmHwbkBXJX+yw=="
+    "graphql@17.0.2": {
+      "integrity": "sha512-FRWbddMxfkjiB7z+aQDWIR+E34xo9I8c9mtK2RPv8PmMzKRvrdsreHL/Ui/TmwHJfhHChEtsFPyMHKI+xuarQQ=="
+    },
+    "path-to-regexp@6.3.0": {
+      "integrity": "sha512-Yhpw4T9C6hPpgPeA28us07OJeqZ5EzQTkbfwuhsUg0c237RomFoETJgmp2sa3F/41gfLE6G5cqcYwznmeEeOlQ=="
     },
     "tslib@2.8.1": {
       "integrity": "sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w=="
-    },
-    "undici-types@6.19.8": {
-      "integrity": "sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw=="
-    },
-    "value-or-promise@1.0.12": {
-      "integrity": "sha512-Z6Uz+TYwEqE7ZN50gwn+1LCVo9ZVrpxRPOhOLnncYkY1ZzOYtrX8Fwf/rFktZ8R5mJms6EZf5TqNOMeZmnPq9Q=="
     },
     "xss@1.0.15": {
       "integrity": "sha512-FVdlVVC67WOIPvfOwhoMETV72f6GbW7aOabBC3WxN/oUdoEMDyLz4OgRv5/gck2ZeNqEQu+Tb0kloovXOfpYVg==",
@@ -223,48 +193,18 @@
       "bin": true
     }
   },
-  "remote": {
-    "https://deno.land/std@0.221.0/testing/_test_suite.ts": "f10a8a6338b60c403f07a76f3f46bdc9f1e1a820c0a1decddeb2949f7a8a0546",
-    "https://deno.land/std@0.221.0/testing/bdd.ts": "7a8ac58eded80e6fefa7cf7538927e88781cf5f247c04b35261c3213316e2dd0",
-    "https://deno.land/std@0.97.0/fmt/colors.ts": "db22b314a2ae9430ae7460ce005e0a7130e23ae1c999157e3bb77cf55800f7e4",
-    "https://deno.land/std@0.97.0/testing/_diff.ts": "961eaf6d9f5b0a8556c9d835bbc6fa74f5addd7d3b02728ba7936ff93364f7a3",
-    "https://deno.land/std@0.97.0/testing/asserts.ts": "341292d12eebc44be4c3c2ca101ba8b6b5859cef2fa69d50c217f9d0bfbcfd1f",
-    "https://deno.land/x/expect@v0.4.0/expect.ts": "1d1856758a750f440d0b65d74f19e5d4829bb76d8e576d05546abd8e7b1dfb9e",
-    "https://deno.land/x/expect@v0.4.0/matchers.ts": "55acf74a3c4a308d079798930f05ab11da2080ec7acd53517193ca90d1296bf7",
-    "https://deno.land/x/expect@v0.4.0/mock.ts": "562d4b1d735d15b0b8e935f342679096b64fe452f86e96714fe8616c0c884914",
-    "https://deno.land/x/expect@v0.4.0/mod.ts": "0304d2430e1e96ba669a8495e24ba606dcc3d152e1f81aaa8da898cea24e36c2",
-    "https://deno.land/x/graphql_tag@0.1.2/deps.ts": "5696461c8bb42db7c83486db452e125f7cfdc62a2c628bb470a4447d934b90b3",
-    "https://deno.land/x/graphql_tag@0.1.2/mod.ts": "57fd56de5f7cbc66e23ce896cc8e99521d286e89969d83e09d960642b0a9d652",
-    "https://deno.land/x/oak@v16.1.0/application.ts": "c6361a3c3fb3607c5dfe1800b156f07b612979dc0498c746aeca54bb9f643a92",
-    "https://deno.land/x/oak@v16.1.0/body.ts": "0f8a6843720ea6cebba2132a5e4dda5a97bbd49e7fb64e96ade0b7c8009bba2d",
-    "https://deno.land/x/oak@v16.1.0/context.ts": "a93a5b41dde2ceb52232ae31b3496be76e8a42ea421a73d7cffe9e640adb8dfd",
-    "https://deno.land/x/oak@v16.1.0/deps.ts": "f960515f71091adecc3df5e2295b3acfc4f1c003e08be29fceec1f7616053433",
-    "https://deno.land/x/oak@v16.1.0/http_server_bun.ts": "cb3a66c735cd0533c4c3776b37ae627ab42344c82f91dff63e3030d9656fd3a0",
-    "https://deno.land/x/oak@v16.1.0/http_server_native.ts": "3bea00ebb9638203d2449fbf9a14a6b87f119bd45012f13282ececdf7b4c4242",
-    "https://deno.land/x/oak@v16.1.0/http_server_native_request.ts": "a4da6f4939736e6323720db2d4b0d19ff2e83f02e52ab1eea9ae80f2c047fa56",
-    "https://deno.land/x/oak@v16.1.0/http_server_node.ts": "9bb5291c15305b297fd634aa4c6b1d5054368f4b7a171d7c7c302c73eb2489ed",
-    "https://deno.land/x/oak@v16.1.0/middleware.ts": "4170180fe5009d2581a0bdc995e5953b90ccb5b1c3767f3eae8a4fe238b8bd81",
-    "https://deno.land/x/oak@v16.1.0/middleware/etag.ts": "310ed4ed01f2af5384ab78617c82a2bdd7f84d66539172e45ee16452846f0754",
-    "https://deno.land/x/oak@v16.1.0/middleware/proxy.ts": "a0b4964509d4320735ffbe52ae2629c78e302dd9b934fcf2ddf189d491469892",
-    "https://deno.land/x/oak@v16.1.0/middleware/serve.ts": "efceebd70afb73bcabe0a6a8981f3d8474a2f2f30e85b46761aee49e81bd9d6a",
-    "https://deno.land/x/oak@v16.1.0/mod.ts": "38e53e01e609583e843f3e2b2677de9872d23d68939ce0de85b402e7a8db01a7",
-    "https://deno.land/x/oak@v16.1.0/node_shims.ts": "4db1569b2b79b73f37c4d947f4aaa50a93e266d48fe67601c8a31af17a28884d",
-    "https://deno.land/x/oak@v16.1.0/request.ts": "1e7f2c338cd6889b616bbdc9e2062eac27acbffde05c685adfb1c60ecc80682a",
-    "https://deno.land/x/oak@v16.1.0/response.ts": "bc47174d3d797ffc802f40fba006c16de8390e776a36f6f4a4d4f58b278bf36f",
-    "https://deno.land/x/oak@v16.1.0/router.ts": "882f36a576e280b0d617cc174feca320f02deed77bdea8264444ba8b55cc0422",
-    "https://deno.land/x/oak@v16.1.0/send.ts": "c05e5985b356b568ae4954a40373f93451a3f8cc9ae8706c8b8879e5e0c8c86b",
-    "https://deno.land/x/oak@v16.1.0/testing.ts": "c879789ac721144c3dcad0a06f5afbe2cd94fb20afc32302992942a49a7def90",
-    "https://deno.land/x/oak@v16.1.0/types.ts": "cd4ccd3e182d0cba2117cd27f560267970470ab9c0ff6556cadd73f605193be7",
-    "https://deno.land/x/oak@v16.1.0/utils/clone_state.ts": "cf8989ddd56816b36ada253ae0acdbd46cdf3d68dbe674d2b66c46640fab3500",
-    "https://deno.land/x/oak@v16.1.0/utils/consts.ts": "137c4f73479f5e98a13153b9305f06f0d85df3cf2aacad2c9f82d4c1f3a2f105",
-    "https://deno.land/x/oak@v16.1.0/utils/create_promise_with_resolvers.ts": "de99e9a998162b929a011f8873eaf0895cf4742492b3ce6f6866d39217342523",
-    "https://deno.land/x/oak@v16.1.0/utils/decode_component.ts": "d3e2c40ecdd2fdb79761c6e9ae224cf01a4643f7c5f4c1e0b69698d43025261b",
-    "https://deno.land/x/oak@v16.1.0/utils/encode_url.ts": "c0ed6b318eb9523adeebba32eb9acd059c0f94d3511b2b9e3b024722d1b3dfb8",
-    "https://deno.land/x/oak@v16.1.0/utils/resolve_path.ts": "aa39d54a003b38fee55f340a0cba3f93a7af85b8ddd5fbfb049a98fc0109b36d",
-    "https://deno.land/x/oak@v16.1.0/utils/streams.ts": "6d55543fdeddc3c9c6f512de227b9b33ff4b0ec5e320edc109f0cbf9bef8963f",
-    "https://deno.land/x/oak@v16.1.0/utils/type_guards.ts": "a1b42aa4c431c4c07d3f8a45a2142020f86d5a3e1e319af94fdf2f4c6c72465f",
-    "https://esm.sh/graphql@16.6.0/denonext/language/parser.mjs": "21defd87cff28344044b53da1b11d1b027ea075148abbdc2c3457321d45b3194",
-    "https://esm.sh/graphql@16.6.0/language/ast#=": "7a63440f25d99e25a685047c3ee76b68023a45a5779d374a6b65c3cb53dc2da1",
-    "https://esm.sh/graphql@16.6.0/language/parser#=": "18b458e1ae94961e5aae7f758aa56c5b3ea3a98fc25caf17ef5a53b7ece8f8d7"
+  "workspace": {
+    "dependencies": [
+      "jsr:@deno-libs/graphql-tag@0.2",
+      "jsr:@deno-libs/superfetch@4",
+      "jsr:@oak/oak@^17.2.0",
+      "jsr:@std/expect@^1.0.20",
+      "jsr:@std/http@^1.1.3",
+      "jsr:@std/testing@^1.0.20",
+      "npm:@graphql-tools/schema@^10.0.38",
+      "npm:graphql-http@^1.22.4",
+      "npm:graphql@^17.0.2",
+      "npm:xss@^1.0.15"
+    ]
   }
 }

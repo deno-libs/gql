@@ -12,24 +12,37 @@
 # gql
 
 Universal and spec-compliant [GraphQL](https://www.graphql.com/) HTTP middleware
-for Deno and Bun. Based on [graphql-http](https://github.com/graphql/graphql-http).
+for Deno and Bun. Based on
+[graphql-http](https://github.com/graphql/graphql-http).
 
 ## Features
 
-- ✨ Works with `Deno.serve`, `Bun.serve` and [oak](https://github.com/oakserver/oak)
+- ✨ Works with `Deno.serve`, `Bun.serve` and
+  [oak](https://github.com/oakserver/oak)
 - ⚡
   [GraphQL Playground](https://github.com/graphql/graphql-playground/tree/master/packages/graphql-playground-html)
   integration (via `graphiql: true`)
 - 🔄 Async context initialization support for auth, DB queries, and more
+
+## Version compatibility
+
+The schema you pass to `GraphQLHTTP` must come from the same major version of
+`graphql` that gql itself uses — graphql rejects schemas built by a different
+copy of itself, both at type-check time and at runtime.
+
+| graphql | gql |
+| ------- | --- |
+| v17     | v5  |
+| v16     | v4  |
 
 ## Get started
 
 The simplest setup with `Deno.serve`:
 
 ```ts
-import { GraphQLHTTP } from 'jsr:@deno-libs/gql@3.0.1/mod.ts'
-import { makeExecutableSchema } from 'npm:@graphql-tools/schema@10.0.3'
-import { gql } from 'https://deno.land/x/graphql_tag@0.1.2/mod.ts'
+import { GraphQLHTTP } from 'jsr:@deno-libs/gql@5.0.0'
+import { makeExecutableSchema } from 'npm:@graphql-tools/schema@10.0.38'
+import { gql } from 'jsr:@deno-libs/graphql-tag@0.2.0'
 
 const typeDefs = gql`
   type Query {

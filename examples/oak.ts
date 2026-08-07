@@ -3,10 +3,10 @@ import {
   type Middleware,
   type Request as OakRequest,
   Router,
-} from 'https://deno.land/x/oak@v16.1.0/mod.ts'
+} from '@oak/oak'
 import { GraphQLHTTP } from '../mod.ts'
-import { makeExecutableSchema } from 'npm:@graphql-tools/schema@10.0.3'
-import { gql } from 'https://deno.land/x/graphql_tag@0.1.2/mod.ts'
+import { makeExecutableSchema } from '@graphql-tools/schema'
+import { gql } from '@deno-libs/graphql-tag'
 
 const typeDefs = gql`
   type Query {
