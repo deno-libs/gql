@@ -40,7 +40,7 @@ copy of itself, both at type-check time and at runtime.
 The simplest setup with `Deno.serve`:
 
 ```ts
-import { GraphQLHTTP } from 'jsr:@deno-libs/gql@5.0.0'
+import { GraphQLHTTP } from 'jsr:@deno-libs/gql@5.0.1'
 import { makeExecutableSchema } from 'npm:@graphql-tools/schema@10.0.38'
 import { gql } from 'jsr:@deno-libs/graphql-tag@0.2.0'
 
