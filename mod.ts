@@ -49,6 +49,11 @@ export function GraphQLHTTP<
   reqCtx?: (req: Req) => ReqCtx | Promise<ReqCtx>,
 ): (req: Request) => Promise<Response> {
   const handler = createHandler(options)
+  const responseHeaders = (defaults?: HeadersInit) => {
+    const merged = new Headers(defaults)
+    new Headers(headers).forEach((value, name) => merged.set(name, value))
+    return merged
+  }
 
   return async function handleRequest(req: Request): Promise<Response> {
     try {
@@ -66,10 +71,7 @@ export function GraphQLHTTP<
           })
 
           return new Response(playground, {
-            headers: new Headers({
-              'Content-Type': 'text/html',
-              ...headers,
-            }),
+            headers: responseHeaders({ 'Content-Type': 'text/html' }),
           })
         }
       }
@@ -84,7 +86,7 @@ export function GraphQLHTTP<
         body || STATUS_TEXT[init.status as StatusCode],
         {
           ...init,
-          headers: new Headers({ ...init.headers, ...headers }),
+          headers: responseHeaders(init.headers),
         },
       )
     } catch (e) {
@@ -99,9 +101,8 @@ export function GraphQLHTTP<
         JSON.stringify({ errors: [{ message: 'Internal server error' }] }),
         {
           status: 500,
-          headers: new Headers({
+          headers: responseHeaders({
             'Content-Type': 'application/json; charset=utf-8',
-            ...headers,
           }),
         },
       )
