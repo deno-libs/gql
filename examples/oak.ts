@@ -27,7 +27,7 @@ const schema = makeExecutableSchema({ typeDefs, resolvers })
 const handleGraphQL: Middleware = async (ctx) => {
   // cast Oak request into a normal Request
   const req = new Request(ctx.request.url.toString(), {
-    body: await ctx.request.body.blob(),
+    body: ctx.request.hasBody ? await ctx.request.body.blob() : undefined,
     headers: ctx.request.headers,
     method: ctx.request.method,
   })
@@ -46,7 +46,7 @@ const handleGraphQL: Middleware = async (ctx) => {
 
 const graphqlRouter = new Router().all('/graphql', handleGraphQL)
 
-const app = new Application().use(
+export const app = new Application().use(
   graphqlRouter.routes(),
   graphqlRouter.allowedMethods(),
 )
@@ -60,4 +60,4 @@ app.addEventListener('listen', ({ secure, hostname, port }) => {
   console.log('☁  Started on ' + url)
 })
 
-await app.listen({ port: 3000 })
+if (import.meta.main) await app.listen({ port: 3000 })
